@@ -82,17 +82,15 @@ unsigned int CalculateNextWorkRequired(const CBlockIndex *pindexLast, int64_t nF
         nActualTimespan = params.nPowTargetTimespan * 4;
 
 
-        // Retarget
-        CBigNum bnNew;
-        bnNew.SetCompact(pindexLast->nBits);
-        bnNew *= nActualTimespan;
-        bnNew /= nLookbackTimespan;
+    // Retarget
+    CBigNum bnNew;
+    bnNew.SetCompact(pindexLast->nBits);
+    bnNew *= nActualTimespan;
+    bnNew /= params.nPowTargetTimespan;
 
-        //printf("bnNew = %lld    bnProofOfWorkLimit = %ld\n", bnNew.GetCompact(), bnProofOfWorkLimit.GetCompact());
-        if (bnNew > bnProofOfWorkLimit)
-            bnNew = bnProofOfWorkLimit;
+    if (bnNew > bnProofOfWorkLimit)
+        bnNew = bnProofOfWorkLimit;
 
-		return bnNew.GetCompact();
 }
 
 bool CheckProofOfWork(uint256 hash, unsigned int nBits, const Consensus::Params &params) {
