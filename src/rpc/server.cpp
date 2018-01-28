@@ -259,7 +259,7 @@ UniValue stop(const UniValue& params, bool fHelp)
     // Event loop will exit after current HTTP requests have been handled, so
     // this reply will get back to the client.
     StartShutdown();
-    return "Zcoin server stopping";
+    return "hexxcoin server stopping";
 }
 
 /**
@@ -272,11 +272,11 @@ static const CRPCCommand vRPCCommands[] =
     { "control",            "help",                   &help,                   true  },
     { "control",            "stop",                   &stop,                   true  },
         /* Dash features */
-    { "zcoin",               "znode",             &znode,             true  },
-    { "zcoin",               "znsync",             &znsync,             true  },
-    { "zcoin",               "znodelist",         &znodelist,         true  },
-    { "zcoin",               "znodebroadcast",    &znodebroadcast,    true  },
-    { "zcoin",               "getpoolinfo",            &getpoolinfo,            true  },
+    { "hexxcoin",               "znode",             &znode,             true  },
+    { "hexxcoin",               "znsync",             &znsync,             true  },
+    { "hexxcoin",               "znodelist",         &znodelist,         true  },
+    { "hexxcoin",               "znodebroadcast",    &znodebroadcast,    true  },
+    { "hexxcoin",               "getpoolinfo",            &getpoolinfo,            true  },
 };
 
 CRPCTable::CRPCTable()
