@@ -15,7 +15,7 @@ static const int PROTOCOL_VERSION = 99012;
 static const int INIT_PROTO_VERSION = 99008;
 
 //! In this version, 'getheaders' was introduced.
-static const int GETHEADERS_VERSION = 99013;
+static const int GETHEADERS_VERSION = 99012;
 
 //! disconnect from peers older than this proto version
 static const int MIN_PEER_PROTO_VERSION = 99008;
@@ -37,7 +37,7 @@ static const int MEMPOOL_GD_VERSION = 99008;
 static const int NO_BLOOM_VERSION = 99012;
 
 //! "sendheaders" command and announcing blocks with headers starts with this version
-static const int SENDHEADERS_VERSION = 99013;
+static const int SENDHEADERS_VERSION = 99012;
 
 //! "feefilter" tells peers to filter invs to you by fee starts with this version
 static const int FEEFILTER_VERSION = 99012;
