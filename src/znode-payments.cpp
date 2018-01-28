@@ -10,7 +10,7 @@
 #include "netfulfilledman.h"
 #include "spork.h"
 #include "util.h"
-
+#include "consensus/consensus.h"
 #include <boost/lexical_cast.hpp>
 
 /** Object for who's going to get paid on which blocks */
@@ -132,7 +132,7 @@ bool IsBlockPayeeValid(const CTransaction &txNew, int nBlockHeight, CAmount bloc
     // we can only check znode payment /
     const Consensus::Params &consensusParams = Params().GetConsensus();
 
-    if (nBlockHeight < consensusParams.nZnodePaymentsStartBlock) {
+    if (nBlockHeight < HF_ZNODE_PAYMENT_START) {
         //there is no budget data to use to check anything, let's just accept the longest chain
         if (fDebug) LogPrintf("IsBlockPayeeValid -- znode isn't start\n");
         return true;
@@ -543,7 +543,7 @@ bool CZnodeBlockPayees::IsTransactionValid(const CTransaction &txNew) {
 
     if (!hasValidPayee) return true;
 
-    LogPrintf("CZnodeBlockPayees::IsTransactionValid -- ERROR: Missing required payment, possible payees: '%s', amount: %f XZC\n", strPayeesPossible, (float) nZnodePayment / COIN);
+    LogPrintf("CZnodeBlockPayees::IsTransactionValid -- ERROR: Missing required payment, possible payees: '%s', amount: %f HXX\n", strPayeesPossible, (float) nZnodePayment / COIN);
     return false;
 }
 

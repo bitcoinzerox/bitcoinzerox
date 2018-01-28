@@ -16,7 +16,7 @@
 #include "libzerocoin/bitcoin_bignum/bignum.h"
 #include "fixed.h"
 
-static CBigNum bnProofOfWorkLimit(~arith_uint256(0) >> 8);
+static CBigNum bnProofOfWorkLimit(~arith_uint256(0) >> 12);
 
 double GetDifficultyHelper(unsigned int nBits) {
     int nShift = (nBits >> 24) & 0xff;
@@ -34,7 +34,7 @@ double GetDifficultyHelper(unsigned int nBits) {
     return dDiff;
 }
 
-// zcoin GetNextWorkRequired
+// hexxcoin GetNextWorkRequired
 unsigned int GetNextWorkRequired(const CBlockIndex *pindexLast, const CBlockHeader *pblock, const Consensus::Params &params) {
     bool fTestNet = Params().NetworkIDString() == CBaseChainParams::TESTNET;
 
@@ -47,12 +47,12 @@ unsigned int GetNextWorkRequired(const CBlockIndex *pindexLast, const CBlockHead
         return bnProofOfWorkLimit.GetCompact();
     }
 
-    static const uint32_t BlocksTargetSpacing = 10 * 60; // 10 minutes
+    static const uint32_t BlocksTargetSpacing = 150; // 2.5 minutes
     unsigned int TimeDaySeconds = 60 * 60 * 24;
-    int64_t PastSecondsMin = TimeDaySeconds * 0.25; // 21600
-    int64_t PastSecondsMax = TimeDaySeconds * 7;// 604800
-    uint32_t PastBlocksMin = PastSecondsMin / BlocksTargetSpacing; // 36 blocks
-    uint32_t PastBlocksMax = PastSecondsMax / BlocksTargetSpacing; // 1008 blocks
+    int64_t PastSecondsMin = TimeDaySeconds / 288; // 300 secs
+    int64_t PastSecondsMax = TimeDaySeconds / 2;// 43200 secs
+    uint32_t PastBlocksMin = PastSecondsMin / BlocksTargetSpacing; // 2 blocks
+    uint32_t PastBlocksMax = PastSecondsMax / BlocksTargetSpacing; // 288 blocks
 
     if (fTestNet) {
         // If the new block's timestamp is more than nTargetSpacing*6
@@ -60,27 +60,6 @@ unsigned int GetNextWorkRequired(const CBlockIndex *pindexLast, const CBlockHead
         if (pblock->nTime > pindexLast->nTime + params.nPowTargetTimespan * 1) {
             return bnProofOfWorkLimit.GetCompact();
         }
-    }
-
-    // 9/29/2016 - Reset to Lyra2(2,block_height,256) due to ASIC KnC Miner Scrypt
-    // 36 block look back, reset to mininmum diff
-    if (!fTestNet && pindexLast->nHeight + 1 >= HF_LYRA2VAR_HEIGHT && pindexLast->nHeight + 1 <= HF_LYRA2VAR_HEIGHT + 36 - 1) {
-        return bnProofOfWorkLimit.GetCompact();
-    }
-    // reset to minimum diff at testnet after scrypt_n, 6 block look back
-    if (fTestNet && pindexLast->nHeight + 1 >= HF_LYRA2VAR_HEIGHT_TESTNET && pindexLast->nHeight + 1 <= HF_LYRA2VAR_HEIGHT_TESTNET + 6 - 1) {
-        return bnProofOfWorkLimit.GetCompact();
-    }
-
-    // 02/11/2017 - Increase diff to match with new hashrates of Lyra2Z algo
-    if ((!fTestNet && pindexLast->nHeight + 1 == HF_LYRA2Z_HEIGHT) || (fTestNet && pindexLast->nHeight + 1 == HF_LYRA2Z_HEIGHT_TESTNET)) {
-        CBigNum bnNew;
-        bnNew.SetCompact(pindexLast->nBits);
-        bnNew /= 20000; // increase the diff by 20000x since the new hashrate is approx. 20000 times higher
-        LogPrintf("Lyra2Z HF - Before: %08x %.8f\n", pindexLast->nBits, GetDifficultyHelper(pindexLast->nBits));
-        LogPrintf("Lyra2Z HF - After: %08x %.8f\n", bnNew.GetCompact(), GetDifficultyHelper(bnNew.GetCompact()));
-        if (bnNew > bnProofOfWorkLimit) { bnNew = bnProofOfWorkLimit; } // safe threshold
-        return bnNew.GetCompact();
     }
 
     if ((pindexLast->nHeight + 1) % params.DifficultyAdjustmentInterval() != 0) // Retarget every nInterval blocks

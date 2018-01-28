@@ -88,7 +88,7 @@ bool AppInit(int argc, char* argv[])
         else
         {
             strUsage += "\n" + _("Usage:") + "\n" +
-                  "  zcoind [options]                     " + strprintf(_("Start %s Daemon"), _(PACKAGE_NAME)) + "\n";
+                  "  hexxcoind [options]                     " + strprintf(_("Start %s Daemon"), _(PACKAGE_NAME)) + "\n";
 
             strUsage += "\n" + HelpMessage(HMM_BITCOIND);
         }
@@ -119,7 +119,7 @@ bool AppInit(int argc, char* argv[])
             return false;
         }
 
-        // parse znode.conf
+        // parse hexxnode.conf
         std::string strErr;
         if(!znodeConfig.read(strErr)) {
             fprintf(stderr,"Error reading znode configuration file: %s\n", strErr.c_str());
@@ -129,19 +129,19 @@ bool AppInit(int argc, char* argv[])
         // Command-line RPC
         bool fCommandLine = false;
         for (int i = 1; i < argc; i++)
-            if (!IsSwitchChar(argv[i][0]) && !boost::algorithm::istarts_with(argv[i], "zcoin:"))
+            if (!IsSwitchChar(argv[i][0]) && !boost::algorithm::istarts_with(argv[i], "hexxcoin:"))
                 fCommandLine = true;
 
         if (fCommandLine)
         {
-            fprintf(stderr, "Error: There is no RPC client functionality in zcoind anymore. Use the zcoin-cli utility instead.\n");
+            fprintf(stderr, "Error: There is no RPC client functionality in hexxcoind anymore. Use the hexxcoin-cli utility instead.\n");
             exit(EXIT_FAILURE);
         }
 #ifndef WIN32
-        fDaemon = GetBoolArg("-daemon", false);
+        fDaemon = GetBoolArg("-daemon", true);
         if (fDaemon)
         {
-            fprintf(stdout, "Zcoin server starting\n");
+            fprintf(stdout, "hexxcoin server starting\n");
 
             // Daemonize
             pid_t pid = fork();
