@@ -56,7 +56,7 @@
     <name>BanTableModel</name>
     </context>
 <context>
-    <name>ZcoinGUI</name>
+    <name>hexxcoinGUI</name>
     <message>
         <source>Synchronizing with network...</source>
         <translation>Duke u sinkronizuar me rrjetin...</translation>
@@ -94,8 +94,8 @@
         <translation>Ndrysho frazkalimin e përdorur per enkriptimin e portofolit</translation>
     </message>
     <message>
-        <source>Zcoin</source>
-        <translation>Zcoin</translation>
+        <source>hexxcoin</source>
+        <translation>hexxcoin</translation>
     </message>
     <message>
         <source>Wallet</source>
@@ -432,14 +432,14 @@
     <name>WalletView</name>
     </context>
 <context>
-    <name>zcoin-core</name>
+    <name>hexxcoin-core</name>
     <message>
         <source>Options:</source>
         <translation>Opsionet:</translation>
     </message>
     <message>
-        <source>Zcoin Core</source>
-        <translation>Berthama Zcoin</translation>
+        <source>hexxcoin core</source>
+        <translation>Berthama hexxcoin</translation>
     </message>
     <message>
         <source>Information</source>

@@ -20,7 +20,7 @@
     <name>BanTableModel</name>
     </context>
 <context>
-    <name>ZcoinGUI</name>
+    <name>hexxcoinGUI</name>
     <message>
         <source>&amp;Transactions</source>
         <translation>&amp;Транзакциялар</translation>
@@ -30,8 +30,8 @@
         <translation>Билдирүүнү &amp;текшерүү...</translation>
     </message>
     <message>
-        <source>Zcoin</source>
-        <translation>Zcoin</translation>
+        <source>hexxcoin</source>
+        <translation>hexxcoin</translation>
     </message>
     <message>
         <source>Wallet</source>
@@ -264,7 +264,7 @@
     <name>WalletView</name>
     </context>
 <context>
-    <name>zcoin-core</name>
+    <name>hexxcoin-core</name>
     <message>
         <source>Information</source>
         <translation>Маалымат</translation>

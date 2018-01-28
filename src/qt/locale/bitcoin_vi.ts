@@ -32,7 +32,7 @@
     <name>BanTableModel</name>
     </context>
 <context>
-    <name>ZcoinGUI</name>
+    <name>hexxcoinGUI</name>
     </context>
 <context>
     <name>CoinControlDialog</name>
@@ -156,6 +156,6 @@
     <name>WalletView</name>
     </context>
 <context>
-    <name>zcoin-core</name>
+    <name>hexxcoin-core</name>
     </context>
 </TS>

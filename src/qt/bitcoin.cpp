@@ -92,7 +92,7 @@ static void InitMessage(const std::string &message)
  */
 static std::string Translate(const char* psz)
 {
-    return QCoreApplication::translate("zcoin-core", psz).toStdString();
+    return QCoreApplication::translate("hexxcoin-core", psz).toStdString();
 }
 
 static QString GetLangTerritory()
@@ -366,9 +366,7 @@ void BitcoinApplication::createWindow(const NetworkStyle *networkStyle)
 
 void BitcoinApplication::createSplashScreen(const NetworkStyle *networkStyle)
 {
-//    SplashScreen *splash = new SplashScreen(0, networkStyle);
-//    SplashScreen splash(QPixmap(), 0);
-    SplashScreen *splash = new SplashScreen(QPixmap(), 0);
+    SplashScreen *splash = new SplashScreen(0, networkStyle);
     // We don't hold a direct pointer to the splash screen after creation, but the splash
     // screen will take care of deleting itself when slotFinish happens.
     splash->show();
@@ -628,10 +626,10 @@ int main(int argc, char *argv[])
     initTranslations(qtTranslatorBase, qtTranslator, translatorBase, translator);
 
 #ifdef ENABLE_WALLET
-    /// 7a. parse znode.conf
+    /// 7a. parse hexxnode.conf
     std::string strErr;
     if(!znodeConfig.read(strErr)) {
-        QMessageBox::critical(0, QObject::tr("Zcoin Core"),
+        QMessageBox::critical(0, QObject::tr("hexxcoin core"),
                               QObject::tr("Error reading znode configuration file: %1").arg(strErr.c_str()));
         return EXIT_FAILURE;
     }

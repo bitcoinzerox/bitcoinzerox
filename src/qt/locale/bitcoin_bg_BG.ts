@@ -76,7 +76,7 @@
     </message>
 </context>
 <context>
-    <name>ZcoinGUI</name>
+    <name>hexxcoinGUI</name>
     <message>
         <source>Sign &amp;message...</source>
         <translation>Подпиши съобщение...</translation>
@@ -260,9 +260,9 @@
     <name>WalletView</name>
     </context>
 <context>
-    <name>zcoin-core</name>
+    <name>hexxcoin-core</name>
     <message>
-        <source>Zcoin Core</source>
+        <source>hexxcoin core</source>
         <translation>Биткойн ядро</translation>
     </message>
     </context>

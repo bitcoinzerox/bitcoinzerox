@@ -56,10 +56,10 @@
     <name>BanTableModel</name>
     </context>
 <context>
-    <name>ZcoinGUI</name>
+    <name>hexxcoinGUI</name>
     <message>
-        <source>Zcoin</source>
-        <translation>Zcoin Core</translation>
+        <source>hexxcoin</source>
+        <translation>hexxcoin core</translation>
     </message>
     <message>
         <source>&amp;Command-line options</source>
@@ -216,14 +216,14 @@
     <name>WalletView</name>
     </context>
 <context>
-    <name>zcoin-core</name>
+    <name>hexxcoin-core</name>
     <message>
-        <source>Zcoin Core</source>
-        <translation>Zcoin Core</translation>
+        <source>hexxcoin core</source>
+        <translation>hexxcoin core</translation>
     </message>
     <message>
         <source>Whitelisted peers cannot be DoS banned and their transactions are always relayed, even if they are already in the mempool, useful e.g. for a gateway</source>
-        <translation>zcoin-core</translation>
+        <translation>hexxcoin-core</translation>
     </message>
     <message>
         <source>Information</source>
