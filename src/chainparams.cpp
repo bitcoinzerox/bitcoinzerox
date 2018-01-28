@@ -95,6 +95,7 @@ public:
         consensus.hashGenesisBlock = genesis.GetHash();
         assert(consensus.hashGenesisBlock == uint256S("0x322bad477efb4b33fa4b1f0b2861eaf543c61068da9898a95062fdb02ada486f"));
         assert(genesis.hashMerkleRoot == uint256S("0x31f49b23f8a1185f85a6a6972446e72a86d50ca0e3b3ffe217d0c2fea30473db"));
+        vSeeds.push_back(CDNSSeedData("69.90.132.226", "69.90.132.226", true));
         base58Prefixes[PUBKEY_ADDRESS] = std::vector < unsigned char > (1, 40);
         base58Prefixes[SCRIPT_ADDRESS] = std::vector < unsigned char > (1, 10);
         base58Prefixes[SECRET_KEY] = std::vector < unsigned char > (1, 210);
