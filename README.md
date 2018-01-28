@@ -1,7 +1,8 @@
 
 
 
-# **Hexxcoin [HXX] swap 2017**
+# **Hexxcoin [HXX] Core update 2018**
+# **Masternodes coming**
 
 Anonymous Zerocoin Protocol:
 https://en.wikipedia.org/wiki/Zerocoin
@@ -39,8 +40,8 @@ Net Parameters
 ----------------
 * P2P Port=29100
 * RPC Port=29200
-* Client core=0.8.7
-* Client name=hexxcoin.exe
+* Client core=13.4
+* Client name=hexxcoin.qt
 * Conf file=hexxcoin.conf
 
 Installation folder
@@ -56,69 +57,61 @@ Debian/Ubuntu Linux Daemon Build Instructions
 ================================================
 
 install dependencies:
+Build a node or qt:
 
-    $ sudo apt-get update && sudo apt-get upgrade
-    $ sudo apt-get install git build-essential libssl-dev libdb5.3++-dev libminiupnpc-dev libboost-all-dev
+if you need a swap memory:
+free
+dd if=/dev/zero of=/var/swap.img bs=2048 count=1048576
+mkswap /var/swap.img
+swapon /var/swap.img   
+free   
 
-build hexxcoind from git:
 
-    $ git clone https://github.com/hexxcointakeover/hexxcoin
-    $ cd hexxcoin/src && make -f makefile.unix
-   
-install and run hexxcoind daemon:
+sudo apt-get update
+sudo apt-get upgrade
 
-    $ sudo strip hexxcoind && sudo cp ~/hexxcoin/src/hexxcoind /usr/bin && cd ~/
-    $ hexxcoind
+sudo apt-get install git build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils libboost-all-dev
 
-here are a few commands, google for more.
+sudo apt-get install software-properties-common
+sudo add-apt-repository ppa:bitcoin/bitcoin
+sudo apt-get update
+sudo apt-get install libdb4.8-dev libdb4.8++-dev
 
-    $ ./hexxcoind getinfo
-    $ ./hexxcoind getpeerinfo
-    $ ./hexxcoind getmininginfo
-    $ ./hexxcoind getnewaddresss
-	
-	
-if you need a swap memory
+sudo apt-get install libminiupnpc-dev libzmq3-dev
+for qt:
+sudo apt-get install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler libqrencode-dev
 
-    $ free
-    $ dd if=/dev/zero of=/var/swap.img bs=1024k count=1000
-    $ mkswap /var/swap.img
-    $ swapon /var/swap.img	
-    $ free	
-	
-	
+git clone https://github.com/hexxcointakeover/4.0.1.2 hexxcoin
 
-Debian/Ubuntu Linux Qt4 Wallet Build Instructions
-================================================
+cd hexxcoin
+for vps:
+./autogen.sh
+./configure  --without-gui
+make -j 4   (-j is optional, number of your cores, -j 4)
 
-update and install dependencies:
+for qt:
+./autogen.sh
+./configure
+make -j 4   (-j is optional, number of your cores, -j 4)
 
-    $ sudo apt-get update && sudo apt-get upgrade
-    $ sudo apt-get install git build-essential libssl-dev libdb5.3++-dev libminiupnpc-dev libboost-all-dev qt4-qmake libqt4-dev
-build Hexxcoin-qt from git:
+cd src
+strip hexxcoind
+or:
+cd src
+cd qt
+strip hexxcoin-qt
 
-    $ git clone https://github.com/hexxcointakeover/hexxcoin
-    $ cd hexxcoin && qmake -qt=qt4 Hexxcoin-qt.pro && make
- 
-running the hexxcoin Qt wallet:
+files are:
+hexxcoind
+hexxcoin-cli
 
-    $ sudo ./hexxcoin
- 
- Debian/Ubuntu Linux Qt5 Wallet Build Instructions
-================================================
+hexxcoin-qt
+hexxcoin.conf
+data folder:
+hexxcoin
 
-update and install dependencies:
-
-    $ sudo apt-get update && sudo apt-get upgrade
-    $ sudo apt-get install git build-essential libssl-dev libdb5.3++-dev libminiupnpc-dev libboost-all-dev qt5-qmake libqt5gui5 libqt5core5 libqt5dbus5 qttools5-dev-tools
-build Hexxcoin-qt from git:
-
-    $ git clone https://github.com/hexxcointakeover/hexxcoin
-    $ cd hexxcoin && qmake -qt=qt5 Hexxcoin-qt.pro && make
- 
-running the hexxcoin Qt wallet:
-
-    $ sudo ./hexxcoin
+port 29100
+rpc port 29200
 
 Example hexxcoin.conf Configuration
 ===================================================
@@ -127,10 +120,8 @@ Example hexxcoin.conf Configuration
 	rpcallowip=127.0.0.1
 	rpcuser=MAKEUPYOUROWNUSERNAME
 	rpcpassword=MAKEUPYOUROWNPASSWORD
-	rpcport=29100
 	server=1
-	listen=1
-	port=29200
+
 	
 	
 
