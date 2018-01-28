@@ -96,7 +96,7 @@ static const int MAX_SCRIPTCHECK_THREADS = 16;
 /** -par default (number of script-checking threads, 0 = auto) */
 static const int DEFAULT_SCRIPTCHECK_THREADS = 0;
 /** Number of blocks that can be requested at any given time from a single peer. */
-static const int MAX_BLOCKS_IN_TRANSIT_PER_PEER = 4096;// for now
+static const int MAX_BLOCKS_IN_TRANSIT_PER_PEER = 512;// for now
 /** Timeout in seconds during which a peer must stall block download progress before being disconnected. */
 static const unsigned int BLOCK_STALLING_TIMEOUT = 10;
 /** Number of headers sent in one getheaders result. We rely on the assumption that if a peer sends
@@ -133,9 +133,9 @@ static const unsigned int AVG_FEEFILTER_BROADCAST_INTERVAL = 120;
 /** Maximum feefilter broadcast delay after significant change. */
 static const unsigned int MAX_FEEFILTER_CHANGE_DELAY = 60;
 /** Block download timeout base, expressed in millionths of the block interval (i.e. 10 min) */
-static const int64_t BLOCK_DOWNLOAD_TIMEOUT_BASE = 1000000;
+static const int64_t BLOCK_DOWNLOAD_TIMEOUT_BASE = 250000;
 /** Additional block download timeout per parallel downloading peer (i.e. 5 min) */
-static const int64_t BLOCK_DOWNLOAD_TIMEOUT_PER_PEER = 500000;
+static const int64_t BLOCK_DOWNLOAD_TIMEOUT_PER_PEER = 125000;
 
 static const unsigned int DEFAULT_LIMITFREERELAY = 15;
 static const bool DEFAULT_RELAYPRIORITY = true;
@@ -144,7 +144,7 @@ static const int64_t DEFAULT_MAX_TIP_AGE = 24 * 60 * 60;
 /** Default for -permitbaremultisig */
 static const bool DEFAULT_PERMIT_BAREMULTISIG = true;
 static const bool DEFAULT_CHECKPOINTS_ENABLED = true;
-static const bool DEFAULT_TXINDEX = true;
+static const bool DEFAULT_TXINDEX = false;
 static const unsigned int DEFAULT_BANSCORE_THRESHOLD = 100;
 
 static const bool DEFAULT_TESTSAFEMODE = false;
