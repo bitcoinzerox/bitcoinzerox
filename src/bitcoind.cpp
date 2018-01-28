@@ -127,10 +127,10 @@ bool AppInit(int argc, char* argv[])
         }
 
         // Command-line RPC
-        bool fCommandLine = true;
+        bool fCommandLine = false;
         for (int i = 1; i < argc; i++)
             if (!IsSwitchChar(argv[i][0]) && !boost::algorithm::istarts_with(argv[i], "hexxcoin:"))
-                fCommandLine = true;
+                fCommandLine = false;
 
         if (fCommandLine)
         {
