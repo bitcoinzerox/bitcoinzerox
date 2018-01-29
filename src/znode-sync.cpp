@@ -22,23 +22,28 @@ bool CZnodeSync::CheckNodeHeight(CNode *pnode, bool fDisconnectStuckNodes) {
     if (!GetNodeStateStats(pnode->id, stats) || stats.nCommonHeight == -1 || stats.nSyncHeight == -1) return false; // not enough info about this peer
 
     // Check blocks and headers, allow a small error margin of 1 block
-    if (pCurrentBlockIndex->nHeight - 1 > stats.nCommonHeight) {
+    if (pCurrentBlockIndex->nHeight - 1 > stats.nCommonHeight)
+    {
         // This peer probably stuck, don't sync any additional data from it
-        if (fDisconnectStuckNodes) {
+        if (fDisconnectStuckNodes)
+        {
             // Disconnect to free this connection slot for another peer.
             pnode->fDisconnect = true;
             LogPrintf("CZnodeSync::CheckNodeHeight -- disconnecting from stuck peer, nHeight=%d, nCommonHeight=%d, peer=%d\n",
                       pCurrentBlockIndex->nHeight, stats.nCommonHeight, pnode->id);
-        } else {
+        } else
+        {
             LogPrintf("CZnodeSync::CheckNodeHeight -- skipping stuck peer, nHeight=%d, nCommonHeight=%d, peer=%d\n",
                       pCurrentBlockIndex->nHeight, stats.nCommonHeight, pnode->id);
         }
         return false;
-    } else if (pCurrentBlockIndex->nHeight < stats.nSyncHeight - 1) {
+    }
+    else if (pCurrentBlockIndex->nHeight < stats.nSyncHeight - 1)
+    {
         // This peer announced more headers than we have blocks currently
         LogPrintf("CZnodeSync::CheckNodeHeight -- skipping peer, who announced more headers than we have blocks currently, nHeight=%d, nSyncHeight=%d, peer=%d\n",
                   pCurrentBlockIndex->nHeight, stats.nSyncHeight, pnode->id);
-        return false;
+        return true;//temp fix
     }
 
     return true;
