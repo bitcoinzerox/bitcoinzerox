@@ -9,19 +9,19 @@
  * network protocol versioning
  */
 
-static const int PROTOCOL_VERSION = 99012;
+static const int PROTOCOL_VERSION = 99013;
 
 //! initial proto version, to be increased after version/verack negotiation
 static const int INIT_PROTO_VERSION = 99008;
 
 //! In this version, 'getheaders' was introduced.
-static const int GETHEADERS_VERSION = 99012;
+static const int GETHEADERS_VERSION = 99013;
 
 //! disconnect from peers older than this proto version
 static const int MIN_PEER_PROTO_VERSION = 99008;
 
 //! disconnect from all older peers after Znode payment HF
-static const int MIN_PEER_PROTO_VERSION_AFTER_ZNODE_PAYMENT_HF = 99013;
+static const int MIN_PEER_PROTO_VERSION_AFTER_ZNODE_PAYMENT_HF = 99014;
 
 //! nTime field added to CAddress, starting with this version;
 //! if possible, avoid requesting addres99011ses nodes older than this
@@ -34,16 +34,16 @@ static const int BIP0031_VERSION = 99008;
 static const int MEMPOOL_GD_VERSION = 99008;
 
 //! "filter*" commands are disabled without NODE_BLOOM after and including this version
-static const int NO_BLOOM_VERSION = 99012;
+static const int NO_BLOOM_VERSION = 99013;
 
 //! "sendheaders" command and announcing blocks with headers starts with this version
-static const int SENDHEADERS_VERSION = 99012;
+static const int SENDHEADERS_VERSION = 99013;
 
 //! "feefilter" tells peers to filter invs to you by fee starts with this version
-static const int FEEFILTER_VERSION = 99012;
+static const int FEEFILTER_VERSION = 99013;
 
 //! shord-id-based block download starts with this version
-static const int SHORT_IDS_BLOCKS_VERSION = 99012;
+static const int SHORT_IDS_BLOCKS_VERSION = 99013;
 
 //! not banning for invalid compact blocks starts with this version
 static const int INVALID_CB_NO_BAN_VERSION = 99008;
