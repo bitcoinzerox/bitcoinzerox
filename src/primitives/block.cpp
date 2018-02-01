@@ -20,7 +20,6 @@
 #include <fstream>
 #include <algorithm>
 #include <string>
-#include "precomputed_hash.h"
 
 uint256 CBlockHeader::GetHash() const
 {
