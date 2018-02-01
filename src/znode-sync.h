@@ -13,9 +13,9 @@ class CZnodeSync;
 
 static const int ZNODE_SYNC_FAILED          = -1;
 static const int ZNODE_SYNC_INITIAL         = 0;
-static const int ZNODE_SYNC_SPORKS          = 0;
-static const int ZNODE_SYNC_LIST            = 0;
-static const int ZNODE_SYNC_MNW             = 0;
+static const int ZNODE_SYNC_SPORKS          = 1;
+static const int ZNODE_SYNC_LIST            = 1;
+static const int ZNODE_SYNC_MNW             = 1;
 static const int ZNODE_SYNC_FINISHED        = 999;
 
 static const int ZNODE_SYNC_TICK_SECONDS    = 6;
