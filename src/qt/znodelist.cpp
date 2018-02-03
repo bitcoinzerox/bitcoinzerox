@@ -84,7 +84,7 @@ void ZnodeList::setClientModel(ClientModel *model)
     this->clientModel = model;
     if(model) {
         // try to update list when znode count changes
-        connect(clientModel, SIGNAL(strZnodesChanged(QString)), this, SLOT(updateNodeList()));
+        connect(clientModel, SIGNAL(strznodesChanged(QString)), this, SLOT(updateNodeList()));
     }
 }
 

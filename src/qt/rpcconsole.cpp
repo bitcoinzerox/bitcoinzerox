@@ -361,6 +361,9 @@ void RPCConsole::setClientModel(ClientModel *model)
 
         setNumBlocks(model->getNumBlocks(), model->getLastBlockDate(), model->getVerificationProgress(NULL), false);
         connect(model, SIGNAL(numBlocksChanged(int,QDateTime,double,bool)), this, SLOT(setNumBlocks(int,QDateTime,double,bool)));
+        
+        setznodeCount(model->getznodeCountString());
+        connect(model, SIGNAL(strznodesChanged(QString)), this, SLOT(setznodeCount(QString)));
 
         updateTrafficStats(model->getTotalBytesRecv(), model->getTotalBytesSent());
         connect(model, SIGNAL(bytesChanged(quint64,quint64)), this, SLOT(updateTrafficStats(quint64, quint64)));
@@ -604,6 +607,11 @@ void RPCConsole::setNumBlocks(int count, const QDateTime& blockDate, double nVer
     }
 }
 
+void RPCConsole::setznodeCount(const QString &strznodes)
+{
+    ui->znodeCount->setText(strznodes);
+}
+
 void RPCConsole::setMempoolSize(long numberOfTxs, size_t dynUsage)
 {
     ui->mempoolNumberTxs->setText(QString::number(numberOfTxs));
@@ -665,7 +673,6 @@ void RPCConsole::startExecutor()
     connect(this, SIGNAL(stopExecutor()), &thread, SLOT(quit()));
     // - queue executor for deletion (in execution thread)
     connect(&thread, SIGNAL(finished()), executor, SLOT(deleteLater()), Qt::DirectConnection);
-    connect(&thread, SIGNAL(finished()), this, SLOT(test()), Qt::DirectConnection);
 
     // Default implementation of QThread::run() simply spins up an event loop in the thread,
     // which is what we want.

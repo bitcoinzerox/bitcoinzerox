@@ -50,6 +50,7 @@ public:
 
     //! Return number of connections, default is in- and outbound (total)
     int getNumConnections(unsigned int flags = CONNECTIONS_ALL) const;
+    QString getznodeCountString() const;
     int getNumBlocks() const;
 
     //! Return number of transactions in the mempool
@@ -79,15 +80,18 @@ public:
 private:
     OptionsModel *optionsModel;
     PeerTableModel *peerTableModel;
+    QString cachedznodeCountString;
     BanTableModel *banTableModel;
 
     QTimer *pollTimer;
+    QTimer *pollMnTimer;
 
     void subscribeToCoreSignals();
     void unsubscribeFromCoreSignals();
 
 Q_SIGNALS:
     void numConnectionsChanged(int count);
+    void strznodesChanged(const QString &strznodes);
     void numBlocksChanged(int count, const QDateTime& blockDate, double nVerificationProgress, bool header);
     void mempoolSizeChanged(long count, size_t mempoolSizeInBytes);
     void alertsChanged(const QString &warnings);
@@ -102,6 +106,7 @@ Q_SIGNALS:
 
 public Q_SLOTS:
     void updateTimer();
+    void updateMnTimer();
     void updateNumConnections(int numConnections);
     void updateAlert();
     void updateBanlist();
