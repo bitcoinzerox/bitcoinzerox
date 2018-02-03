@@ -207,7 +207,7 @@
          </property>
         </widget>
        </item>
-       <item row="8" column="1" colspan="2">
+       <item row="9" column="1" colspan="2">
         <widget class="QLabel" name="numberOfConnections">
          <property name="cursor">
           <cursorShape>IBeamCursor</cursorShape>
@@ -223,7 +223,21 @@
          </property>
         </widget>
        </item>
-       <item row="9" column="0">
+       <item row="10" column="0">
+        <widget class="QLabel" name="znodeCountLabel">
+         <property name="text">
+          <string>Number of hexxnodes</string>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="1">
+        <widget class="QLabel" name="znodeCount">
+         <property name="text">
+          <string>N/A</string>
+         </property>
+        </widget>
+       </item>
+       <item row="11" column="0">
         <widget class="QLabel" name="label_10">
          <property name="font">
           <font>
