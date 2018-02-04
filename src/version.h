@@ -9,7 +9,7 @@
  * network protocol versioning
  */
 
-static const int PROTOCOL_VERSION = 99013;
+static const int PROTOCOL_VERSION = 99014;
 
 //! initial proto version, to be increased after version/verack negotiation
 static const int INIT_PROTO_VERSION = 99008;
@@ -21,7 +21,7 @@ static const int GETHEADERS_VERSION = 99013;
 static const int MIN_PEER_PROTO_VERSION = 99008;
 
 //! disconnect from all older peers after Znode payment HF
-static const int MIN_PEER_PROTO_VERSION_AFTER_ZNODE_PAYMENT_HF = 99014;
+static const int MIN_PEER_PROTO_VERSION_AFTER_ZNODE_PAYMENT_HF = 99015;
 
 //! nTime field added to CAddress, starting with this version;
 //! if possible, avoid requesting addres99011ses nodes older than this
