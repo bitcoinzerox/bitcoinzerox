@@ -68,13 +68,13 @@ public:
 
         // Deployment of BIP68, BIP112, and BIP113.
         consensus.vDeployments[Consensus::DEPLOYMENT_CSV].bit = 0;
-        consensus.vDeployments[Consensus::DEPLOYMENT_CSV].nStartTime = 1517740570; // active
-        consensus.vDeployments[Consensus::DEPLOYMENT_CSV].nTimeout = 1580812569; // May 1st, 2017
+        consensus.vDeployments[Consensus::DEPLOYMENT_CSV].nStartTime = 1517744282; // active
+        consensus.vDeployments[Consensus::DEPLOYMENT_CSV].nTimeout = 1580816281; // 
 
         // Deployment of SegWit (BIP141, BIP143, and BIP147)
         consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].bit = 1;
-        consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nStartTime = 1517740570; // active
-        consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nTimeout = 1580812569; // November 15th, 2017.
+        consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nStartTime = 1517744282; // active
+        consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nTimeout = 1580816281; // 
 
         // znode params
         strSporkPubKey = "04ffde6668d0dff8ba92c67b1f751568e11608f23c8c0437eccd5a6ec713ae3638238478b816783593d552bc8b6a57147dd67596eb372b0cadc743d3835c43e9e3";
@@ -149,6 +149,11 @@ public:
         strNetworkID = "regtest";
     }
 
+    void UpdateBIP9Parameters(Consensus::DeploymentPos d, int64_t nStartTime, int64_t nTimeout)
+	{
+        consensus.vDeployments[d].nStartTime = nStartTime;
+        consensus.vDeployments[d].nTimeout = nTimeout;
+    }
 };
 
 static CRegTestParams regTestParams;
@@ -174,4 +179,8 @@ CChainParams &Params(const std::string &chain) {
 void SelectParams(const std::string &network) {
     SelectBaseParams(network);
     pCurrentParams = &Params(network);
+}
+
+void UpdateRegtestBIP9Parameters(Consensus::DeploymentPos d, int64_t nStartTime, int64_t nTimeout) {
+    regTestParams.UpdateBIP9Parameters(d, nStartTime, nTimeout);
 }
