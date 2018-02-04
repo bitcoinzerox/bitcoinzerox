@@ -77,8 +77,8 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nTimeout = 1580812569; // November 15th, 2017.
 
         // znode params
-        strSporkPubKey = "04549ac134f694c0243f503e8c8a9a986f5de6610049c40b07816809b0d1d06a21b07be27b9bb555931773f62ba6cf35a25fd52f694d4e1106ccd237a7bb899fdd";
-        strZnodePaymentsPubKey = "04549ac134f694c0243f503e8c8a9a986f5de6610049c40b07816809b0d1d06a21b07be27b9bb555931773f62ba6cf35a25fd52f694d4e1106ccd237a7bb899fdd";
+        strSporkPubKey = "04ffde6668d0dff8ba92c67b1f751568e11608f23c8c0437eccd5a6ec713ae3638238478b816783593d552bc8b6a57147dd67596eb372b0cadc743d3835c43e9e3";
+        strZnodePaymentsPubKey = "04ffde6668d0dff8ba92c67b1f751568e11608f23c8c0437eccd5a6ec713ae3638238478b816783593d552bc8b6a57147dd67596eb372b0cadc743d3835c43e9e3";
 
 		pchMessageStart[0] = { 'h' };
 		pchMessageStart[1] = { 'e' };
