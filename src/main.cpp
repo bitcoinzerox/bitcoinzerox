@@ -2295,17 +2295,17 @@ CAmount GetBlockSubsidy(int nHeight, const Consensus::Params &consensusParams)
                 nSubsidy = 6.25 * COIN;
 
             if (halvings >= 4)// Force block reward to 1 coin when right shift is undefined.
-                return 1 * COIN + nFees; // final reward
+                return 1 * COIN; // final reward
 
             nSubsidy >>= halvings;
-            return nSubsidy + nFees;
+            return nSubsidy;
         }
 
     else if ((nHeight >= (HF_ALLOW_ZERO)) && (nHeight < (HF_F_PAYMENT_STOP)))
-            return 3 * COIN + nFees;  // reward after masternode fork. 576 blocks 1 extra coin for miners.
+            return 3 * COIN;  // reward after masternode fork. 576 blocks 1 extra coin for miners.
 
     else
-        return 2 * COIN + nFees; // reward after fee payment stop
+        return 2 * COIN; // reward after fee payment stop
 }
 
 bool IsInitialBlockDownload() {
