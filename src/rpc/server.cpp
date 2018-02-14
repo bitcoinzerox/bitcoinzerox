@@ -272,10 +272,10 @@ static const CRPCCommand vRPCCommands[] =
     { "control",            "help",                   &help,                   true  },
     { "control",            "stop",                   &stop,                   true  },
         /* Dash features */
-    { "hexxcoin",               "znode",             &znode,             true  },
-    { "hexxcoin",               "znsync",             &znsync,             true  },
-    { "hexxcoin",               "znodelist",         &znodelist,         true  },
-    { "hexxcoin",               "znodebroadcast",    &znodebroadcast,    true  },
+    { "hexxcoin",               "xnode",             &xnode,             true  },
+    { "hexxcoin",               "xnsync",           &xnsync,             true  },
+    { "hexxcoin",               "xnodelist",         &xnodelist,         true  },
+    { "hexxcoin",               "xnodebroadcast",    &xnodebroadcast,    true  },
     { "hexxcoin",               "getpoolinfo",            &getpoolinfo,            true  },
 };
 

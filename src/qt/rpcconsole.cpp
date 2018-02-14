@@ -362,8 +362,8 @@ void RPCConsole::setClientModel(ClientModel *model)
         setNumBlocks(model->getNumBlocks(), model->getLastBlockDate(), model->getVerificationProgress(NULL), false);
         connect(model, SIGNAL(numBlocksChanged(int,QDateTime,double,bool)), this, SLOT(setNumBlocks(int,QDateTime,double,bool)));
         
-        setznodeCount(model->getznodeCountString());
-        connect(model, SIGNAL(strznodesChanged(QString)), this, SLOT(setznodeCount(QString)));
+        setxnodeCount(model->getxnodeCountString());
+        connect(model, SIGNAL(strxnodesChanged(QString)), this, SLOT(setxnodeCount(QString)));
 
         updateTrafficStats(model->getTotalBytesRecv(), model->getTotalBytesSent());
         connect(model, SIGNAL(bytesChanged(quint64,quint64)), this, SLOT(updateTrafficStats(quint64, quint64)));
@@ -607,9 +607,9 @@ void RPCConsole::setNumBlocks(int count, const QDateTime& blockDate, double nVer
     }
 }
 
-void RPCConsole::setznodeCount(const QString &strznodes)
+void RPCConsole::setxnodeCount(const QString &strxnodes)
 {
-    ui->znodeCount->setText(strznodes);
+    ui->xnodeCount->setText(strxnodes);
 }
 
 void RPCConsole::setMempoolSize(long numberOfTxs, size_t dynUsage)

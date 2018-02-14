@@ -17,8 +17,8 @@
 #include "ui_interface.h"
 #include "util.h"
 #include "darksend.h"
-#include "znodeman.h"
-#include "znode-sync.h"
+#include "xnodeman.h"
+#include "xnode-sync.h"
 #include <stdint.h>
 
 #include <QDebug>
@@ -34,7 +34,7 @@ ClientModel::ClientModel(OptionsModel *optionsModel, QObject *parent) :
     QObject(parent),
     optionsModel(optionsModel),
     peerTableModel(0),
-    cachedznodeCountString(""),
+    cachedxnodeCountString(""),
     banTableModel(0),
     pollTimer(0)
 {
@@ -71,7 +71,7 @@ int ClientModel::getNumConnections(unsigned int flags) const
     return nNum;
 }
 
-QString ClientModel::getznodeCountString() const
+QString ClientModel::getxnodeCountString() const
 {
     // return tr("Total: %1 (PS compatible: %2 / Enabled: %3) (IPv4: %4, IPv6: %5, TOR: %6)").arg(QString::number((int)mnodeman.size()))
     return tr("Total: %1 (PS compatible: %2 / Enabled: %3)")
@@ -140,13 +140,13 @@ void ClientModel::updateTimer()
 
 void ClientModel::updateMnTimer()
 {
-    QString newznodeCountString = getznodeCountString();
+    QString newxnodeCountString = getxnodeCountString();
 
-    if (cachedznodeCountString != newznodeCountString)
+    if (cachedxnodeCountString != newxnodeCountString)
     {
-        cachedznodeCountString = newznodeCountString;
+        cachedxnodeCountString = newxnodeCountString;
 
-        Q_EMIT strznodesChanged(cachedznodeCountString);
+        Q_EMIT strxnodesChanged(cachedxnodeCountString);
     }
 }
 

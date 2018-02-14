@@ -88,7 +88,7 @@ public Q_SLOTS:
     /** Set number of connections shown in the UI */
     void setNumConnections(int count);
     /** Set number of masternodes shown in the UI */
-    void setznodeCount(const QString &strznodes);
+    void setxnodeCount(const QString &strxnodes);
     /** Set number of blocks and last block date shown in the UI */
     void setNumBlocks(int count, const QDateTime& blockDate, double nVerificationProgress, bool headers);
     /** Set size (number of transactions and memory usage) of the mempool in the UI */

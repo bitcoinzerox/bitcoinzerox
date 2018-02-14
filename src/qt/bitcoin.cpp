@@ -19,7 +19,7 @@
 #include "splashscreen.h"
 #include "utilitydialog.h"
 #include "winshutdownmonitor.h"
-#include "znodeconfig.h"
+#include "xnodeconfig.h"
 
 #ifdef ENABLE_WALLET
 #include "paymentserver.h"
@@ -626,11 +626,11 @@ int main(int argc, char *argv[])
     initTranslations(qtTranslatorBase, qtTranslator, translatorBase, translator);
 
 #ifdef ENABLE_WALLET
-    /// 7a. parse hexxnode.conf
+    /// 7a. parse xnode.conf
     std::string strErr;
-    if(!znodeConfig.read(strErr)) {
+    if(!xnodeConfig.read(strErr)) {
         QMessageBox::critical(0, QObject::tr("hexxcoin core"),
-                              QObject::tr("Error reading znode configuration file: %1").arg(strErr.c_str()));
+                              QObject::tr("Error reading xnode configuration file: %1").arg(strErr.c_str()));
         return EXIT_FAILURE;
     }
 

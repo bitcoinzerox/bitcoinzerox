@@ -112,7 +112,7 @@ private:
     QAction *openAction;
     QAction *showHelpMessageAction;
     QAction *zerocoinAction;
-    QAction *znodeAction;
+    QAction *xnodeAction;
     QAction *zerocoinMenuAction;
 
     QSystemTrayIcon *trayIcon;
@@ -186,8 +186,8 @@ private Q_SLOTS:
     void gotoOverviewPage();
     /** Switch to history (transactions) page */
     void gotoHistoryPage();
-    /** Switch to znode page */
-    void gotoZnodePage();
+    /** Switch to xnode page */
+    void gotoXnodePage();
     /** Switch to receive coins page */
     void gotoReceiveCoinsPage();
     /** Switch to send coins page */

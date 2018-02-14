@@ -63,12 +63,12 @@
 #include <boost/interprocess/sync/file_lock.hpp>
 #include <boost/thread.hpp>
 #include <openssl/crypto.h>
-#include "activeznode.h"
+#include "activexnode.h"
 #include "darksend.h"
-#include "znode-payments.h"
-#include "znode-sync.h"
-#include "znodeman.h"
-#include "znodeconfig.h"
+#include "xnode-payments.h"
+#include "xnode-sync.h"
+#include "xnodeman.h"
+#include "xnodeconfig.h"
 #include "netfulfilledman.h"
 #include "flat-database.h"
 #include "instantx.h"
@@ -217,9 +217,9 @@ void Shutdown() {
     StopNode();
 
     // STORE DATA CACHES INTO SERIALIZED DAT FILES
-    CFlatDB<CZnodeMan> flatdb1("zncache.dat", "magicZnodeCache");
+    CFlatDB<CXnodeMan> flatdb1("xncache.dat", "magicXnodeCache");
     flatdb1.Dump(mnodeman);
-    CFlatDB<CZnodePayments> flatdb2("znpayments.dat", "magicZnodePaymentsCache");
+    CFlatDB<CXnodePayments> flatdb2("xnpayments.dat", "magicXnodePaymentsCache");
     flatdb2.Dump(mnpayments);
     CFlatDB<CNetFulfilledRequestManager> flatdb4("netfulfilled.dat", "magicFulfilledCache");
     flatdb4.Dump(netfulfilledman);
@@ -1667,46 +1667,46 @@ bool AppInit2(boost::thread_group &threadGroup, CScheduler &scheduler) {
                      chainparams);
 
     // ********************************************************* Step 11a: setup PrivateSend
-    fZNode = GetBoolArg("-znode", false);
+    fXNode = GetBoolArg("-xnode", false);
 
-    LogPrintf("fZNode = %s\n", fZNode);
-    LogPrintf("znodeConfig.getCount(): %s\n", znodeConfig.getCount());
+    LogPrintf("fXNode = %s\n", fXNode);
+    LogPrintf("xnodeConfig.getCount(): %s\n", xnodeConfig.getCount());
 
-    if ((fZNode || znodeConfig.getCount() > 0) && !fTxIndex) {
-        return InitError("Enabling Znode support requires turning on transaction indexing."
+    if ((fXNode || xnodeConfig.getCount() > 0) && !fTxIndex) {
+        return InitError("Enabling Xnode support requires turning on transaction indexing."
                                  "Please add txindex=1 to your configuration and start with -reindex");
     }
 
-    if (fZNode) {
-        LogPrintf("ZNODE:\n");
+    if (fXNode) {
+        LogPrintf("XNODE:\n");
 
-        if (!GetArg("-znodeaddr", "").empty()) {
-            // Hot Znode (either local or remote) should get its address in
-            // CActiveZnode::ManageState() automatically and no longer relies on Znodeaddr.
-            return InitError(_("znodeaddr option is deprecated. Please use hexxnode.conf to manage your remote znodes."));
+        if (!GetArg("-xnodeaddr", "").empty()) {
+            // Hot Xnode (either local or remote) should get its address in
+            // CActiveXnode::ManageState() automatically and no longer relies on Xnodeaddr.
+            return InitError(_("xnodeaddr option is deprecated. Please use xnode.conf to manage your remote xnodes."));
         }
 
-        std::string strZnodePrivKey = GetArg("-znodeprivkey", "");
-        if (!strZnodePrivKey.empty()) {
-            if (!darkSendSigner.GetKeysFromSecret(strZnodePrivKey, activeZnode.keyZnode,
-                                                  activeZnode.pubKeyZnode))
-                return InitError(_("Invalid znodeprivkey. Please see documenation."));
+        std::string strXnodePrivKey = GetArg("-xnodeprivkey", "");
+        if (!strXnodePrivKey.empty()) {
+            if (!darkSendSigner.GetKeysFromSecret(strXnodePrivKey, activeXnode.keyXnode,
+                                                  activeXnode.pubKeyXnode))
+                return InitError(_("Invalid xnodeprivkey. Please see documenation."));
 
-            LogPrintf("  pubKeyZnode: %s\n", CBitcoinAddress(activeZnode.pubKeyZnode.GetID()).ToString());
+            LogPrintf("  pubKeyXnode: %s\n", CBitcoinAddress(activeXnode.pubKeyXnode.GetID()).ToString());
         } else {
             return InitError(
-                    _("You must specify a znodeprivkey in the configuration. Please see documentation for help."));
+                    _("You must specify a xnodeprivkey in the configuration. Please see documentation for help."));
         }
     }
 
-    LogPrintf("Using Znode config file %s\n", GetZnodeConfigFile().string());
+    LogPrintf("Using Xnode config file %s\n", GetXnodeConfigFile().string());
 
-    if (GetBoolArg("-znconflock", true) && pwalletMain && (znodeConfig.getCount() > 0)) {
+    if (GetBoolArg("-xnconflock", true) && pwalletMain && (xnodeConfig.getCount() > 0)) {
         LOCK(pwalletMain->cs_wallet);
-        LogPrintf("Locking Znodes:\n");
+        LogPrintf("Locking Xnodes:\n");
         uint256 mnTxHash;
         int outputIndex;
-        BOOST_FOREACH(CZnodeConfig::CZnodeEntry mne, znodeConfig.getEntries()) {
+        BOOST_FOREACH(CXnodeConfig::CXnodeEntry mne, xnodeConfig.getEntries()) {
             mnTxHash.SetHex(mne.getTxHash());
             outputIndex = boost::lexical_cast<unsigned int>(mne.getOutputIndex());
             COutPoint outpoint = COutPoint(mnTxHash, outputIndex);
@@ -1736,10 +1736,10 @@ bool AppInit2(boost::thread_group &threadGroup, CScheduler &scheduler) {
     nInstantSendDepth = GetArg("-instantsenddepth", DEFAULT_INSTANTSEND_DEPTH);
     nInstantSendDepth = std::min(std::max(nInstantSendDepth, 0), 60);
 
-    //lite mode disables all Znode and Darksend related functionality
+    //lite mode disables all Xnode and Darksend related functionality
     fLiteMode = GetBoolArg("-litemode", false);
-    if (fZNode && fLiteMode) {
-        return InitError("You can not start a znode in litemode");
+    if (fXNode && fLiteMode) {
+        return InitError("You can not start a xnode in litemode");
     }
 
     LogPrintf("fLiteMode %d\n", fLiteMode);
@@ -1753,20 +1753,20 @@ bool AppInit2(boost::thread_group &threadGroup, CScheduler &scheduler) {
 
     // LOAD SERIALIZED DAT FILES INTO DATA CACHES FOR INTERNAL USE
 
-    uiInterface.InitMessage(_("Loading znode cache..."));
-    CFlatDB<CZnodeMan> flatdb1("zncache.dat", "magicZnodeCache");
+    uiInterface.InitMessage(_("Loading xnode cache..."));
+    CFlatDB<CXnodeMan> flatdb1("xncache.dat", "magicXnodeCache");
     if (!flatdb1.Load(mnodeman)) {
-        return InitError("Failed to load znode cache from zncache.dat");
+        return InitError("Failed to load xnode cache from xncache.dat");
     }
 
     if (mnodeman.size()) {
-        uiInterface.InitMessage(_("Loading Znode payment cache..."));
-        CFlatDB<CZnodePayments> flatdb2("znpayments.dat", "magicZnodePaymentsCache");
+        uiInterface.InitMessage(_("Loading Xnode payment cache..."));
+        CFlatDB<CXnodePayments> flatdb2("xnpayments.dat", "magicXnodePaymentsCache");
         if (!flatdb2.Load(mnpayments)) {
-            return InitError("Failed to load znode payments cache from znpayments.dat");
+            return InitError("Failed to load xnode payments cache from xnpayments.dat");
         }
     } else {
-        uiInterface.InitMessage(_("Znode cache is empty, skipping payments and governance cache..."));
+        uiInterface.InitMessage(_("Xnode cache is empty, skipping payments and governance cache..."));
     }
 
     uiInterface.InitMessage(_("Loading fulfilled requests cache..."));
@@ -1783,7 +1783,7 @@ bool AppInit2(boost::thread_group &threadGroup, CScheduler &scheduler) {
     mnodeman.UpdatedBlockTip(chainActive.Tip());
     darkSendPool.UpdatedBlockTip(chainActive.Tip());
     mnpayments.UpdatedBlockTip(chainActive.Tip());
-    znodeSync.UpdatedBlockTip(chainActive.Tip());
+    xnodeSync.UpdatedBlockTip(chainActive.Tip());
 //    governance.UpdatedBlockTip(chainActive.Tip());
 
     // ********************************************************* Step 11d: start dash-privatesend thread

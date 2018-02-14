@@ -14,7 +14,7 @@
 #include "util.h"
 #include "utilstrencodings.h"
 #ifdef ENABLE_WALLET
-#include "znode-sync.h"
+#include "xnode-sync.h"
 #include "wallet/wallet.h"
 #include "wallet/walletdb.h"
 #endif
@@ -279,11 +279,11 @@ CScript _createmultisig_redeemScript(const UniValue& params)
     return result;
 }
 
-UniValue znsync(const UniValue& params, bool fHelp)
+UniValue xnsync(const UniValue& params, bool fHelp)
 {
     if (fHelp || params.size() != 1)
         throw runtime_error(
-                "znsync [status|next|reset]\n"
+                "xnsync [status|next|reset]\n"
                         "Returns the sync status, updates to the next step or resets it entirely.\n"
         );
 
@@ -291,26 +291,26 @@ UniValue znsync(const UniValue& params, bool fHelp)
 
     if(strMode == "status") {
         UniValue objStatus(UniValue::VOBJ);
-        objStatus.push_back(Pair("AssetID", znodeSync.GetAssetID()));
-        objStatus.push_back(Pair("AssetName", znodeSync.GetAssetName()));
-        objStatus.push_back(Pair("Attempt", znodeSync.GetAttempt()));
-        objStatus.push_back(Pair("IsBlockchainSynced", znodeSync.IsBlockchainSynced()));
-        objStatus.push_back(Pair("IsZnodeListSynced", znodeSync.IsZnodeListSynced()));
-        objStatus.push_back(Pair("IsWinnersListSynced", znodeSync.IsWinnersListSynced()));
-        objStatus.push_back(Pair("IsSynced", znodeSync.IsSynced()));
-        objStatus.push_back(Pair("IsFailed", znodeSync.IsFailed()));
+        objStatus.push_back(Pair("AssetID", xnodeSync.GetAssetID()));
+        objStatus.push_back(Pair("AssetName", xnodeSync.GetAssetName()));
+        objStatus.push_back(Pair("Attempt", xnodeSync.GetAttempt()));
+        objStatus.push_back(Pair("IsBlockchainSynced", xnodeSync.IsBlockchainSynced()));
+        objStatus.push_back(Pair("IsXnodeListSynced", xnodeSync.IsXnodeListSynced()));
+        objStatus.push_back(Pair("IsWinnersListSynced", xnodeSync.IsWinnersListSynced()));
+        objStatus.push_back(Pair("IsSynced", xnodeSync.IsSynced()));
+        objStatus.push_back(Pair("IsFailed", xnodeSync.IsFailed()));
         return objStatus;
     }
 
     if(strMode == "next")
     {
-        znodeSync.SwitchToNextAsset();
-        return "sync updated to " + znodeSync.GetAssetName();
+        xnodeSync.SwitchToNextAsset();
+        return "sync updated to " + xnodeSync.GetAssetName();
     }
 
     if(strMode == "reset")
     {
-        znodeSync.Reset();
+        xnodeSync.Reset();
         return "success";
     }
     return "failure";

@@ -57,7 +57,7 @@ struct Params {
     int64_t nPowTargetSpacing;
     int64_t nPowTargetTimespan;
     int nInstantSendKeepLock; // in blocks
-    int nZnodeMinimumConfirmations;
+    int nXnodeMinimumConfirmations;
     int64_t DifficultyAdjustmentInterval() const { return nPowTargetTimespan / nPowTargetSpacing; }
 };
 }

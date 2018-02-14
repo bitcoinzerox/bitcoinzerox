@@ -76,9 +76,9 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nStartTime = 1517744282; // active
         consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nTimeout = 1580816281; // 
 
-        // znode params
+        // xnode params
         strSporkPubKey = "04ffde6668d0dff8ba92c67b1f751568e11608f23c8c0437eccd5a6ec713ae3638238478b816783593d552bc8b6a57147dd67596eb372b0cadc743d3835c43e9e3";
-        strZnodePaymentsPubKey = "04ffde6668d0dff8ba92c67b1f751568e11608f23c8c0437eccd5a6ec713ae3638238478b816783593d552bc8b6a57147dd67596eb372b0cadc743d3835c43e9e3";
+        strXnodePaymentsPubKey = "04ffde6668d0dff8ba92c67b1f751568e11608f23c8c0437eccd5a6ec713ae3638238478b816783593d552bc8b6a57147dd67596eb372b0cadc743d3835c43e9e3";
 
 		pchMessageStart[0] = { 'h' };
 		pchMessageStart[1] = { 'e' };

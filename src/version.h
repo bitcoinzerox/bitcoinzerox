@@ -20,8 +20,8 @@ static const int GETHEADERS_VERSION = 99013;
 //! disconnect from peers older than this proto version
 static const int MIN_PEER_PROTO_VERSION = 99008;
 
-//! disconnect from all older peers after Znode payment HF
-static const int MIN_PEER_PROTO_VERSION_AFTER_ZNODE_PAYMENT_HF = 99015;
+//! disconnect from all older peers after Xnode payment HF
+static const int MIN_PEER_PROTO_VERSION_AFTER_XNODE_PAYMENT_HF = 99015;
 
 //! nTime field added to CAddress, starting with this version;
 //! if possible, avoid requesting addres99011ses nodes older than this

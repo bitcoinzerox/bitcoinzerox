@@ -17,7 +17,7 @@
 #include "httpserver.h"
 #include "httprpc.h"
 #include "utilstrencodings.h"
-#include "znodeconfig.h"
+#include "xnodeconfig.h"
 
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/filesystem.hpp>
@@ -119,10 +119,10 @@ bool AppInit(int argc, char* argv[])
             return false;
         }
 
-        // parse hexxnode.conf
+        // parse xnode.conf
         std::string strErr;
-        if(!znodeConfig.read(strErr)) {
-            fprintf(stderr,"Error reading znode configuration file: %s\n", strErr.c_str());
+        if(!xnodeConfig.read(strErr)) {
+            fprintf(stderr,"Error reading xnode configuration file: %s\n", strErr.c_str());
             return false;
         }
 

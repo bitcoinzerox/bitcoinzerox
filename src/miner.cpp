@@ -30,8 +30,8 @@
 #include "crypto/scrypt.h"
 #include "crypto/Lyra2Z/Lyra2Z.h"
 #include "crypto/Lyra2Z/Lyra2.h"
-#include "znode-payments.h"
-#include "znode-sync.h"
+#include "xnode-payments.h"
+#include "xnode-sync.h"
 #include <algorithm>
 #include <boost/thread.hpp>
 #include <boost/tuple/tuple.hpp>
@@ -149,7 +149,7 @@ CBlockTemplate* BlockAssembler::CreateNewBlock(const CScript& scriptPubKeyIn)
     const int nHeight = pindexPrev->nHeight + 1;
 
     // To founders and investors
-    if ((nHeight + 1 > HF_ZNODE_PAYMENT_START) && (nHeight + 1 < (HF_F_PAYMENT_STOP)))
+    if ((nHeight + 1 > HF_XNODE_PAYMENT_START) && (nHeight + 1 < (HF_F_PAYMENT_STOP)))
 	{
         CScript FOUNDER_1_SCRIPT;
         CScript FOUNDER_2_SCRIPT;
@@ -447,12 +447,12 @@ CBlockTemplate* BlockAssembler::CreateNewBlock(const CScript& scriptPubKeyIn)
             }
         }
         CAmount blockReward = nFees + GetBlockSubsidy(nHeight, chainparams.GetConsensus());
-        // Update coinbase transaction with additional info about znode and governance payments,
+        // Update coinbase transaction with additional info about xnode and governance payments,
         // get some info back to pass to getblocktemplate
-        if (nHeight >= HF_ZNODE_PAYMENT_START) {
-            CAmount znodePayment = GetZnodePayment(nHeight, blockReward);
-            coinbaseTx.vout[0].nValue -= znodePayment;
-            FillBlockPayments(coinbaseTx, nHeight, znodePayment, pblock->txoutZnode, pblock->voutSuperblock);
+        if (nHeight >= HF_XNODE_PAYMENT_START) {
+            CAmount xnodePayment = GetXnodePayment(nHeight, blockReward);
+            coinbaseTx.vout[0].nValue -= xnodePayment;
+            FillBlockPayments(coinbaseTx, nHeight, xnodePayment, pblock->txoutXnode, pblock->voutSuperblock);
         }
 
         nLastBlockTx = nBlockTx;

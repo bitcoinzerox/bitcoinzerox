@@ -99,8 +99,8 @@ namespace boost {
 
 using namespace std;
 
-// znode fZnode
-bool fZNode = false;
+// xnode fXnode
+bool fXNode = false;
 bool fLiteMode = false;
 int nWalletBackups = 10;
 
@@ -563,9 +563,9 @@ boost::filesystem::path GetConfigFile()
     return pathConfigFile;
 }
 
-boost::filesystem::path GetZnodeConfigFile()
+boost::filesystem::path GetXnodeConfigFile()
 {
-    boost::filesystem::path pathConfigFile(GetArg("-znconf", "hexxnode.conf"));
+    boost::filesystem::path pathConfigFile(GetArg("-xnconf", "xnode.conf"));
     if (!pathConfigFile.is_complete()) pathConfigFile = GetDataDir() / pathConfigFile;
     LogPrintf("pathConfigFile=%s\n", pathConfigFile);
     return pathConfigFile;

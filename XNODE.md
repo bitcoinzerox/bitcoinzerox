@@ -1,4 +1,4 @@
-Znode Build Instructions and Notes
+Xnode Build Instructions and Notes
 =============================
  - Version 0.1.6
  - Date: 14 December 2017
@@ -35,9 +35,9 @@ Step 3. First run on your Local Wallet
 
     ./src/hexxcoind -daemon -server -testnet
 
-**3.2.**  Generate znodeprivkey:
+**3.2.**  Generate xnodeprivkey:
 
-    ./src/hexxcoin-cli znode genkey
+    ./src/hexxcoin-cli xnode genkey
 
 (Store this key)
 
@@ -51,7 +51,7 @@ Step 3. First run on your Local Wallet
 
     ./src/hexxcoin-cli stop
 
-Step 4. In your VPS where you are hosting your Znode. Update config files
+Step 4. In your VPS where you are hosting your Xnode. Update config files
 ----------------------
 **4.1.**  Create file **hexxcoin.conf** (in folder **~/.hexxcoin**)
 
@@ -64,41 +64,41 @@ Step 4. In your VPS where you are hosting your Znode. Update config files
     server=1
     listen=1
     maxconnections=24
-    znode=1
-    znodeprivkey=XXXXXXXXXXXXXXXXX  ## Replace with your znode private key
+    xnode=1
+    xnodeprivkey=XXXXXXXXXXXXXXXXX  ## Replace with your xnode private key
     externalip=XXX.XXX.XXX.XXX:8168 ## Replace with your node external IP
 
-**4.2.**  Create file **znode.conf** (in 2 folders **~/.hexxcoin** and **~/.hexxcoin/testnet3**) contains the following info:
+**4.2.**  Create file **xnode.conf** (in 2 folders **~/.hexxcoin** and **~/.hexxcoin/testnet3**) contains the following info:
  - LABEL: A one word name you make up to call your node (ex. ZN1)
- - IP:PORT: Your znode VPS's IP, and the port is always 18168.
- - ZNODEPRIVKEY: This is the result of your "znode genkey" from earlier.
+ - IP:PORT: Your xnode VPS's IP, and the port is always 18168.
+ - XNODEPRIVKEY: This is the result of your "xnode genkey" from earlier.
  - TRANSACTION HASH: The collateral tx. hash from the 1000 HXX deposit.
  - INDEX: The Index is always 0 or 1.
 
 To get TRANSACTION HASH, run:
 
-    ./src/hexxcoin-cli znode outputs
+    ./src/hexxcoin-cli xnode outputs
 
 The output will look like:
 
     { "d6fd38868bb8f9958e34d5155437d009b72dfd33fc28874c87fd42e51c0f74fdb" : "0", }
 
-Sample of znode.conf:
+Sample of xnode.conf:
 
     ZN1 51.52.53.54:18168 XrxSr3fXpX3dZcU7CoiFuFWqeHYw83r28btCFfIHqf6zkMp1PZ4 d6fd38868bb8f9958e34d5155437d009b72dfd33fc28874c87fd42e51c0f74fdb 0
 
-Step 5. Run a znode
+Step 5. Run a xnode
 ----------------------
-**5.1.**  Start znode:
+**5.1.**  Start xnode:
 
-    ./src/hexxcoin-cli znode start-alias <LABEL>
+    ./src/hexxcoin-cli xnode start-alias <LABEL>
 
 For example:
 
-    ./src/hexxcoin-cli znode start-alias ZN1
+    ./src/hexxcoin-cli xnode start-alias ZN1
 
 **5.2.**  To check node status:
 
-    ./src/hexxcoin-cli znode debug
+    ./src/hexxcoin-cli xnode debug
 
 If not successfully started, just repeat start command
