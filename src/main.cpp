@@ -1373,47 +1373,92 @@ bool CheckTransaction(const CTransaction &tx, CValidationState &state, uint256 h
 				bool found_3 = false;
 				bool found_4 = false;
 				bool found_5 = false;
+                bool found_6 = false;
+                bool found_7 = false;
+                bool found_8 = false;
+                bool found_9 = false;
+                bool found_0 = false;
 				int total_payment_tx = 0; // no more than 1 output for payment
 				CScript FOUNDER_1_SCRIPT;
 				CScript FOUNDER_2_SCRIPT;
 				CScript FOUNDER_3_SCRIPT;
 				CScript FOUNDER_4_SCRIPT;
 				CScript FOUNDER_5_SCRIPT;
+                CScript FOUNDER_6_SCRIPT;
+                CScript FOUNDER_7_SCRIPT;
+                CScript FOUNDER_8_SCRIPT;
+                CScript FOUNDER_9_SCRIPT;
+                CScript FOUNDER_0_SCRIPT;
 				FOUNDER_1_SCRIPT = GetScriptForDestination(CBitcoinAddress("HNdzbEtifr2nTd3VBvUWqJLc35ZFXr2EYo").Get());
 				FOUNDER_2_SCRIPT = GetScriptForDestination(CBitcoinAddress("HNdzbEtifr2nTd3VBvUWqJLc35ZFXr2EYo").Get());
 				FOUNDER_3_SCRIPT = GetScriptForDestination(CBitcoinAddress("HNdzbEtifr2nTd3VBvUWqJLc35ZFXr2EYo").Get());
 				FOUNDER_4_SCRIPT = GetScriptForDestination(CBitcoinAddress("HNdzbEtifr2nTd3VBvUWqJLc35ZFXr2EYo").Get());
 				FOUNDER_5_SCRIPT = GetScriptForDestination(CBitcoinAddress("HNdzbEtifr2nTd3VBvUWqJLc35ZFXr2EYo").Get());
+                FOUNDER_6_SCRIPT = GetScriptForDestination(CBitcoinAddress("HNdzbEtifr2nTd3VBvUWqJLc35ZFXr2EYo").Get());
+                FOUNDER_7_SCRIPT = GetScriptForDestination(CBitcoinAddress("HNdzbEtifr2nTd3VBvUWqJLc35ZFXr2EYo").Get());
+                FOUNDER_8_SCRIPT = GetScriptForDestination(CBitcoinAddress("HNdzbEtifr2nTd3VBvUWqJLc35ZFXr2EYo").Get());
+                FOUNDER_9_SCRIPT = GetScriptForDestination(CBitcoinAddress("HNdzbEtifr2nTd3VBvUWqJLc35ZFXr2EYo").Get());
+                FOUNDER_0_SCRIPT = GetScriptForDestination(CBitcoinAddress("HNdzbEtifr2nTd3VBvUWqJLc35ZFXr2EYo").Get());
 				CAmount znodePayment = GetZnodePayment(nHeight);
                 BOOST_FOREACH(const CTxOut &output, tx.vout)
 				{
-                    if (output.scriptPubKey == FOUNDER_1_SCRIPT && output.nValue == (int64_t)(0 * COIN))
+                    if (output.scriptPubKey == FOUNDER_1_SCRIPT && output.nValue == (int64_t)(0.1 * COIN))
 					{
 						found_1 = true;
                         continue;
                     }
 					
-                    if (output.scriptPubKey == FOUNDER_2_SCRIPT && output.nValue == (int64_t)(0 * COIN))
+                    if (output.scriptPubKey == FOUNDER_2_SCRIPT && output.nValue == (int64_t)(0.1 * COIN))
 					{
                         found_2 = true;
                         continue;
                     }
 					
-                    if (output.scriptPubKey == FOUNDER_3_SCRIPT && output.nValue == (int64_t)(0 * COIN))
+                    if (output.scriptPubKey == FOUNDER_3_SCRIPT && output.nValue == (int64_t)(0.1 * COIN))
 					{
                         found_3 = true;
                         continue;
                     }
 					
-                    if (output.scriptPubKey == FOUNDER_4_SCRIPT && output.nValue == (int64_t)(0 * COIN))
+                    if (output.scriptPubKey == FOUNDER_4_SCRIPT && output.nValue == (int64_t)(0.1 * COIN))
 					{
                         found_4 = true;
                         continue;
                     }
 					
-                    if (output.scriptPubKey == FOUNDER_5_SCRIPT && output.nValue == (int64_t)(0 * COIN))
+                    if (output.scriptPubKey == FOUNDER_5_SCRIPT && output.nValue == (int64_t)(0.1 * COIN))
 					{
                         found_5 = true;
+                        continue;
+                    }
+
+                    if (output.scriptPubKey == FOUNDER_6_SCRIPT && output.nValue == (int64_t)(0.1 * COIN))
+                    {
+                        found_6 = true;
+                        continue;
+                    }
+
+                    if (output.scriptPubKey == FOUNDER_7_SCRIPT && output.nValue == (int64_t)(0.1 * COIN))
+                    {
+                        found_7 = true;
+                        continue;
+                    }
+
+                    if (output.scriptPubKey == FOUNDER_8_SCRIPT && output.nValue == (int64_t)(0.1 * COIN))
+                    {
+                        found_8 = true;
+                        continue;
+                    }
+
+                    if (output.scriptPubKey == FOUNDER_9_SCRIPT && output.nValue == (int64_t)(0.1 * COIN))
+                    {
+                        found_9 = true;
+                        continue;
+                    }
+
+                    if (output.scriptPubKey == FOUNDER_0_SCRIPT && output.nValue == (int64_t)(0.1 * COIN))
+                    {
+                        found_0 = true;
                         continue;
                     }
 					
@@ -1424,7 +1469,7 @@ bool CheckTransaction(const CTransaction &tx, CValidationState &state, uint256 h
 				}
 
 
-            if (!(found_1 && found_2 && found_3 && found_4 && found_5))
+            if (!(found_1 && found_2 && found_3 && found_4 && found_5 && found_6 && found_7 && found_8 && found_9 && found_0))
 			{
                 return state.DoS(100, false, REJECT_FOUNDER_REWARD_MISSING,
                                  "CTransaction::CheckTransaction() : founders reward missing");
@@ -2229,32 +2274,38 @@ bool ReadBlockFromDisk(CBlock &block, const CBlockIndex *pindex, const Consensus
 
 CAmount GetBlockSubsidy(int nHeight, const Consensus::Params &consensusParams)
 {
+    if (nHeight < (HF_ALLOW_ZERO))
+        {
+            if (nHeight == 0) // Genesis block is 0 coins
+                return 0;
 
+            if (nHeight == 1) // Coin swap amount
+                return 996714 * COIN; // account HGkojYYJzwqm8XBYSLii5nVommLEVYUong , all funds sent to owners before block 800
 
-    if (nHeight == 0) // Genesis block is 0 coins
-        return 0;
+            else if (nHeight <= 8064) // 2 weeks
+                return 1 * COIN; // no fees
 
-    if (nHeight == 1) // Coin swap amount
-        return 996714 * COIN; // account HGkojYYJzwqm8XBYSLii5nVommLEVYUong , all funds sent to owners before block 800
+            CAmount nSubsidy = 12.5 * COIN; // Subsidy is cut in half every 24192 blocks which will occur approximately every 6 weeks.
+            int halvings = nHeight / 24192;
 
-    else if (nHeight <= 8064) // 2 weeks
-        return 1 * COIN; // no fees
+            if (nHeight <= 12096) // 1 week
+                nSubsidy = 3.125 * COIN;
 
-    CAmount nSubsidy = 12.5 * COIN; // Subsidy is cut in half every 24192 blocks which will occur approximately every 6 weeks.
-    int halvings = nHeight / 24192;
+            else if (nHeight <= 16128) // 1 week
+                nSubsidy = 6.25 * COIN;
 
-    if (nHeight <= 12096) // 1 week
-        nSubsidy = 3.125 * COIN;
+            if (halvings >= 4)// Force block reward to 1 coin when right shift is undefined.
+                return 1 * COIN + nFees; // final reward
 
-    else if (nHeight <= 16128) // 1 week
-        nSubsidy = 6.25 * COIN;
+            nSubsidy >>= halvings;
+            return nSubsidy + nFees;
+        }
 
-    if (halvings >= 4)// Force block reward to 1 coin when right shift is undefined.
-        return 1 * COIN; // final reward
+    else if ((nHeight >= (HF_ALLOW_ZERO)) && (nHeight < (HF_F_PAYMENT_STOP)))
+            return 3 * COIN + nFees;  // reward after masternode fork. 576 blocks 1 extra coin for miners.
 
-    nSubsidy >>= halvings;
-
-    return nSubsidy;
+    else
+        return 2 * COIN + nFees; // reward after fee payment stop
 }
 
 bool IsInitialBlockDownload() {
@@ -4538,8 +4589,9 @@ GenerateCoinbaseCommitment(CBlock &block, const CBlockIndex *pindexPrev, const C
     return commitment;
 }
 
-bool ContextualCheckBlockHeader(const CBlockHeader &block, CValidationState &state, const Consensus::Params &consensusParams, CBlockIndex *const pindexPrev, int64_t nAdjustedTime)
-{
+bool
+ContextualCheckBlockHeader(const CBlockHeader &block, CValidationState &state, const Consensus::Params &consensusParams,
+                           CBlockIndex *const pindexPrev, int64_t nAdjustedTime) {
     // Check proof of work
     if (block.nBits != GetNextWorkRequired(pindexPrev, &block, consensusParams))
         return state.DoS(100, false, REJECT_INVALID, "bad-diffbits", false, "incorrect proof of work");

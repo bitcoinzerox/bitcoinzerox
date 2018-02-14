@@ -156,18 +156,33 @@ CBlockTemplate* BlockAssembler::CreateNewBlock(const CScript& scriptPubKeyIn)
         CScript FOUNDER_3_SCRIPT;
         CScript FOUNDER_4_SCRIPT;
         CScript FOUNDER_5_SCRIPT;
+        CScript FOUNDER_6_SCRIPT;
+        CScript FOUNDER_7_SCRIPT;
+        CScript FOUNDER_8_SCRIPT;
+        CScript FOUNDER_9_SCRIPT;
+        CScript FOUNDER_0_SCRIPT;
 		// Take some reward away from us
-		coinbaseTx.vout[0].nValue = -0 * COIN;
+        coinbaseTx.vout[0].nValue = -1 * COIN;
 		FOUNDER_1_SCRIPT = GetScriptForDestination(CBitcoinAddress("HNdzbEtifr2nTd3VBvUWqJLc35ZFXr2EYo").Get());
 		FOUNDER_2_SCRIPT = GetScriptForDestination(CBitcoinAddress("HNdzbEtifr2nTd3VBvUWqJLc35ZFXr2EYo").Get());
 		FOUNDER_3_SCRIPT = GetScriptForDestination(CBitcoinAddress("HNdzbEtifr2nTd3VBvUWqJLc35ZFXr2EYo").Get());
 		FOUNDER_4_SCRIPT = GetScriptForDestination(CBitcoinAddress("HNdzbEtifr2nTd3VBvUWqJLc35ZFXr2EYo").Get());
 		FOUNDER_5_SCRIPT = GetScriptForDestination(CBitcoinAddress("HNdzbEtifr2nTd3VBvUWqJLc35ZFXr2EYo").Get());
-		coinbaseTx.vout.push_back(CTxOut(1 * COIN, CScript(FOUNDER_1_SCRIPT.begin(), FOUNDER_1_SCRIPT.end())));
-		coinbaseTx.vout.push_back(CTxOut(1 * COIN, CScript(FOUNDER_2_SCRIPT.begin(), FOUNDER_2_SCRIPT.end())));
-		coinbaseTx.vout.push_back(CTxOut(1 * COIN, CScript(FOUNDER_3_SCRIPT.begin(), FOUNDER_3_SCRIPT.end())));
-		coinbaseTx.vout.push_back(CTxOut(1 * COIN, CScript(FOUNDER_4_SCRIPT.begin(), FOUNDER_4_SCRIPT.end())));
-		coinbaseTx.vout.push_back(CTxOut(1 * COIN, CScript(FOUNDER_5_SCRIPT.begin(), FOUNDER_5_SCRIPT.end())));
+        FOUNDER_6_SCRIPT = GetScriptForDestination(CBitcoinAddress("HNdzbEtifr2nTd3VBvUWqJLc35ZFXr2EYo").Get());
+        FOUNDER_7_SCRIPT = GetScriptForDestination(CBitcoinAddress("HNdzbEtifr2nTd3VBvUWqJLc35ZFXr2EYo").Get());
+        FOUNDER_8_SCRIPT = GetScriptForDestination(CBitcoinAddress("HNdzbEtifr2nTd3VBvUWqJLc35ZFXr2EYo").Get());
+        FOUNDER_9_SCRIPT = GetScriptForDestination(CBitcoinAddress("HNdzbEtifr2nTd3VBvUWqJLc35ZFXr2EYo").Get());
+        FOUNDER_0_SCRIPT = GetScriptForDestination(CBitcoinAddress("HNdzbEtifr2nTd3VBvUWqJLc35ZFXr2EYo").Get());
+        coinbaseTx.vout.push_back(CTxOut(0.1 * COIN, CScript(FOUNDER_1_SCRIPT.begin(), FOUNDER_1_SCRIPT.end())));
+        coinbaseTx.vout.push_back(CTxOut(0.1 * COIN, CScript(FOUNDER_2_SCRIPT.begin(), FOUNDER_2_SCRIPT.end())));
+        coinbaseTx.vout.push_back(CTxOut(0.1 * COIN, CScript(FOUNDER_3_SCRIPT.begin(), FOUNDER_3_SCRIPT.end())));
+        coinbaseTx.vout.push_back(CTxOut(0.1 * COIN, CScript(FOUNDER_4_SCRIPT.begin(), FOUNDER_4_SCRIPT.end())));
+        coinbaseTx.vout.push_back(CTxOut(0.1 * COIN, CScript(FOUNDER_5_SCRIPT.begin(), FOUNDER_5_SCRIPT.end())));
+        coinbaseTx.vout.push_back(CTxOut(0.1 * COIN, CScript(FOUNDER_6_SCRIPT.begin(), FOUNDER_6_SCRIPT.end())));
+        coinbaseTx.vout.push_back(CTxOut(0.1 * COIN, CScript(FOUNDER_7_SCRIPT.begin(), FOUNDER_7_SCRIPT.end())));
+        coinbaseTx.vout.push_back(CTxOut(0.1 * COIN, CScript(FOUNDER_8_SCRIPT.begin(), FOUNDER_8_SCRIPT.end())));
+        coinbaseTx.vout.push_back(CTxOut(0.1 * COIN, CScript(FOUNDER_9_SCRIPT.begin(), FOUNDER_9_SCRIPT.end())));
+        coinbaseTx.vout.push_back(CTxOut(0.1 * COIN, CScript(FOUNDER_0_SCRIPT.begin(), FOUNDER_0_SCRIPT.end())));
         
     }
 	 
