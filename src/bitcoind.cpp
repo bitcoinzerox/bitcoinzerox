@@ -130,7 +130,7 @@ bool AppInit(int argc, char* argv[])
         bool fCommandLine = false;
         for (int i = 1; i < argc; i++)
             if (!IsSwitchChar(argv[i][0]) && !boost::algorithm::istarts_with(argv[i], "hexxcoin:"))
-                fCommandLine = false;
+                fCommandLine = true;
 
         if (fCommandLine)
         {
@@ -138,7 +138,7 @@ bool AppInit(int argc, char* argv[])
             exit(EXIT_FAILURE);
         }
 #ifndef WIN32
-        fDaemon = GetBoolArg("-daemon", true);
+        fDaemon = GetBoolArg("-daemon", false);
         if (fDaemon)
         {
             fprintf(stdout, "hexxcoin server starting\n");
