@@ -6388,13 +6388,16 @@ bool static ProcessMessage(CNode *pfrom, string strCommand, CDataStream &vRecv, 
         int64_t nTimeOffset = nTime - GetTime();
         pfrom->nTimeOffset = nTimeOffset;
         AddTimeData(pfrom->addr, nTimeOffset);
-    } else if (pfrom->nVersion == 0) {
-        // Must have a version message before anything else
-        LOCK(cs_main);
-        Misbehaving(pfrom->GetId(), 1);
-        LogPrintf("Must have a version message before anything else\n");
-        return false;
-    } else if (strCommand == NetMsgType::VERACK) {
+    }
+    //else if (pfrom->nVersion == 0)
+    //{
+    //    // Must have a version message before anything else
+    //    LOCK(cs_main);
+    //    Misbehaving(pfrom->GetId(), 1);
+    //    LogPrintf("Must have a version message before anything else\n");
+    //    return false;
+    //    }
+    else if (strCommand == NetMsgType::VERACK) {
         pfrom->SetRecvVersion(min(pfrom->nVersion, PROTOCOL_VERSION));
 
         // Mark this node as currently connected, so we update its timestamp later.
