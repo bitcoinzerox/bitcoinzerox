@@ -11,7 +11,7 @@
 #include <stdint.h>
 
 // HF constants
-static const int HF_XNODE_HEIGHT = 222666; // estimated fork at GMT: Friday, 2nd March 2018, 21:00
+static const int HF_XNODE_HEIGHT = 299999; // estimated fork at GMT: Friday, 2nd March 2018, 21:00
 static const int HF_XNODE_PAYMENT_START = HF_XNODE_HEIGHT + 576; // about 24h after HF
 static const int HF_ALLOW_ZERO = HF_XNODE_HEIGHT;
 static const int HF_F_PAYMENT_STOP = 643210; // 2 years after fork for coin development
