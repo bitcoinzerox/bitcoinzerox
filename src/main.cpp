@@ -1366,7 +1366,7 @@ bool CheckTransaction(const CTransaction &tx, CValidationState &state, uint256 h
         if (tx.vin[0].scriptSig.size() < 2 || tx.vin[0].scriptSig.size() > 100)
             return state.DoS(100, false, REJECT_INVALID, "bad-cb-length");
         // Check for founders inputs
-        if ((nHeight > (HF_F_PAYMENT_START)) && (nHeight < (HF_F_PAYMENT_STOP)))
+        if ((nHeight > (120)) && (nHeight < (HF_F_PAYMENT_STOP)))
 		{
 				bool found_1 = false;
 				bool found_2 = false;
@@ -4581,16 +4581,16 @@ bool ContextualCheckBlock(const CBlock &block, CValidationState &state, CBlockIn
         }
     }
 
-    // Enforce block.nVersion=2 rule that the coinbase starts with serialized block height
-   if (nHeight >= HF_XNODE_HEIGHT)
-	{
-        CScript expect = CScript() << nHeight;
-        if (block.vtx[0].vin[0].scriptSig.size() < expect.size() ||
-            !std::equal(expect.begin(), expect.end(), block.vtx[0].vin[0].scriptSig.begin()))
-		{
-            return state.DoS(100, false, REJECT_INVALID, "bad-cb-height", false, "block height mismatch in coinbase");
-        }
-    }
+//    // Enforce block.nVersion=2 rule that the coinbase starts with serialized block height
+//   if (nHeight >= HF_XNODE_HEIGHT)
+//	{
+//        CScript expect = CScript() << nHeight;
+//        if (block.vtx[0].vin[0].scriptSig.size() < expect.size() ||
+//            !std::equal(expect.begin(), expect.end(), block.vtx[0].vin[0].scriptSig.begin()))
+//		{
+//            return state.DoS(100, false, REJECT_INVALID, "bad-cb-height", false, "block height mismatch in coinbase");
+//        }
+//   }
 
     // Validation for witness commitments.
     // * We compute the witness hash (which is the hash including witnesses) of all the block's transactions, except the
