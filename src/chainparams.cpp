@@ -96,11 +96,11 @@ public:
         assert(consensus.hashGenesisBlock == uint256S("0x322bad477efb4b33fa4b1f0b2861eaf543c61068da9898a95062fdb02ada486f"));
         assert(genesis.hashMerkleRoot == uint256S("0x31f49b23f8a1185f85a6a6972446e72a86d50ca0e3b3ffe217d0c2fea30473db"));
         vSeeds.push_back(CDNSSeedData("45.32.31.63", "45.32.31.63", false));
-		vSeeds.push_back(CDNSSeedData("hxx-addnode01.chainsilo.com", "hxx-addnode01.chainsilo.com", false));
-		vSeeds.push_back(CDNSSeedData("hxx-addnode02.chainsilo.com", "hxx-addnode02.chainsilo.com", false));
-		vSeeds.push_back(CDNSSeedData("hxx-addnode03.chainsilo.com", "hxx-addnode03.chainsilo.com", false));
-		vSeeds.push_back(CDNSSeedData("hxx-addnode04.chainsilo.com", "hxx-addnode04.chainsilo.com", false));
-		vSeeds.push_back(CDNSSeedData("hxx-addnode05.chainsilo.com", "hxx-addnode05.chainsilo.com", false));
+        vSeeds.push_back(CDNSSeedData("hxx-addnode01.chainsilo.com", "hxx-addnode01.chainsilo.com", false));
+        vSeeds.push_back(CDNSSeedData("hxx-addnode02.chainsilo.com", "hxx-addnode02.chainsilo.com", false));
+        vSeeds.push_back(CDNSSeedData("hxx-addnode03.chainsilo.com", "hxx-addnode03.chainsilo.com", false));
+        vSeeds.push_back(CDNSSeedData("hxx-addnode04.chainsilo.com", "hxx-addnode04.chainsilo.com", false));
+        vSeeds.push_back(CDNSSeedData("hxx-addnode05.chainsilo.com", "hxx-addnode05.chainsilo.com", false));
         base58Prefixes[PUBKEY_ADDRESS] = std::vector < unsigned char > (1, 40);
         base58Prefixes[SCRIPT_ADDRESS] = std::vector < unsigned char > (1, 10);
         base58Prefixes[SECRET_KEY] = std::vector < unsigned char > (1, 210);
@@ -120,8 +120,9 @@ public:
         ( 801, uint256S("0xb3a950b3d94c2d1298cacc9089c8e3ba90fb425306cfbf04cc39282ac6a794d2")) // chain revert to fix zerocoin
         (15001, uint256S("0xc84d91a83ec6fa779e607fa7403e8708318f321c8364c6686205f7e70900cb98"))	
         (30001, uint256S("0x223dca0c2a6fd028dc4df4b5b4309985502ee839bc7dcd968494368007866540"))
-        (204045, uint256S("0x49cd241e4f6ca0bcd882b470d41484cd51a89b04c52c50dba0f4cd07befc2031")),
-        1517253681, // * UNIX timestamp of last checkpoint block
+        (204045, uint256S("0x49cd241e4f6ca0bcd882b470d41484cd51a89b04c52c50dba0f4cd07befc2031"))
+        (220974, uint256S("0xd85b2231760133f521aec73e240c7867b62f4981aecbf4d2f797813925ecdccb")),
+        1519754494, // * UNIX timestamp of last checkpoint block
         204045,    // * total number of transactions between genesis and last checkpoint
                   //   (the tx=... number in the SetBestChain debug.log lines)
 		576.0 // * estimated number of transactions per day after checkpoint

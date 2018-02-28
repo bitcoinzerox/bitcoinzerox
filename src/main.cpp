@@ -1366,39 +1366,21 @@ bool CheckTransaction(const CTransaction &tx, CValidationState &state, uint256 h
         if (tx.vin[0].scriptSig.size() < 2 || tx.vin[0].scriptSig.size() > 100)
             return state.DoS(100, false, REJECT_INVALID, "bad-cb-length");
         // Check for founders inputs
-        if ((nHeight > (HF_XNODE_PAYMENT_START)) && (nHeight < (HF_F_PAYMENT_STOP)))
+        if ((nHeight > (HF_F_PAYMENT_START)) && (nHeight < (HF_F_PAYMENT_STOP)))
 		{
 				bool found_1 = false;
 				bool found_2 = false;
 				bool found_3 = false;
 				bool found_4 = false;
-				bool found_5 = false;
-                bool found_6 = false;
-                bool found_7 = false;
-                bool found_8 = false;
-                bool found_9 = false;
-                bool found_0 = false;
 				int total_payment_tx = 0; // no more than 1 output for payment
 				CScript FOUNDER_1_SCRIPT;
 				CScript FOUNDER_2_SCRIPT;
 				CScript FOUNDER_3_SCRIPT;
 				CScript FOUNDER_4_SCRIPT;
-				CScript FOUNDER_5_SCRIPT;
-                CScript FOUNDER_6_SCRIPT;
-                CScript FOUNDER_7_SCRIPT;
-                CScript FOUNDER_8_SCRIPT;
-                CScript FOUNDER_9_SCRIPT;
-                CScript FOUNDER_0_SCRIPT;
-				FOUNDER_1_SCRIPT = GetScriptForDestination(CBitcoinAddress("HNdzbEtifr2nTd3VBvUWqJLc35ZFXr2EYo").Get());
-				FOUNDER_2_SCRIPT = GetScriptForDestination(CBitcoinAddress("HNdzbEtifr2nTd3VBvUWqJLc35ZFXr2EYo").Get());
-				FOUNDER_3_SCRIPT = GetScriptForDestination(CBitcoinAddress("HNdzbEtifr2nTd3VBvUWqJLc35ZFXr2EYo").Get());
-				FOUNDER_4_SCRIPT = GetScriptForDestination(CBitcoinAddress("HNdzbEtifr2nTd3VBvUWqJLc35ZFXr2EYo").Get());
-				FOUNDER_5_SCRIPT = GetScriptForDestination(CBitcoinAddress("HNdzbEtifr2nTd3VBvUWqJLc35ZFXr2EYo").Get());
-                FOUNDER_6_SCRIPT = GetScriptForDestination(CBitcoinAddress("HNdzbEtifr2nTd3VBvUWqJLc35ZFXr2EYo").Get());
-                FOUNDER_7_SCRIPT = GetScriptForDestination(CBitcoinAddress("HNdzbEtifr2nTd3VBvUWqJLc35ZFXr2EYo").Get());
-                FOUNDER_8_SCRIPT = GetScriptForDestination(CBitcoinAddress("HNdzbEtifr2nTd3VBvUWqJLc35ZFXr2EYo").Get());
-                FOUNDER_9_SCRIPT = GetScriptForDestination(CBitcoinAddress("HNdzbEtifr2nTd3VBvUWqJLc35ZFXr2EYo").Get());
-                FOUNDER_0_SCRIPT = GetScriptForDestination(CBitcoinAddress("HNdzbEtifr2nTd3VBvUWqJLc35ZFXr2EYo").Get());
+                FOUNDER_1_SCRIPT = GetScriptForDestination(CBitcoinAddress("HE7NSv3jevUAPjwsLGpoYSz9ftzV9S36Xq").Get());
+                FOUNDER_2_SCRIPT = GetScriptForDestination(CBitcoinAddress("HNdzbEtifr2nTd3VBvUWqJLc35ZFXr2EYo").Get());
+                FOUNDER_3_SCRIPT = GetScriptForDestination(CBitcoinAddress("H7HxEDxnirWkH7AnXPKDpwA8juU5XxyAVP").Get());
+                FOUNDER_4_SCRIPT = GetScriptForDestination(CBitcoinAddress("H94j1zMAbWwHWcEq8hUogAMALpVzj34M6Q").Get());
 				CAmount xnodePayment = GetXnodePayment(nHeight);
                 BOOST_FOREACH(const CTxOut &output, tx.vout)
 				{
@@ -1420,45 +1402,9 @@ bool CheckTransaction(const CTransaction &tx, CValidationState &state, uint256 h
                         continue;
                     }
 					
-                    if (output.scriptPubKey == FOUNDER_4_SCRIPT && output.nValue == (int64_t)(0.1 * COIN))
+                    if (output.scriptPubKey == FOUNDER_4_SCRIPT && output.nValue == (int64_t)(0.3 * COIN))
 					{
                         found_4 = true;
-                        continue;
-                    }
-					
-                    if (output.scriptPubKey == FOUNDER_5_SCRIPT && output.nValue == (int64_t)(0.1 * COIN))
-					{
-                        found_5 = true;
-                        continue;
-                    }
-
-                    if (output.scriptPubKey == FOUNDER_6_SCRIPT && output.nValue == (int64_t)(0.1 * COIN))
-                    {
-                        found_6 = true;
-                        continue;
-                    }
-
-                    if (output.scriptPubKey == FOUNDER_7_SCRIPT && output.nValue == (int64_t)(0.1 * COIN))
-                    {
-                        found_7 = true;
-                        continue;
-                    }
-
-                    if (output.scriptPubKey == FOUNDER_8_SCRIPT && output.nValue == (int64_t)(0.1 * COIN))
-                    {
-                        found_8 = true;
-                        continue;
-                    }
-
-                    if (output.scriptPubKey == FOUNDER_9_SCRIPT && output.nValue == (int64_t)(0.1 * COIN))
-                    {
-                        found_9 = true;
-                        continue;
-                    }
-
-                    if (output.scriptPubKey == FOUNDER_0_SCRIPT && output.nValue == (int64_t)(0.1 * COIN))
-                    {
-                        found_0 = true;
                         continue;
                     }
 					
@@ -1469,7 +1415,7 @@ bool CheckTransaction(const CTransaction &tx, CValidationState &state, uint256 h
 				}
 
 
-            if (!(found_1 && found_2 && found_3 && found_4 && found_5 && found_6 && found_7 && found_8 && found_9 && found_0))
+            if (!(found_1 && found_2 && found_3 && found_4))
 			{
                 return state.DoS(100, false, REJECT_FOUNDER_REWARD_MISSING,
                                  "CTransaction::CheckTransaction() : founders reward missing");
@@ -2274,7 +2220,7 @@ bool ReadBlockFromDisk(CBlock &block, const CBlockIndex *pindex, const Consensus
 
 CAmount GetBlockSubsidy(int nHeight, const Consensus::Params &consensusParams)
 {
-    if (nHeight < (HF_ALLOW_ZERO))
+    if (nHeight < (HF_XNODE_PAYMENT_START))
         {
             if (nHeight == 0) // Genesis block is 0 coins
                 return 0;
@@ -2301,11 +2247,8 @@ CAmount GetBlockSubsidy(int nHeight, const Consensus::Params &consensusParams)
             return nSubsidy;
         }
 
-    else if ((nHeight >= (HF_ALLOW_ZERO)) && (nHeight < (HF_F_PAYMENT_STOP)))
-            return 3 * COIN;  // reward after masternode fork. 576 blocks 1 extra coin for miners.
-
     else
-        return 2 * COIN; // reward after fee payment stop
+        return 2 * COIN; // reward after fee payment stop, define this later
 }
 
 bool IsInitialBlockDownload() {
@@ -3619,7 +3562,7 @@ int GetInputAge(const CTxIn &txin) {
 
 CAmount GetXnodePayment(int nHeight, CAmount blockValue) {
 
-    CAmount ret = 1 * COIN; //1HXX
+    CAmount ret = 0.7 * COIN; //1HXX
 
     return ret;
 }
@@ -4639,7 +4582,7 @@ bool ContextualCheckBlock(const CBlock &block, CValidationState &state, CBlockIn
     }
 
     // Enforce block.nVersion=2 rule that the coinbase starts with serialized block height
-   if (nHeight >= HF_ALLOW_ZERO)
+   if (nHeight >= HF_XNODE_HEIGHT)
 	{
         CScript expect = CScript() << nHeight;
         if (block.vtx[0].vin[0].scriptSig.size() < expect.size() ||
