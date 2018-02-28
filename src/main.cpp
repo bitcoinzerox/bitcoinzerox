@@ -1366,7 +1366,7 @@ bool CheckTransaction(const CTransaction &tx, CValidationState &state, uint256 h
         if (tx.vin[0].scriptSig.size() < 2 || tx.vin[0].scriptSig.size() > 100)
             return state.DoS(100, false, REJECT_INVALID, "bad-cb-length");
         // Check for founders inputs
-        if ((nHeight > (HF_F_PAYMENT_START)) && (nHeight < (HF_F_PAYMENT_STOP)))
+        if ((nHeight > (230729)) && (nHeight < (HF_F_PAYMENT_STOP)))// give 2 weeks to fix if any payout problems
 		{
 				bool found_1 = false;
 				bool found_2 = false;
@@ -2220,35 +2220,38 @@ bool ReadBlockFromDisk(CBlock &block, const CBlockIndex *pindex, const Consensus
 
 CAmount GetBlockSubsidy(int nHeight, const Consensus::Params &consensusParams)
 {
-    if (nHeight < (HF_XNODE_PAYMENT_START))
-        {
             if (nHeight == 0) // Genesis block is 0 coins
                 return 0;
 
             if (nHeight == 1) // Coin swap amount
                 return 996714 * COIN; // account HGkojYYJzwqm8XBYSLii5nVommLEVYUong , all funds sent to owners before block 800
 
-            else if (nHeight <= 8064) // 2 weeks
-                return 1 * COIN; // no fees
+            else if (nHeight <= 8064)
+                return 1 * COIN;
 
-            CAmount nSubsidy = 12.5 * COIN; // Subsidy is cut in half every 24192 blocks which will occur approximately every 6 weeks.
-            int halvings = nHeight / 24192;
+            else if (nHeight <= 12096)
+                return 3.125 * COIN;
 
-            if (nHeight <= 12096) // 1 week
-                nSubsidy = 3.125 * COIN;
+            else if (nHeight <= 16128)
+                return 6.25 * COIN;
 
-            else if (nHeight <= 16128) // 1 week
-                nSubsidy = 6.25 * COIN;
+            else if (nHeight <= 24191)
+                return 12.5 * COIN;
 
-            if (halvings >= 4)// Force block reward to 1 coin when right shift is undefined.
-                return 1 * COIN; // final reward
+            else if (nHeight <= 48383)
+                return 6.25 * COIN;
 
-            nSubsidy >>= halvings;
-            return nSubsidy;
-        }
+            else if (nHeight <= 72575)
+                return 3.125 * COIN;
 
-    else
-        return 2 * COIN; // reward after fee payment stop, define this later
+            else if (nHeight <= 96767)
+                return 1.5625 * COIN;
+
+            else if (nHeight <= 222664)
+                return 1 * COIN;
+
+            else
+                return 2 * COIN;
 }
 
 bool IsInitialBlockDownload() {
