@@ -1366,7 +1366,7 @@ bool CheckTransaction(const CTransaction &tx, CValidationState &state, uint256 h
         if (tx.vin[0].scriptSig.size() < 2 || tx.vin[0].scriptSig.size() > 100)
             return state.DoS(100, false, REJECT_INVALID, "bad-cb-length");
         // Check for founders inputs
-        if ((nHeight > (120)) && (nHeight < (HF_F_PAYMENT_STOP)))
+        if ((nHeight > (HF_F_PAYMENT_START)) && (nHeight < (HF_F_PAYMENT_STOP)))
 		{
 				bool found_1 = false;
 				bool found_2 = false;
