@@ -68,13 +68,13 @@ public:
 
         // Deployment of BIP68, BIP112, and BIP113.
         consensus.vDeployments[Consensus::DEPLOYMENT_CSV].bit = 0;
-        consensus.vDeployments[Consensus::DEPLOYMENT_CSV].nStartTime = 1517744282; // active
-        consensus.vDeployments[Consensus::DEPLOYMENT_CSV].nTimeout = 1580816281; // 
+        consensus.vDeployments[Consensus::DEPLOYMENT_CSV].nStartTime = 1517744282; //
+        consensus.vDeployments[Consensus::DEPLOYMENT_CSV].nTimeout = 1517744282; // 
 
         // Deployment of SegWit (BIP141, BIP143, and BIP147)
         consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].bit = 1;
-        consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nStartTime = 1517744282; // active
-        consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nTimeout = 1580816281; // 
+        consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nStartTime = 1517744282; //
+        consensus.vDeployments[Consensus::DEPLOYMENT_SEGWIT].nTimeout = 1517744282; // 
 
         // xnode params
         strSporkPubKey = "04ffde6668d0dff8ba92c67b1f751568e11608f23c8c0437eccd5a6ec713ae3638238478b816783593d552bc8b6a57147dd67596eb372b0cadc743d3835c43e9e3";
