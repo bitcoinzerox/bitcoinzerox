@@ -13,7 +13,7 @@
 // HF constants
 static const int HF_XNODE_HEIGHT = 222665; //estimated fork, GMT: Saturday, 3rd March 2018, 07.32 am
 static const int HF_XNODE_PAYMENT_START = HF_XNODE_HEIGHT + 576; // about 24h after HF
-static const int HF_ALLOW_ZERO = HF_XNODE_HEIGHT;
+static const int HF_ALLOW_ZERO = 999999;
 static const int HF_F_PAYMENT_STOP = 643145; // 2 years after fork for coin development
 static const int HF_F_PAYMENT_START = HF_XNODE_HEIGHT;
 
