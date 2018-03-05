@@ -645,6 +645,7 @@ CXnode* CXnodeMan::GetNextXnodeInQueueForPayment(int nBlockHeight, bool fFilterS
         if (reasonStr != NULL) {
             LogPrint("xnodeman", "Xnode, %s, addr(%s), qualify %s\n",
                      mn.vin.prevout.ToStringShort(), CBitcoinAddress(mn.pubKeyCollateralAddress.GetID()).ToString(), reasonStr);
+			delete [] reasonStr;
             continue;
         }
         vecXnodeLastPaid.push_back(std::make_pair(mn.GetLastPaidBlock(), &mn));
