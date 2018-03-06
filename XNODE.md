@@ -140,6 +140,6 @@ For example:
 
     ./hexxcoin-cli xnode debug
 
-**Note:** on qt wallets you just ommit `./hexxcoin-cli` like before and use the debug console.
+**Note:** on qt wallets you just ommit `./hexxcoin-cli` like before and use the debug console or use the `Xnodes` tab to start the xnode.
 
 If not successfully started, just repeat start command
