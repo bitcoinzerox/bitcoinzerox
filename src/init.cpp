@@ -217,12 +217,12 @@ void Shutdown() {
     StopNode();
 
     // STORE DATA CACHES INTO SERIALIZED DAT FILES
-    //CFlatDB<CXnodeMan> flatdb1("xncache.dat", "magicXnodeCache");
-    //flatdb1.Dump(mnodeman);
-    //CFlatDB<CXnodePayments> flatdb2("xnpayments.dat", "magicXnodePaymentsCache");
-    //flatdb2.Dump(mnpayments);
-    //CFlatDB<CNetFulfilledRequestManager> flatdb4("netfulfilled.dat", "magicFulfilledCache");
-    //flatdb4.Dump(netfulfilledman);
+    CFlatDB<CXnodeMan> flatdb1("xncache.dat", "magicXnodeCache");
+    flatdb1.Dump(mnodeman);
+    CFlatDB<CXnodePayments> flatdb2("xnpayments.dat", "magicXnodePaymentsCache");
+    flatdb2.Dump(mnpayments);
+    CFlatDB<CNetFulfilledRequestManager> flatdb4("netfulfilled.dat", "magicFulfilledCache");
+    flatdb4.Dump(netfulfilledman);
 
     StopTorControl();
     UnregisterNodeSignals(GetNodeSignals());
@@ -1752,7 +1752,7 @@ bool AppInit2(boost::thread_group &threadGroup, CScheduler &scheduler) {
     // ********************************************************* Step 11b: Load cache data
 
     // LOAD SERIALIZED DAT FILES INTO DATA CACHES FOR INTERNAL USE
-/*
+
     uiInterface.InitMessage(_("Loading xnode cache..."));
     CFlatDB<CXnodeMan> flatdb1("xncache.dat", "magicXnodeCache");
     if (!flatdb1.Load(mnodeman)) {
@@ -1769,13 +1769,11 @@ bool AppInit2(boost::thread_group &threadGroup, CScheduler &scheduler) {
         uiInterface.InitMessage(_("Xnode cache is empty, skipping payments and governance cache..."));
     }
 
-    uiInterface.InitMessage(_("Loading fulfilled requests cache..."));*/
+    uiInterface.InitMessage(_("Loading fulfilled requests cache..."));
     CFlatDB<CNetFulfilledRequestManager> flatdb4("netfulfilled.dat", "magicFulfilledCache");
-	flatdb4.Load(netfulfilledman);
-	/*
     if (!flatdb4.Load(netfulfilledman)) {
         return InitError("Failed to load fulfilled requests cache from netfulfilled.dat");
-    }*/
+    }
 
     // ********************************************************* Step 11c: update block tip in Dash modules
 
