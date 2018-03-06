@@ -110,6 +110,7 @@ It is a good idea to lock the unspent 2000 HXX you just transfered so you dont a
 
 To do so enable coin control in the wallets settings and lock the 2000 HXX in the `Send` tab in `Inputs` like so:
 
+![lockunspent](/lockunspent.png)
 
 Step 3. ON VPS: Update config files
 ----------------------
