@@ -1825,8 +1825,8 @@ bool AcceptToMemoryPoolWorker(CTxMemPool &pool, CValidationState &state, const C
 
                 LOCK(csFreeLimiter);
 
-                // Use an exponentially decaying ~2,5-minute window:
-                dFreeCount *= pow(1.0 - 1.0 / 150.0, (double) (nNow - nLastTime));
+                // Use an exponentially decaying ~10-minute window:
+                dFreeCount *= pow(1.0 - 1.0 / 600.0, (double) (nNow - nLastTime));
                 nLastTime = nNow;
                 // -limitfreerelay unit is thousand-bytes-per-minute
                 // At default rate it would take over a month to fill 1GB

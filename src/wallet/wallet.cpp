@@ -5305,7 +5305,7 @@ bool CWallet::BackupWallet(const std::string &strDest) {
 #endif
                     LogPrintf("copied %s to %s\n", strWalletFile, pathDest.string());
                     return true;
-                } catch (const boost::filesystem::filesystem_error &e) {
+                } catch (const boost::filesystem::filesystem_error& e) {
                     LogPrintf("error copying %s to %s - %s\n", strWalletFile, pathDest.string(), e.what());
                     return false;
                 }

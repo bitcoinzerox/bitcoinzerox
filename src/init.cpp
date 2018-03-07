@@ -108,7 +108,7 @@ enum BindFlags {
     BF_WHITELIST = (1U << 2),
 };
 
-static const char* FEE_ESTIMATES_FILENAME="fee_estimates.dat";
+static const char *FEE_ESTIMATES_FILENAME = "fee_estimates.dat";
 
 //////////////////////////////////////////////////////////////////////////////
 //
@@ -267,7 +267,7 @@ void Shutdown() {
 #ifndef WIN32
     try {
         boost::filesystem::remove(GetPidFile());
-    } catch (const boost::filesystem::filesystem_error& e) {
+    } catch (const boost::filesystem::filesystem_error &e) {
         LogPrintf("%s: Unable to remove pidfile: %s\n", __func__, e.what());
     }
 #endif
@@ -978,7 +978,7 @@ bool AppInit2(boost::thread_group &threadGroup, CScheduler &scheduler) {
 #endif
 
     // ********************************************************* Step 2: parameter interactions
-    const CChainParams& chainparams = Params();
+    const CChainParams &chainparams = Params();
 
     // also see: InitParameterInteraction()
 
@@ -1015,7 +1015,7 @@ bool AppInit2(boost::thread_group &threadGroup, CScheduler &scheduler) {
 
     fDebug = !mapMultiArgs["-debug"].empty();
     // Special-case: if -debug=0/-nodebug is set, turn off debugging messages
-    const vector<string>& categories = mapMultiArgs["-debug"];
+    const vector <string> &categories = mapMultiArgs["-debug"];
     if (GetBoolArg("-nodebug", false) || find(categories.begin(), categories.end(), string("0")) != categories.end())
         fDebug = false;
 
@@ -1138,7 +1138,7 @@ bool AppInit2(boost::thread_group &threadGroup, CScheduler &scheduler) {
     if ((!fEnableReplacement) && mapArgs.count("-mempoolreplacement")) {
         // Minimal effort at forwards compatibility
         std::string strReplacementModeList = GetArg("-mempoolreplacement", "");  // default is impossible
-        std::vector<std::string> vstrReplacementModes;
+        std::vector <std::string> vstrReplacementModes;
         boost::split(vstrReplacementModes, strReplacementModeList, boost::is_any_of(","));
         fEnableReplacement = (std::find(vstrReplacementModes.begin(), vstrReplacementModes.end(), "fee") !=
                               vstrReplacementModes.end());
@@ -1149,7 +1149,7 @@ bool AppInit2(boost::thread_group &threadGroup, CScheduler &scheduler) {
         if (!Params().MineBlocksOnDemand()) {
             return InitError("BIP9 parameters may only be overridden on regtest.");
         }
-        const vector<string>& deployments = mapMultiArgs["-bip9params"];
+        const vector <string> &deployments = mapMultiArgs["-bip9params"];
         for (auto i : deployments) {
             std::vector<std::string> vDeploymentParams;
             boost::split(vDeploymentParams, i, boost::is_any_of(":"));
@@ -1195,7 +1195,7 @@ bool AppInit2(boost::thread_group &threadGroup, CScheduler &scheduler) {
 
     // Make sure only a single Bitcoin process is using the data directory.
     boost::filesystem::path pathLockFile = GetDataDir() / ".lock";
-    FILE* file = fopen(pathLockFile.string().c_str(), "a"); // empty lock file; created if it doesn't exist.
+    FILE *file = fopen(pathLockFile.string().c_str(), "a"); // empty lock file; created if it doesn't exist.
     if (file) fclose(file);
 
     try {
@@ -1226,7 +1226,7 @@ bool AppInit2(boost::thread_group &threadGroup, CScheduler &scheduler) {
 
     LogPrintf("Using %u threads for script verification\n", nScriptCheckThreads);
     if (nScriptCheckThreads) {
-        for (int i=0; i<nScriptCheckThreads-1; i++)
+        for (int i = 0; i < nScriptCheckThreads - 1; i++)
             threadGroup.create_thread(&ThreadScriptCheck);
     }
 
@@ -1247,10 +1247,6 @@ bool AppInit2(boost::thread_group &threadGroup, CScheduler &scheduler) {
     }
 
     int64_t nStart;
-
-#if defined(USE_SSE2)
-    scrypt_detect_sse2();
-#endif
 
 // ********************************************************* Step 5: verify wallet database integrity
 #ifdef ENABLE_WALLET
@@ -1286,7 +1282,7 @@ bool AppInit2(boost::thread_group &threadGroup, CScheduler &scheduler) {
             nets.insert(net);
         }
         for (int n = 0; n < NET_MAX; n++) {
-            enum Network net = (enum Network)n;
+            enum Network net = (enum Network) n;
             if (!nets.count(net))
                 SetLimited(net);
         }
@@ -1369,7 +1365,7 @@ bool AppInit2(boost::thread_group &threadGroup, CScheduler &scheduler) {
     }
 
     if (mapArgs.count("-externalip")) {
-        BOOST_FOREACH(const std::string& strAddr, mapMultiArgs["-externalip"]) {
+        BOOST_FOREACH(const std::string &strAddr, mapMultiArgs["-externalip"]) {
             CService addrLocal;
             if (Lookup(strAddr.c_str(), addrLocal, GetListenPort(), fNameLookup) && addrLocal.IsValid())
                 AddLocal(addrLocal, LOCAL_MANUAL);
@@ -1389,7 +1385,7 @@ bool AppInit2(boost::thread_group &threadGroup, CScheduler &scheduler) {
     }
 #endif
     if (mapArgs.count("-maxuploadtarget")) {
-        CNode::SetMaxOutboundTarget(GetArg("-maxuploadtarget", DEFAULT_MAX_UPLOAD_TARGET)*1024*1024);
+        CNode::SetMaxOutboundTarget(GetArg("-maxuploadtarget", DEFAULT_MAX_UPLOAD_TARGET) * 1024 * 1024);
     }
 
     // ********************************************************* Step 7: load block chain
@@ -1406,12 +1402,12 @@ bool AppInit2(boost::thread_group &threadGroup, CScheduler &scheduler) {
         for (unsigned int i = 1; i < 10000; i++) {
             boost::filesystem::path source = GetDataDir() / strprintf("blk%04u.dat", i);
             if (!boost::filesystem::exists(source)) break;
-            boost::filesystem::path dest = blocksDir / strprintf("blk%05u.dat", i-1);
+            boost::filesystem::path dest = blocksDir / strprintf("blk%05u.dat", i - 1);
             try {
                 boost::filesystem::create_hard_link(source, dest);
                 LogPrintf("Hardlinked %s -> %s\n", source.string(), dest.string());
                 linked = true;
-            } catch (const boost::filesystem::filesystem_error& e) {
+            } catch (const boost::filesystem::filesystem_error &e) {
                 // Note: hardlink creation failing is not a disaster, it just means
                 // blocks will get re-downloaded from peers.
                 LogPrintf("Error hardlinking blk%04u.dat: %s\n", i, e.what());
@@ -1513,7 +1509,7 @@ bool AppInit2(boost::thread_group &threadGroup, CScheduler &scheduler) {
 
                 {
                     LOCK(cs_main);
-                    CBlockIndex* tip = chainActive.Tip();
+                    CBlockIndex *tip = chainActive.Tip();
                     if (tip && tip->nTime > GetAdjustedTime() + 2 * 60 * 60) {
                         strLoadError = _("The block database contains a block which appears to be from the future. "
                                 "This may be due to your computer's date and time being set incorrectly. "
@@ -1527,14 +1523,14 @@ bool AppInit2(boost::thread_group &threadGroup, CScheduler &scheduler) {
                     strLoadError = _("Corrupted block database detected");
                     break;
                 }
-            } catch (const std::exception& e) {
+            } catch (const std::exception &e) {
                 if (fDebug) LogPrintf("%s\n", e.what());
                 strLoadError = _("Error opening block database");
                 break;
             }
 
             fLoaded = true;
-        } while(false);
+        } while (false);
 
         if (!fLoaded) {
             // first suggest a reindex
@@ -1627,7 +1623,7 @@ bool AppInit2(boost::thread_group &threadGroup, CScheduler &scheduler) {
     if (mapArgs.count("-blocknotify"))
         uiInterface.NotifyBlockTip.connect(BlockNotifyCallback);
 
-    std::vector<boost::filesystem::path> vImportFiles;
+    std::vector <boost::filesystem::path> vImportFiles;
     if (mapArgs.count("-loadblock")) {
         BOOST_FOREACH(const std::string& strFile, mapMultiArgs["-loadblock"])
         vImportFiles.push_back(strFile);
