@@ -355,7 +355,7 @@ bool CDBEnv::RemoveDb(const string& strFile)
 
 bool CDB::Rewrite(const string& strFile, const char* pszSkip)
 {
-    while (true) {
+    while(true) {
         {
             LOCK(bitdb.cs_db);
             if (!bitdb.mapFileUseCount.count(strFile) || bitdb.mapFileUseCount[strFile] == 0) {

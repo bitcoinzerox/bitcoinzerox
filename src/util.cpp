@@ -200,7 +200,7 @@ static FILE* fileout = NULL;
 static boost::mutex* mutexDebugLog = NULL;
 static list<string> *vMsgsBeforeOpenLog;
 
-static int FileWriteStr(const std::string &str, FILE *fp)
+static int FileWriteStr(const std::string& str, FILE* fp)
 {
     return fwrite(str.data(), 1, str.size(), fp);
 }
@@ -267,7 +267,7 @@ bool LogAcceptCategory(const char* category)
  * suppress printing of the timestamp when multiple calls are made that don't
  * end in a newline. Initialize it to true, and hold it, in the calling context.
  */
-static std::string LogTimestampStr(const std::string &str, bool *fStartedNewLine)
+static std::string LogTimestampStr(const std::string& str, bool *fStartedNewLine)
 {
     string strStamped;
 
@@ -291,7 +291,7 @@ static std::string LogTimestampStr(const std::string &str, bool *fStartedNewLine
     return strStamped;
 }
 
-int LogPrintStr(const std::string &str)
+int LogPrintStr(const std::string& str)
 {
     int ret = 0; // Returns total number of characters written
     static bool fStartedNewLine = true;
@@ -644,7 +644,7 @@ bool TryCreateDirectory(const boost::filesystem::path& p)
     return false;
 }
 
-void FileCommit(FILE *fileout)
+void FileCommit(FILE* fileout)
 {
     fflush(fileout); // harmless if redundantly called
 #ifdef WIN32
@@ -661,7 +661,7 @@ void FileCommit(FILE *fileout)
 #endif
 }
 
-bool TruncateFile(FILE *file, unsigned int length) {
+bool TruncateFile(FILE* file, unsigned int length) {
 #if defined(WIN32)
     return _chsize(_fileno(file), length) == 0;
 #else
@@ -696,7 +696,7 @@ int RaiseFileDescriptorLimit(int nMinFD) {
  * this function tries to make a particular range of a file allocated (corresponding to disk space)
  * it is advisory, and the range specified in the arguments will never contain live data
  */
-void AllocateFileRange(FILE *file, unsigned int offset, unsigned int length) {
+void AllocateFileRange(FILE* file, unsigned int offset, unsigned int length) {
 #if defined(WIN32)
     // Windows-specific version
     HANDLE hFile = (HANDLE)_get_osfhandle(_fileno(file));

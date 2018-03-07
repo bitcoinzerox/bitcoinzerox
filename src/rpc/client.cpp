@@ -155,7 +155,7 @@ UniValue ParseNonRFCJSONValue(const std::string& strVal)
 }
 
 /** Convert strings to command-specific RPC representation */
-UniValue RPCConvertValues(const std::string &strMethod, const std::vector<std::string> &strParams)
+UniValue RPCConvertValues(const std::string& strMethod, const std::vector<std::string> &strParams)
 {
     UniValue params(UniValue::VARR);
 

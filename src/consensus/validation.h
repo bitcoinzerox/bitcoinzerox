@@ -41,9 +41,9 @@ private:
 public:
     CValidationState() : mode(MODE_VALID), nDoS(0), chRejectCode(0), corruptionPossible(false) {}
     bool DoS(int level, bool ret = false,
-             unsigned int chRejectCodeIn=0, const std::string &strRejectReasonIn="",
+             unsigned int chRejectCodeIn=0, const std::string& strRejectReasonIn="",
              bool corruptionIn=false,
-             const std::string &strDebugMessageIn="") {
+             const std::string& strDebugMessageIn="") {
         chRejectCode = chRejectCodeIn;
         strRejectReason = strRejectReasonIn;
         corruptionPossible = corruptionIn;

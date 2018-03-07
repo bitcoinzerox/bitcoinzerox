@@ -619,7 +619,7 @@ void CNetAddr::SetRaw(Network network, const uint8_t *ip_in)
 
 static const unsigned char pchOnionCat[] = {0xFD,0x87,0xD8,0x7E,0xEB,0x43};
 
-bool CNetAddr::SetSpecial(const std::string &strName)
+bool CNetAddr::SetSpecial(const std::string& strName)
 {
     if (strName.size()>6 && strName.substr(strName.size() - 6, 6) == ".onion") {
         std::vector<unsigned char> vchAddr = DecodeBase32(strName.substr(0, strName.size() - 6).c_str());
@@ -657,7 +657,7 @@ CNetAddr::CNetAddr(const char *pszIp)
         *this = vIP[0];
 }
 
-CNetAddr::CNetAddr(const std::string &strIp)
+CNetAddr::CNetAddr(const std::string& strIp)
 {
     Init();
     std::vector<CNetAddr> vIP;
@@ -1100,7 +1100,7 @@ CService::CService(const char *pszIpPort, int portDefault)
         *this = ip;
 }
 
-CService::CService(const std::string &strIpPort)
+CService::CService(const std::string& strIpPort)
 {
     Init();
     CService ip;
@@ -1108,7 +1108,7 @@ CService::CService(const std::string &strIpPort)
         *this = ip;
 }
 
-CService::CService(const std::string &strIpPort, int portDefault)
+CService::CService(const std::string& strIpPort, int portDefault)
 {
     Init();
     CService ip;
@@ -1206,7 +1206,7 @@ CSubNet::CSubNet():
     memset(netmask, 0, sizeof(netmask));
 }
 
-CSubNet::CSubNet(const std::string &strSubnet)
+CSubNet::CSubNet(const std::string& strSubnet)
 {
     size_t slash = strSubnet.find_last_of('/');
     std::vector<CNetAddr> vIP;

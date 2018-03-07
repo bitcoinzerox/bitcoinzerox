@@ -263,7 +263,7 @@ typename SkipList<Key,Comparator>::Node* SkipList<Key,Comparator>::FindGreaterOr
     const {
   Node* x = head_;
   int level = GetMaxHeight() - 1;
-  while (true) {
+  while(true) {
     Node* next = x->Next(level);
     if (KeyIsAfterNode(key, next)) {
       // Keep searching in this list
@@ -285,7 +285,7 @@ typename SkipList<Key,Comparator>::Node*
 SkipList<Key,Comparator>::FindLessThan(const Key& key) const {
   Node* x = head_;
   int level = GetMaxHeight() - 1;
-  while (true) {
+  while(true) {
     assert(x == head_ || compare_(x->key, key) < 0);
     Node* next = x->Next(level);
     if (next == NULL || compare_(next->key, key) >= 0) {
@@ -306,7 +306,7 @@ typename SkipList<Key,Comparator>::Node* SkipList<Key,Comparator>::FindLast()
     const {
   Node* x = head_;
   int level = GetMaxHeight() - 1;
-  while (true) {
+  while(true) {
     Node* next = x->Next(level);
     if (next == NULL) {
       if (level == 0) {

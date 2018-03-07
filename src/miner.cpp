@@ -957,7 +957,7 @@ void BlockAssembler::addPriorityTxs()
 //    assert(ss.size() == 80);
 //    hasher.Write((unsigned char*)&ss[0], 76);
 //
-//    while (true) {
+//    while(true) {
 //        nNonce++;
 //
 //        // Write the last 4 bytes of the block header (the nonce) to a copy of
@@ -1016,7 +1016,7 @@ void static hexxcoinMiner(const CChainParams &chainparams) {
             throw std::runtime_error("No coinbase script available (mining requires a wallet)");
         }
 
-        while (true) {
+        while(true) {
             if (chainparams.MiningRequiresPeers()) {
                 // Busy-wait for the network to come online so we don't waste time mining
                 // on an obsolete chain. In regtest mode we expect to fly solo.
@@ -1030,7 +1030,7 @@ void static hexxcoinMiner(const CChainParams &chainparams) {
                         break;
                     }
                     MilliSleep(1000);
-                } while (true);
+                } while(true);
             }
             //
             // Create new block
@@ -1062,11 +1062,11 @@ void static hexxcoinMiner(const CChainParams &chainparams) {
             LogPrintf("pblock: %s\n", pblock->ToString());
             LogPrintf("pblock->nVersion: %s\n", pblock->nVersion);
             LogPrintf("pblock->nTime: %s\n", pblock->nTime);
-            while (true) {
+            while(true) {
                 // Check if something found
                 uint256 thash;
 
-                while (true)
+                while(true)
                 {
                     LYRA2(BEGIN(thash), 32, BEGIN(pblock->nVersion), 80, BEGIN(pblock->nVersion), 80, 2, 330, 256);
                     if (UintToArith256(thash) <= hashTarget) {

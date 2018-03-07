@@ -30,7 +30,7 @@ CDarkSendSigner darkSendSigner;
 std::map <uint256, CDarksendBroadcastTx> mapDarksendBroadcastTxes;
 std::vector <CAmount> vecPrivateSendDenominations;
 
-void CDarksendPool::ProcessMessage(CNode *pfrom, std::string &strCommand, CDataStream &vRecv) {
+void CDarksendPool::ProcessMessage(CNode *pfrom, std::string& strCommand, CDataStream &vRecv) {
     if (fLiteMode) return; // ignore all Dash related functionality
     if (!xnodeSync.IsBlockchainSynced()) return;
 
@@ -481,7 +481,7 @@ void CDarksendPool::SetNull() {
 // Unlock coins after mixing fails or succeeds
 //
 void CDarksendPool::UnlockCoins() {
-    while (true) {
+    while(true) {
         TRY_LOCK(pwalletMain->cs_wallet, lockWallet);
         if (!lockWallet) {
             MilliSleep(50);
@@ -1683,7 +1683,7 @@ bool CDarksendPool::SubmitDenominate() {
     return false;
 }
 
-bool CDarksendPool::PrepareDenominate(int nMinRounds, int nMaxRounds, std::string &strErrorRet, std::vector <CTxIn> &vecTxInRet, std::vector <CTxOut> &vecTxOutRet) {
+bool CDarksendPool::PrepareDenominate(int nMinRounds, int nMaxRounds, std::string& strErrorRet, std::vector <CTxIn> &vecTxInRet, std::vector <CTxOut> &vecTxOutRet) {
     if (pwalletMain->IsLocked(true)) {
         strErrorRet = "Wallet locked, unable to create transaction!";
         return false;
@@ -2182,7 +2182,7 @@ int CDarksendPool::GetDenominations(const std::vector <CTxDSOut> &vecTxDSOut) {
         non-denom - 0, all bits off
 */
 int CDarksendPool::GetDenominations(const std::vector <CTxOut> &vecTxOut, bool fSingleRandomDenom) {
-    std::vector <std::pair<CAmount, int>> vecDenomUsed;
+    std::vector<std::pair<CAmount, int>> vecDenomUsed;
 
     // make a list of denominations, with zero uses
     BOOST_FOREACH(CAmount
@@ -2335,7 +2335,7 @@ bool CDarkSendSigner::SignMessage(std::string strMessage, std::vector<unsigned c
     return key.SignCompact(ss.GetHash(), vchSigRet);
 }
 
-bool CDarkSendSigner::VerifyMessage(CPubKey pubkey, const std::vector<unsigned char> &vchSig, std::string strMessage, std::string &strErrorRet) {
+bool CDarkSendSigner::VerifyMessage(CPubKey pubkey, const std::vector<unsigned char> &vchSig, std::string strMessage, std::string& strErrorRet) {
     CHashWriter ss(SER_GETHASH, 0);
     ss << strMessageMagic;
     ss << strMessage;
@@ -2502,7 +2502,7 @@ void ThreadCheckDarkSendPool() {
     unsigned int nTick = 0;
     unsigned int nDoAutoNextRun = nTick + PRIVATESEND_AUTO_TIMEOUT_MIN;
 
-    while (true) {
+    while(true) {
         MilliSleep(1000);
 
         // try to sync from all available nodes, one step at a time

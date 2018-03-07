@@ -75,8 +75,8 @@ public:
 
     EditStatus getEditStatus() const { return editStatus; }
 
-    bool zerocoinMint(std::string &stringError, std::string denomAmount);
-    bool zerocoinSpend(std::string &stringError, std::string denomAmount);
+    bool zerocoinMint(std::string& stringError, std::string denomAmount);
+    bool zerocoinSpend(std::string& stringError, std::string denomAmount);
 
 private:
     WalletModel *walletModel;

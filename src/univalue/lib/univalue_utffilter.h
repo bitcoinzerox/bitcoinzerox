@@ -13,7 +13,7 @@
 class JSONUTF8StringFilter
 {
 public:
-    JSONUTF8StringFilter(std::string &s):
+    JSONUTF8StringFilter(std::string& s):
         str(s), is_valid(true), codepoint(0), state(0), surpair(0)
     {
     }
@@ -78,7 +78,7 @@ public:
         return is_valid;
     }
 private:
-    std::string &str;
+    std::string& str;
     bool is_valid;
     // Current UTF-8 decoding state
     unsigned int codepoint;

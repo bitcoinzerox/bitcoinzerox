@@ -480,7 +480,7 @@ UniValue xnodelist(const UniValue &params, bool fHelp) {
 
     UniValue obj(UniValue::VOBJ);
     if (strMode == "rank") {
-        std::vector <std::pair<int, CXnode>> vXnodeRanks = mnodeman.GetXnodeRanks();
+        std::vector<std::pair<int, CXnode>> vXnodeRanks = mnodeman.GetXnodeRanks();
         BOOST_FOREACH(PAIRTYPE(int, CXnode) & s, vXnodeRanks)
         {
             std::string strOutpoint = s.second.vin.prevout.ToStringShort();

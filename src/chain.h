@@ -420,7 +420,7 @@ public:
     }
 
     /** Returns the index entry for the tip of this chain, or NULL if none. */
-    CBlockIndex *Tip() const {
+    CBlockIndex* tip() const {
         return vChain.size() > 0 ? vChain[vChain.size() - 1] : NULL;
     }
 

@@ -862,7 +862,7 @@ class Benchmark {
     } else {
       // Special thread that keeps writing until other threads are done.
       RandomGenerator gen;
-      while (true) {
+      while(true) {
         {
           MutexLock l(&thread->shared->mu);
           if (thread->shared->num_done + 1 >= thread->shared->num_initialized) {

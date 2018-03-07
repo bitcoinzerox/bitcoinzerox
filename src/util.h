@@ -88,7 +88,7 @@ bool SetupNetworking();
 /** Return true if log accepts specified category */
 bool LogAcceptCategory(const char* category);
 /** Send a string to the log output */
-int LogPrintStr(const std::string &str);
+int LogPrintStr(const std::string& str);
 
 #define LogPrintf(...) LogPrint(NULL, __VA_ARGS__)
 
@@ -124,10 +124,10 @@ static inline bool error(const char* s)
 
 void PrintExceptionContinue(const std::exception *pex, const char* pszThread);
 void ParseParameters(int argc, const char*const argv[]);
-void FileCommit(FILE *fileout);
-bool TruncateFile(FILE *file, unsigned int length);
+void FileCommit(FILE* fileout);
+bool TruncateFile(FILE* file, unsigned int length);
 int RaiseFileDescriptorLimit(int nMinFD);
-void AllocateFileRange(FILE *file, unsigned int offset, unsigned int length);
+void AllocateFileRange(FILE* file, unsigned int offset, unsigned int length);
 bool RenameOver(boost::filesystem::path src, boost::filesystem::path dest);
 bool TryCreateDirectory(const boost::filesystem::path& p);
 boost::filesystem::path GetDefaultDataDir();

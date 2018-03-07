@@ -192,7 +192,7 @@ void CWalletDB::ListAccountCreditDebit(const string &strAccount, list <CAccounti
     if (!pcursor)
         throw runtime_error(std::string(__func__) + ": cannot create DB cursor");
     unsigned int fFlags = DB_SET_RANGE;
-    while (true) {
+    while(true) {
         // Read next record
         CDataStream ssKey(SER_DISK, CLIENT_VERSION);
         if (fFlags == DB_SET_RANGE)
@@ -273,7 +273,7 @@ void CWalletDB::ListPubCoin(std::list <CZerocoinEntry> &listPubCoin) {
     if (!pcursor)
         throw runtime_error("CWalletDB::ListPubCoin() : cannot create DB cursor");
     unsigned int fFlags = DB_SET_RANGE;
-    while (true) {
+    while(true) {
         // Read next record
         CDataStream ssKey(SER_DISK, CLIENT_VERSION);
         if (fFlags == DB_SET_RANGE)
@@ -306,7 +306,7 @@ void CWalletDB::ListCoinSpendSerial(std::list <CZerocoinSpendEntry> &listCoinSpe
     if (!pcursor)
         throw runtime_error("CWalletDB::ListCoinSpendSerial() : cannot create DB cursor");
     unsigned int fFlags = DB_SET_RANGE;
-    while (true) {
+    while(true) {
         // Read next record
         CDataStream ssKey(SER_DISK, CLIENT_VERSION);
         if (fFlags == DB_SET_RANGE)
@@ -672,7 +672,7 @@ DBErrors CWalletDB::LoadWallet(CWallet *pwallet) {
             return DB_CORRUPT;
         }
 
-        while (true) {
+        while(true) {
             // Read next record
             CDataStream ssKey(SER_DISK, CLIENT_VERSION);
             CDataStream ssValue(SER_DISK, CLIENT_VERSION);
@@ -774,7 +774,7 @@ DBErrors CWalletDB::FindWalletTx(CWallet *pwallet, vector <uint256> &vTxHash, ve
             return DB_CORRUPT;
         }
 
-        while (true) {
+        while(true) {
             // Read next record
             CDataStream ssKey(SER_DISK, CLIENT_VERSION);
             CDataStream ssValue(SER_DISK, CLIENT_VERSION);
@@ -883,7 +883,7 @@ void ThreadFlushWalletDB(const string &strFile) {
     unsigned int nLastSeen = nWalletDBUpdated;
     unsigned int nLastFlushed = nWalletDBUpdated;
     int64_t nLastWalletUpdate = GetTime();
-    while (true) {
+    while(true) {
         MilliSleep(500);
 
         if (nLastSeen != nWalletDBUpdated) {
@@ -987,7 +987,7 @@ bool AutoBackupWallet (CWallet* wallet, std::string strWalletFile, std::string& 
                 try {
                     fs::copy_file(sourceFile, backupFile);
                     LogPrintf("Creating backup of %s -> %s\n", sourceFile.string(), backupFile.string());
-                } catch(fs::filesystem_error &error) {
+                } catch(fs::filesystem_error& error) {
                     strBackupWarning = strprintf(_("Failed to create backup, error: %s"), error.what());
                     LogPrintf("%s\n", strBackupWarning);
                     nWalletBackups = -1;
@@ -1028,7 +1028,7 @@ bool AutoBackupWallet (CWallet* wallet, std::string strWalletFile, std::string& 
                 try {
                     fs::remove(file.second);
                     LogPrintf("Old backup deleted: %s\n", file.second);
-                } catch(fs::filesystem_error &error) {
+                } catch(fs::filesystem_error& error) {
                     strBackupWarning = strprintf(_("Failed to delete backup, error: %s"), error.what());
                     LogPrintf("%s\n", strBackupWarning);
                     return false;

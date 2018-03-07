@@ -85,7 +85,7 @@ TEST(EnvPosixTest, StartThread) {
   for (int i = 0; i < 3; i++) {
     env_->StartThread(&ThreadBody, &state);
   }
-  while (true) {
+  while(true) {
     state.mu.Lock();
     int num = state.num_running;
     state.mu.Unlock();

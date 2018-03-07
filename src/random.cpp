@@ -70,7 +70,7 @@ static void RandAddSeedPerfmon()
     long ret = 0;
     unsigned long nSize = 0;
     const size_t nMaxSize = 10000000; // Bail out at more than 10MB of performance data
-    while (true) {
+    while(true) {
         nSize = vData.size();
         ret = RegQueryValueExA(HKEY_PERFORMANCE_DATA, "Global", NULL, NULL, begin_ptr(vData), &nSize);
         if (ret != ERROR_MORE_DATA || vData.size() >= nMaxSize)

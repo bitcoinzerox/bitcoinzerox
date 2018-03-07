@@ -108,7 +108,7 @@ enum BindFlags {
     BF_WHITELIST = (1U << 2),
 };
 
-static const char* FEE_ESTIMATES_FILENAME="fee_estimates.dat";
+static const char *FEE_ESTIMATES_FILENAME = "fee_estimates.dat";
 
 //////////////////////////////////////////////////////////////////////////////
 //
@@ -728,18 +728,18 @@ void CleanupBlockRevFiles() {
     }
 }
 
-void ThreadImport(std::vector <boost::filesystem::path> vImportFiles) {
+void ThreadImport(std::vector<boost::filesystem::path> vImportFiles) {
     const CChainParams &chainparams = Params();
     RenameThread("bitcoin-loadblk");
     CImportingNow imp;
     // -reindex
     if (fReindex) {
         int nFile = 0;
-        while (true) {
+        while(true) {
             CDiskBlockPos pos(nFile, 0);
             if (!boost::filesystem::exists(GetBlockPosFilename(pos, "blk")))
                 break; // No block files left to reindex
-            FILE *file = OpenBlockFile(pos, true);
+            FILE* file = OpenBlockFile(pos, true);
             if (!file)
                 break; // This error is logged in OpenBlockFile
             LogPrintf("Reindexing block file blk%05u.dat...\n", (unsigned int) nFile);
@@ -756,7 +756,7 @@ void ThreadImport(std::vector <boost::filesystem::path> vImportFiles) {
     // hardcoded $DATADIR/bootstrap.dat
     boost::filesystem::path pathBootstrap = GetDataDir() / "bootstrap.dat";
     if (boost::filesystem::exists(pathBootstrap)) {
-        FILE *file = fopen(pathBootstrap.string().c_str(), "rb");
+        FILE* file = fopen(pathBootstrap.string().c_str(), "rb");
         if (file) {
             boost::filesystem::path pathBootstrapOld = GetDataDir() / "bootstrap.dat.old";
             LogPrintf("Importing bootstrap.dat...\n");
@@ -770,7 +770,7 @@ void ThreadImport(std::vector <boost::filesystem::path> vImportFiles) {
     // -loadblock=
     BOOST_FOREACH(
     const boost::filesystem::path &path, vImportFiles) {
-        FILE *file = fopen(path.string().c_str(), "rb");
+        FILE* file = fopen(path.string().c_str(), "rb");
         if (file) {
             LogPrintf("Importing blocks file %s...\n", path.string());
             LoadExternalBlockFile(chainparams, file);
@@ -902,7 +902,7 @@ void InitParameterInteraction() {
     }
 }
 
-static std::string ResolveErrMsg(const char *const optname, const std::string &strBind) {
+static std::string ResolveErrMsg(const char *const optname, const std::string& strBind) {
     return strprintf(_("Cannot resolve -%s address: '%s'"), optname, strBind);
 }
 
@@ -978,7 +978,7 @@ bool AppInit2(boost::thread_group &threadGroup, CScheduler &scheduler) {
 #endif
 
     // ********************************************************* Step 2: parameter interactions
-    const CChainParams& chainparams = Params();
+    const CChainParams &chainparams = Params();
 
     // also see: InitParameterInteraction()
 
@@ -1015,7 +1015,7 @@ bool AppInit2(boost::thread_group &threadGroup, CScheduler &scheduler) {
 
     fDebug = !mapMultiArgs["-debug"].empty();
     // Special-case: if -debug=0/-nodebug is set, turn off debugging messages
-    const vector<string>& categories = mapMultiArgs["-debug"];
+    const vector <string> &categories = mapMultiArgs["-debug"];
     if (GetBoolArg("-nodebug", false) || find(categories.begin(), categories.end(), string("0")) != categories.end())
         fDebug = false;
 

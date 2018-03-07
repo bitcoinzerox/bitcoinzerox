@@ -554,7 +554,7 @@ void PosixEnv::Schedule(void (*function)(void*), void* arg) {
 }
 
 void PosixEnv::BGThread() {
-  while (true) {
+  while(true) {
     // Wait until there is an item that is ready to run
     PthreadCall("lock", pthread_mutex_lock(&mu_));
     while (queue_.empty()) {

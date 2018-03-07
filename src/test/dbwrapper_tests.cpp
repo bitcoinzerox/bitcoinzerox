@@ -258,7 +258,7 @@ struct StringContentsSerializer {
         if (ser_action.ForRead()) {
             str.clear();
             char c = 0;
-            while (true) {
+            while(true) {
                 try {
                     READWRITE(c);
                     str.push_back(c);
