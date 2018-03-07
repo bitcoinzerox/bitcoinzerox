@@ -43,7 +43,7 @@ Step 2. ON LOCAL MACHINE: First run on your Local Wallet
 
 **2.3.**  Get wallet address:
 
-    getaccountaddress 0
+    getaccountaddress XN1
 
 **2.4.**  Send to received address **exactly 2000 HXX** in **1 transaction**. Wait for 15 confirmations.
 
@@ -67,7 +67,7 @@ Step 2. ON LOCAL MACHINE: First run on your Local Wallet
 
 **2.3.**  Get wallet address:
 
-    ./hexxcoin-cli getaccountaddress 0
+    ./hexxcoin-cli getaccountaddress XN1
 
 **2.4.**  Send to received address **exactly 2000 HXX** in **1 transaction**. Wait for 15 confirmations.
 
