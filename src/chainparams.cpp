@@ -95,12 +95,12 @@ public:
         consensus.hashGenesisBlock = genesis.GetHash();
         assert(consensus.hashGenesisBlock == uint256S("0x322bad477efb4b33fa4b1f0b2861eaf543c61068da9898a95062fdb02ada486f"));
         assert(genesis.hashMerkleRoot == uint256S("0x31f49b23f8a1185f85a6a6972446e72a86d50ca0e3b3ffe217d0c2fea30473db"));
-        vSeeds.push_back(CDNSSeedData("45.32.31.63", "45.32.31.63", false));
-        vSeeds.push_back(CDNSSeedData("hxx-addnode01.chainsilo.com", "hxx-addnode01.chainsilo.com", false));
-        vSeeds.push_back(CDNSSeedData("hxx-addnode02.chainsilo.com", "hxx-addnode02.chainsilo.com", false));
-        vSeeds.push_back(CDNSSeedData("hxx-addnode03.chainsilo.com", "hxx-addnode03.chainsilo.com", false));
-        vSeeds.push_back(CDNSSeedData("hxx-addnode04.chainsilo.com", "hxx-addnode04.chainsilo.com", false));
-        vSeeds.push_back(CDNSSeedData("hxx-addnode05.chainsilo.com", "hxx-addnode05.chainsilo.com", false));
+        vSeeds.push_back(CDNSSeedData("45.32.31.63", "45.32.31.63"));
+        vSeeds.push_back(CDNSSeedData("hxx-addnode01.chainsilo.com", "hxx-addnode01.chainsilo.com"));
+        vSeeds.push_back(CDNSSeedData("hxx-addnode02.chainsilo.com", "hxx-addnode02.chainsilo.com"));
+        vSeeds.push_back(CDNSSeedData("hxx-addnode03.chainsilo.com", "hxx-addnode03.chainsilo.com"));
+        vSeeds.push_back(CDNSSeedData("hxx-addnode04.chainsilo.com", "hxx-addnode04.chainsilo.com"));
+        vSeeds.push_back(CDNSSeedData("hxx-addnode05.chainsilo.com", "hxx-addnode05.chainsilo.com"));
         base58Prefixes[PUBKEY_ADDRESS] = std::vector < unsigned char > (1, 40);
         base58Prefixes[SCRIPT_ADDRESS] = std::vector < unsigned char > (1, 10);
         base58Prefixes[SECRET_KEY] = std::vector < unsigned char > (1, 210);
