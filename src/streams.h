@@ -533,7 +533,7 @@ protected:
     }
 
 public:
-    CBufferedFile(FILE* fileIn, uint64_t nBufSize, uint64_t nRewindIn, int nTypeIn, int nVersionIn) :
+    CBufferedFile(FILE *fileIn, uint64_t nBufSize, uint64_t nRewindIn, int nTypeIn, int nVersionIn) :
         nSrcPos(0), nReadPos(0), nReadLimit((uint64_t)(-1)), nRewind(nRewindIn), vchBuf(nBufSize, 0)
     {
         src = fileIn;
@@ -631,7 +631,7 @@ public:
 
     // search for a given byte in the stream, and remain positioned on it
     void FindByte(char ch) {
-        while(true) {
+        while (true) {
             if (nReadPos == nSrcPos)
                 Fill();
             if (vchBuf[nReadPos % vchBuf.size()] == ch)

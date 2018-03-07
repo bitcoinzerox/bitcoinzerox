@@ -1213,7 +1213,7 @@ Status DBImpl::Write(const WriteOptions& options, WriteBatch* my_batch) {
     versions_->SetLastSequence(last_sequence);
   }
 
-  while(true) {
+  while (true) {
     Writer* ready = writers_.front();
     writers_.pop_front();
     if (ready != &w) {
@@ -1288,7 +1288,7 @@ Status DBImpl::MakeRoomForWrite(bool force) {
   assert(!writers_.empty());
   bool allow_delay = !force;
   Status s;
-  while(true) {
+  while (true) {
     if (!bg_error_.ok()) {
       // Yield previous error
       s = bg_error_;

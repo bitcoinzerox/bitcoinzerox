@@ -424,7 +424,7 @@ std::string JSONRPCExecBatch(const UniValue& vReq)
     return ret.write() + "\n";
 }
 
-UniValue CRPCTable::execute(const std::string& strMethod, const UniValue &params) const
+UniValue CRPCTable::execute(const std::string &strMethod, const UniValue &params) const
 {
     // Return immediately if in warmup
     {

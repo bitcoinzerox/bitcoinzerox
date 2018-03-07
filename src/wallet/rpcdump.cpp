@@ -35,7 +35,7 @@ std::string static EncodeDumpTime(int64_t nTime) {
     return DateTimeStrFormat("%Y-%m-%dT%H:%M:%SZ", nTime);
 }
 
-int64_t static DecodeDumpTime(const std::string& str) {
+int64_t static DecodeDumpTime(const std::string &str) {
     static const boost::posix_time::ptime epoch = boost::posix_time::from_time_t(0);
     static const std::locale loc(std::locale::classic(),
         new boost::posix_time::time_input_facet("%Y-%m-%dT%H:%M:%SZ"));
@@ -48,7 +48,7 @@ int64_t static DecodeDumpTime(const std::string& str) {
     return (ptime - epoch).total_seconds();
 }
 
-std::string static EncodeDumpString(const std::string& str) {
+std::string static EncodeDumpString(const std::string &str) {
     std::stringstream ret;
     BOOST_FOREACH(unsigned char c, str) {
         if (c <= 32 || c >= 128 || c == '%') {
@@ -60,7 +60,7 @@ std::string static EncodeDumpString(const std::string& str) {
     return ret.str();
 }
 
-std::string DecodeDumpString(const std::string& str) {
+std::string DecodeDumpString(const std::string &str) {
     std::stringstream ret;
     for (unsigned int pos = 0; pos < str.length(); pos++) {
         unsigned char c = str[pos];

@@ -438,7 +438,7 @@ void CXnode::UpdateLastPaid(const CBlockIndex *pindex, int nMaxBlocksToScanBack)
     // LogPrint("xnode", "CXnode::UpdateLastPaidBlock -- searching for block with payment to %s -- keeping old %d\n", vin.prevout.ToStringShort(), nBlockLastPaid);
 }
 
-bool CXnodeBroadcast::Create(std::string strService, std::string strKeyXnode, std::string strTxHash, std::string strOutputIndex, std::string& strErrorRet, CXnodeBroadcast &mnbRet, bool fOffline) {
+bool CXnodeBroadcast::Create(std::string strService, std::string strKeyXnode, std::string strTxHash, std::string strOutputIndex, std::string &strErrorRet, CXnodeBroadcast &mnbRet, bool fOffline) {
     LogPrintf("CXnodeBroadcast::Create\n");
     CTxIn txin;
     CPubKey pubKeyCollateralAddressNew;
@@ -482,7 +482,7 @@ bool CXnodeBroadcast::Create(std::string strService, std::string strKeyXnode, st
     return Create(txin, CService(strService), keyCollateralAddressNew, pubKeyCollateralAddressNew, keyXnodeNew, pubKeyXnodeNew, strErrorRet, mnbRet);
 }
 
-bool CXnodeBroadcast::Create(CTxIn txin, CService service, CKey keyCollateralAddressNew, CPubKey pubKeyCollateralAddressNew, CKey keyXnodeNew, CPubKey pubKeyXnodeNew, std::string& strErrorRet, CXnodeBroadcast &mnbRet) {
+bool CXnodeBroadcast::Create(CTxIn txin, CService service, CKey keyCollateralAddressNew, CPubKey pubKeyCollateralAddressNew, CKey keyXnodeNew, CPubKey pubKeyXnodeNew, std::string &strErrorRet, CXnodeBroadcast &mnbRet) {
     // wait for reindex and/or import to finish
     if (fImporting || fReindex) return false;
 

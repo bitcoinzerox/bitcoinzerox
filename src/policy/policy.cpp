@@ -185,7 +185,7 @@ bool IsWitnessStandard(const CTransaction& tx, const CCoinsViewCache& mapInputs)
         CScript prevScript = prev.scriptPubKey;
 
         if (prevScript.IsPayToScriptHash()) {
-            std::vector<std::vector<unsigned char> > stack;
+            std::vector <std::vector<unsigned char> > stack;
             // If the scriptPubKey is P2SH, we try to extract the redeemScript casually by converting the scriptSig
             // into a stack. We do not check IsPushOnly nor compare the hash as these will be done later anyway.
             // If the check fails at this stage, we know that this txid must be a bad one.

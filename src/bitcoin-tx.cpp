@@ -141,7 +141,7 @@ static void RegisterLoad(const string& strInput)
     string key = strInput.substr(0, pos);
     string filename = strInput.substr(pos + 1, string::npos);
 
-    FILE* f = fopen(filename.c_str(), "r");
+    FILE *f = fopen(filename.c_str(), "r");
     if (!f) {
         string strErr = "Cannot open file " + filename;
         throw runtime_error(strErr);

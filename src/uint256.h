@@ -153,7 +153,7 @@ inline uint256 uint256S(const char *str)
     return rv;
 }
 /* uint256 from std::string.
- * This is a separate function because the constructor uint256(const std::string& str) can result
+ * This is a separate function because the constructor uint256(const std::string &str) can result
  * in dangerously catching uint256(0) via std::string(const char*).
  */
 inline uint256 uint256S(const std::string& str)

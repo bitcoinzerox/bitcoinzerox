@@ -117,7 +117,7 @@ const static std::string allNetMessageTypes[] = {
         NetMsgType::MNVERIFY,
 
 };
-const static std::vector<std::string> allNetMessageTypesVec(allNetMessageTypes, allNetMessageTypes + ARRAYLEN(allNetMessageTypes));
+const static std::vector <std::string> allNetMessageTypesVec(allNetMessageTypes, allNetMessageTypes + ARRAYLEN(allNetMessageTypes));
 
 CMessageHeader::CMessageHeader(const MessageStartChars &pchMessageStartIn) {
     memcpy(pchMessageStart, pchMessageStartIn, MESSAGE_START_SIZE);
@@ -223,6 +223,6 @@ std::string CInv::ToString() const
     return strprintf("%s %s", GetCommand(), hash.ToString());
 }
 
-const std::vector<std::string> &getAllNetMessageTypes() {
+const std::vector <std::string> &getAllNetMessageTypes() {
     return allNetMessageTypesVec;
 }

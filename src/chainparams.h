@@ -16,7 +16,7 @@
 struct CDNSSeedData {
     std::string name, host;
     bool supportsServiceBitsFiltering;
-    CDNSSeedData(const std::string& strName, const std::string& strHost, bool supportsServiceBitsFilteringIn = false) : name(strName), host(strHost), supportsServiceBitsFiltering(supportsServiceBitsFilteringIn) {}
+    CDNSSeedData(const std::string &strName, const std::string &strHost, bool supportsServiceBitsFilteringIn = false) : name(strName), host(strHost), supportsServiceBitsFiltering(supportsServiceBitsFilteringIn) {}
 };
 
 struct SeedSpec6 {
@@ -111,7 +111,7 @@ protected:
  * Return the currently selected parameters. This won't change after app
  * startup, except for unit tests.
  */
-const CChainParams& params();
+const CChainParams &Params();
 
 /**
  * @returns CChainParams for the given BIP70 chain name.

@@ -123,7 +123,7 @@ private:
                 if (fOk)
                     fOk = check();
             vChecks.clear();
-        } while(true);
+        } while (true);
     }
 
 public:

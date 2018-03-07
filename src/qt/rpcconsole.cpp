@@ -125,7 +125,7 @@ public:
  * @param[out]   args        Parsed arguments will be appended to this list
  * @param[in]    strCommand  Command line to split
  */
-bool parseCommandLine(std::vector<std::string> &args, const std::string& strCommand)
+bool parseCommandLine(std::vector<std::string> &args, const std::string &strCommand)
 {
     enum CmdParseState
     {

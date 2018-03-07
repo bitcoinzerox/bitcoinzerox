@@ -70,7 +70,7 @@ vector<unsigned char> ParseHex(const char* psz)
 {
     // convert hex dump to vector
     vector<unsigned char> vch;
-    while(true)
+    while (true)
     {
         while (isspace(*psz))
             psz++;

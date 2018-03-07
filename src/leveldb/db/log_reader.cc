@@ -71,7 +71,7 @@ bool Reader::ReadRecord(Slice* record, std::string* scratch) {
   uint64_t prospective_record_offset = 0;
 
   Slice fragment;
-  while(true) {
+  while (true) {
     uint64_t physical_record_offset = end_of_buffer_offset_ - buffer_.size();
     const unsigned int record_type = ReadPhysicalRecord(&fragment);
     switch (record_type) {
@@ -179,7 +179,7 @@ void Reader::ReportDrop(uint64_t bytes, const Status& reason) {
 }
 
 unsigned int Reader::ReadPhysicalRecord(Slice* result) {
-  while(true) {
+  while (true) {
     if (buffer_.size() < kHeaderSize) {
       if (!eof_) {
         // Last read was a full read, so this is a trailer to skip

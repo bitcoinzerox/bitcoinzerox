@@ -35,7 +35,7 @@ namespace libzerocoin {
 /// in length, and 3072 bits is strongly recommended.
 ///
 
-    void CalculateParams(Params& params, Bignum N, string aux, uint32_t securityLevel) {
+    void CalculateParams(Params &params, Bignum N, string aux, uint32_t securityLevel) {
         params.initialized = false;
         params.accumulatorParams.initialized = false;
 

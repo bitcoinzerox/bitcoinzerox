@@ -105,7 +105,7 @@ limitedmap<uint256, int64_t> mapAlreadyAskedFor(MAX_INV_SZ);
 static std::deque <std::string> vOneShots;
 CCriticalSection cs_vOneShots;
 
-std::vector<std::string> vAddedNodes;
+std::vector <std::string> vAddedNodes;
 CCriticalSection cs_vAddedNodes;
 
 NodeId nLastNodeId = 0;
@@ -119,7 +119,7 @@ static CNodeSignals g_signals;
 
 CNodeSignals &GetNodeSignals() { return g_signals; }
 
-void AddOneShot(const std::string& strDest) {
+void AddOneShot(const std::string &strDest) {
     LOCK(cs_vOneShots);
     vOneShots.push_back(strDest);
 }
@@ -1044,7 +1044,7 @@ static void AcceptConnection(const ListenSocket &hListenSocket) {
 
 void ThreadSocketHandler() {
     unsigned int nPrevNodeCount = 0;
-    while(true) {
+    while (true) {
         //
         // Disconnect nodes
         //
@@ -1339,7 +1339,7 @@ void ThreadMapPort()
         std::string strDesc = "Bitcoin " + FormatFullVersion();
 
         try {
-            while(true) {
+            while (true) {
 #ifndef UPNPDISCOVER_SUCCESS
                 /* miniupnpc 1.5 */
                 r = UPNP_AddPortMapping(urls.controlURL, data.first.servicetype,
@@ -1516,7 +1516,7 @@ void ThreadOpenConnections() {
         for (int64_t nLoop = 0;; nLoop++) {
             ProcessOneShot();
             BOOST_FOREACH(
-            const std::string& strAddr, mapMultiArgs["-connect"])
+            const std::string &strAddr, mapMultiArgs["-connect"])
             {
                 CAddress addr(CService(), NODE_NONE);
                 OpenNetworkConnection(addr, false, NULL, strAddr.c_str());
@@ -1533,7 +1533,7 @@ void ThreadOpenConnections() {
 
     // Minimum time before next feeler connection (in microseconds).
     int64_t nNextFeeler = PoissonNextSend(nStart * 1000 * 1000, FEELER_INTERVAL);
-    while(true) {
+    while (true) {
         ProcessOneShot();
 
         MilliSleep(500);
@@ -1596,7 +1596,7 @@ void ThreadOpenConnections() {
 
         int64_t nANow = GetAdjustedTime();
         int nTries = 0;
-        while(true) {
+        while (true) {
             CAddrInfo addr = addrman.Select(fFeeler);
 
             // if we selected an invalid address, restart
@@ -1657,7 +1657,7 @@ std::vector <AddedNodeInfo> GetAddedNodeInfo() {
         LOCK(cs_vAddedNodes);
         ret.reserve(vAddedNodes.size());
         BOOST_FOREACH(
-        const std::string& strAddNode, vAddedNodes)
+        const std::string &strAddNode, vAddedNodes)
         lAddresses.push_back(strAddNode);
     }
 
@@ -1679,7 +1679,7 @@ std::vector <AddedNodeInfo> GetAddedNodeInfo() {
     }
 
     BOOST_FOREACH(
-    const std::string& strAddNode, lAddresses) {
+    const std::string &strAddNode, lAddresses) {
         CService service(strAddNode, Params().GetDefaultPort());
         if (service.IsValid()) {
             // strAddNode is an IP:port
@@ -1762,7 +1762,7 @@ void ThreadMessageHandler() {
     boost::mutex condition_mutex;
     boost::unique_lock<boost::mutex> lock(condition_mutex);
 
-    while(true) {
+    while (true) {
         std::vector < CNode * > vNodesCopy;
         {
             LOCK(cs_vNodes);
@@ -1819,7 +1819,7 @@ void ThreadMessageHandler() {
 }
 
 
-bool BindListenPort(const CService &addrBind, std::string& strError, bool fWhitelisted) {
+bool BindListenPort(const CService &addrBind, std::string &strError, bool fWhitelisted) {
     strError = "";
     int nOne = 1;
 
@@ -2260,7 +2260,7 @@ bool CAddrDB::Write(const CAddrMan &addr) {
 
     // open temp output file, and associate with CAutoFile
     boost::filesystem::path pathTmp = GetDataDir() / tmpfn;
-    FILE* file = fopen(pathTmp.string().c_str(), "wb");
+    FILE *file = fopen(pathTmp.string().c_str(), "wb");
     CAutoFile fileout(file, SER_DISK, CLIENT_VERSION);
     if (fileout.IsNull())
         return error("%s: Failed to open file %s", __func__, pathTmp.string());
@@ -2284,7 +2284,7 @@ bool CAddrDB::Write(const CAddrMan &addr) {
 
 bool CAddrDB::Read(CAddrMan &addr) {
     // open input file, and associate with CAutoFile
-    FILE* file = fopen(pathAddr.string().c_str(), "rb");
+    FILE *file = fopen(pathAddr.string().c_str(), "rb");
     CAutoFile filein(file, SER_DISK, CLIENT_VERSION);
     if (filein.IsNull())
         return error("%s: Failed to open file %s", __func__, pathAddr.string());
@@ -2546,7 +2546,7 @@ bool CBanDB::Write(const banmap_t &banSet) {
 
     // open temp output file, and associate with CAutoFile
     boost::filesystem::path pathTmp = GetDataDir() / tmpfn;
-    FILE* file = fopen(pathTmp.string().c_str(), "wb");
+    FILE *file = fopen(pathTmp.string().c_str(), "wb");
     CAutoFile fileout(file, SER_DISK, CLIENT_VERSION);
     if (fileout.IsNull())
         return error("%s: Failed to open file %s", __func__, pathTmp.string());
@@ -2570,7 +2570,7 @@ bool CBanDB::Write(const banmap_t &banSet) {
 
 bool CBanDB::Read(banmap_t &banSet) {
     // open input file, and associate with CAutoFile
-    FILE* file = fopen(pathBanlist.string().c_str(), "rb");
+    FILE *file = fopen(pathBanlist.string().c_str(), "rb");
     CAutoFile filein(file, SER_DISK, CLIENT_VERSION);
     if (filein.IsNull())
         return error("%s: Failed to open file %s", __func__, pathBanlist.string());

@@ -74,7 +74,7 @@ Status ReadFileToString(Env* env, const std::string& fname, std::string* data) {
   }
   static const int kBufferSize = 8192;
   char* space = new char[kBufferSize];
-  while(true) {
+  while (true) {
     Slice fragment;
     s = file->Read(kBufferSize, &fragment, space);
     if (!s.ok()) {

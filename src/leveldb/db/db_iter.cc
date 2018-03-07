@@ -210,7 +210,7 @@ void DBIter::Prev() {
     // the key changes so we can use the normal reverse scanning code.
     assert(iter_->Valid());  // Otherwise valid_ would have been false
     SaveKey(ExtractUserKey(iter_->key()), &saved_key_);
-    while(true) {
+    while (true) {
       iter_->Prev();
       if (!iter_->Valid()) {
         valid_ = false;

@@ -364,7 +364,7 @@ public:
     }
 
     /// Create Xnode broadcast, needs to be relayed manually after that
-    static bool Create(CTxIn vin, CService service, CKey keyCollateralAddressNew, CPubKey pubKeyCollateralAddressNew, CKey keyXnodeNew, CPubKey pubKeyXnodeNew, std::string& strErrorRet, CXnodeBroadcast &mnbRet);
+    static bool Create(CTxIn vin, CService service, CKey keyCollateralAddressNew, CPubKey pubKeyCollateralAddressNew, CKey keyXnodeNew, CPubKey pubKeyXnodeNew, std::string &strErrorRet, CXnodeBroadcast &mnbRet);
     static bool Create(std::string strService, std::string strKey, std::string strTxHash, std::string strOutputIndex, std::string& strErrorRet, CXnodeBroadcast &mnbRet, bool fOffline = false);
 
     bool SimpleCheck(int& nDos);

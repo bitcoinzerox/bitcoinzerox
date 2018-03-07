@@ -249,7 +249,7 @@ bool TorControlConnection::Command(const std::string &cmd, const ReplyHandlerCB&
 /* Split reply line in the form 'AUTH METHODS=...' into a type
  * 'AUTH' and arguments 'METHODS=...'.
  */
-static std::pair<std::string,std::string> SplitTorReplyLine(const std::string& s)
+static std::pair<std::string,std::string> SplitTorReplyLine(const std::string &s)
 {
     size_t ptr=0;
     std::string type;
@@ -264,7 +264,7 @@ static std::pair<std::string,std::string> SplitTorReplyLine(const std::string& s
 
 /** Parse reply arguments in the form 'METHODS=COOKIE,SAFECOOKIE COOKIEFILE=".../control_auth_cookie"'.
  */
-static std::map<std::string,std::string> ParseTorReplyMapping(const std::string& s)
+static std::map<std::string,std::string> ParseTorReplyMapping(const std::string &s)
 {
     std::map<std::string,std::string> mapping;
     size_t ptr=0;
@@ -314,7 +314,7 @@ static std::map<std::string,std::string> ParseTorReplyMapping(const std::string&
  */
 static std::pair<bool,std::string> ReadBinaryFile(const std::string &filename, size_t maxsize=std::numeric_limits<size_t>::max())
 {
-    FILE* f = fopen(filename.c_str(), "rb");
+    FILE *f = fopen(filename.c_str(), "rb");
     if (f == NULL)
         return std::make_pair(false,"");
     std::string retval;
@@ -334,7 +334,7 @@ static std::pair<bool,std::string> ReadBinaryFile(const std::string &filename, s
  */
 static bool WriteBinaryFile(const std::string &filename, const std::string &data)
 {
-    FILE* f = fopen(filename.c_str(), "wb");
+    FILE *f = fopen(filename.c_str(), "wb");
     if (f == NULL)
         return false;
     if (fwrite(data.data(), 1, data.size(), f) != data.size()) {
@@ -429,7 +429,7 @@ void TorController::add_onion_cb(TorControlConnection& conn, const TorControlRep
 {
     if (reply.code == 250) {
         LogPrint("tor", "tor: ADD_ONION successful\n");
-        BOOST_FOREACH(const std::string& s, reply.lines) {
+        BOOST_FOREACH(const std::string &s, reply.lines) {
             std::map<std::string,std::string> m = ParseTorReplyMapping(s);
             std::map<std::string,std::string>::iterator i;
             if ((i = m.find("ServiceID")) != m.end())
@@ -548,7 +548,7 @@ void TorController::protocolinfo_cb(TorControlConnection& conn, const TorControl
          * 250-AUTH METHODS=NULL
          * 250-AUTH METHODS=HASHEDPASSWORD
          */
-        BOOST_FOREACH(const std::string& s, reply.lines) {
+        BOOST_FOREACH(const std::string &s, reply.lines) {
             std::pair<std::string,std::string> l = SplitTorReplyLine(s);
             if (l.first == "AUTH") {
                 std::map<std::string,std::string> m = ParseTorReplyMapping(l.second);
@@ -565,7 +565,7 @@ void TorController::protocolinfo_cb(TorControlConnection& conn, const TorControl
                 }
             }
         }
-        BOOST_FOREACH(const std::string& s, methods) {
+        BOOST_FOREACH(const std::string &s, methods) {
             LogPrint("tor", "tor: Supported authentication method: %s\n", s);
         }
         // Prefer NULL, otherwise SAFECOOKIE. If a password is provided, use HASHEDPASSWORD

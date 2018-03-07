@@ -10,6 +10,7 @@
 #include "netfulfilledman.h"
 #include "spork.h"
 #include "util.h"
+#include "consensus/consensus.h"
 #include <boost/lexical_cast.hpp>
 
 /** Object for who's going to get paid on which blocks */
@@ -30,7 +31,7 @@ CCriticalSection cs_mapXnodePaymentVotes;
 *   - When non-superblocks are detected, the normal schedule should be maintained
 */
 
-bool IsBlockValueValid(const CBlock &block, int nBlockHeight, CAmount blockReward, std::string& strErrorRet) {
+bool IsBlockValueValid(const CBlock &block, int nBlockHeight, CAmount blockReward, std::string &strErrorRet) {
     strErrorRet = "";
 
     bool isBlockRewardValueMet = (block.vtx[0].GetValueOut() <= blockReward);
@@ -131,7 +132,7 @@ bool IsBlockPayeeValid(const CTransaction &txNew, int nBlockHeight, CAmount bloc
     // we can only check xnode payment /
     const Consensus::Params &consensusParams = Params().GetConsensus();
 
-    if (nBlockHeight < 222665) {
+    if (nBlockHeight < HF_XNODE_PAYMENT_START) {
         //there is no budget data to use to check anything, let's just accept the longest chain
         if (fDebug) LogPrintf("IsBlockPayeeValid -- xnode isn't start\n");
         return true;
@@ -259,7 +260,7 @@ int CXnodePayments::GetMinXnodePaymentsProto() {
            : MIN_XNODE_PAYMENT_PROTO_VERSION_1;
 }
 
-void CXnodePayments::ProcessMessage(CNode *pfrom, std::string& strCommand, CDataStream &vRecv) {
+void CXnodePayments::ProcessMessage(CNode *pfrom, std::string &strCommand, CDataStream &vRecv) {
 
 //    LogPrintf("CXnodePayments::ProcessMessage strCommand=%s\n", strCommand);
     // Ignore any payments messages until xnode list is synced
@@ -609,7 +610,7 @@ void CXnodePayments::CheckAndRemove() {
     LogPrintf("CXnodePayments::CheckAndRemove -- %s\n", ToString());
 }
 
-bool CXnodePaymentVote::IsValid(CNode *pnode, int nValidationHeight, std::string& strError) {
+bool CXnodePaymentVote::IsValid(CNode *pnode, int nValidationHeight, std::string &strError) {
     CXnode *pmn = mnodeman.Find(vinXnode);
 
     if (!pmn) {

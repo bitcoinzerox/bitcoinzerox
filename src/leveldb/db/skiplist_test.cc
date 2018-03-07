@@ -232,7 +232,7 @@ class ConcurrentTest {
     Key pos = RandomTarget(rnd);
     SkipList<Key, Comparator>::Iterator iter(&list_);
     iter.Seek(pos);
-    while(true) {
+    while (true) {
       Key current;
       if (!iter.Valid()) {
         current = MakeKey(K, 0);

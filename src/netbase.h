@@ -50,7 +50,7 @@ class CNetAddr
         CNetAddr();
         CNetAddr(const struct in_addr& ipv4Addr);
         explicit CNetAddr(const char *pszIp);
-        explicit CNetAddr(const std::string& strIp);
+        explicit CNetAddr(const std::string &strIp);
         void Init();
         void SetIP(const CNetAddr& ip);
 
@@ -60,7 +60,7 @@ class CNetAddr
          */
         void SetRaw(Network network, const uint8_t *data);
 
-        bool SetSpecial(const std::string& strName); // for Tor addresses
+        bool SetSpecial(const std::string &strName); // for Tor addresses
         bool IsIPv4() const;    // IPv4 mapped address (::FFFF:0:0/96, 0.0.0.0/0)
         bool IsIPv6() const;    // IPv6 address (not mapped IPv4, not Tor)
         bool IsRFC1918() const; // IPv4 private networks (10.0.0.0/8, 192.168.0.0/16, 172.16.0.0/12)
@@ -119,7 +119,7 @@ class CSubNet
 
     public:
         CSubNet();
-        explicit CSubNet(const std::string& strSubnet);
+        explicit CSubNet(const std::string &strSubnet);
 
         //constructor for single ip subnet (<ipv4>/32 or <ipv6>/128)
         explicit CSubNet(const CNetAddr &addr);

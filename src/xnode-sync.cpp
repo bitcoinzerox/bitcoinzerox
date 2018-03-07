@@ -205,7 +205,7 @@ std::string CXnodeSync::GetSyncStatus() {
     }
 }
 
-void CXnodeSync::ProcessMessage(CNode *pfrom, std::string& strCommand, CDataStream &vRecv) {
+void CXnodeSync::ProcessMessage(CNode *pfrom, std::string &strCommand, CDataStream &vRecv) {
     if (strCommand == NetMsgType::SYNCSTATUSCOUNT) { //Sync status count
 
         //do not care about stats if sync process finished or failed

@@ -70,7 +70,7 @@ static const uint64_t DEFAULT_MAX_UPLOAD_TARGET = 0;
 /** Default for blocks only*/
 static const bool DEFAULT_BLOCKSONLY = false;
 
-static const bool DEFAULT_FORCEDNSSEED = true;
+static const bool DEFAULT_FORCEDNSSEED = false;
 static const size_t DEFAULT_MAXRECEIVEBUFFER = 5 * 1000;
 static const size_t DEFAULT_MAXSENDBUFFER    = 1 * 1000;
 
@@ -469,6 +469,8 @@ private:
     static uint64_t nMaxOutboundLimit;
     static uint64_t nMaxOutboundTimeframe;
 
+    CCriticalSection cs_nRefCount;
+	
     CNode(const CNode&);
     void operator=(const CNode&);
 
@@ -482,6 +484,7 @@ public:
 
     int GetRefCount()
     {
+		LOCK(cs_nRefCount);
         assert(nRefCount >= 0);
         return nRefCount;
     }
@@ -508,12 +511,14 @@ public:
 
     CNode* AddRef()
     {
+		LOCK(cs_nRefCount);
         nRefCount++;
         return this;
     }
 
     void Release()
     {
+		LOCK(cs_nRefCount);
         nRefCount--;
     }
 

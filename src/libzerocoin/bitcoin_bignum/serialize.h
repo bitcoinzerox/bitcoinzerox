@@ -1261,7 +1261,7 @@ public:
     int nType;
     int nVersion;
 
-    CBufferedFile(FILE* fileIn, uint64 nBufSize, uint64 nRewindIn, int nTypeIn, int nVersionIn) :
+    CBufferedFile(FILE *fileIn, uint64 nBufSize, uint64 nRewindIn, int nTypeIn, int nVersionIn) :
             src(fileIn), nSrcPos(0), nReadPos(0), nReadLimit((uint64)(-1)), nRewind(nRewindIn), vchBuf(nBufSize, 0),
             state(0), exceptmask(std::ios_base::badbit | std::ios_base::failbit), nType(nTypeIn), nVersion(nVersionIn) {
     }
@@ -1349,7 +1349,7 @@ public:
 
     // search for a given byte in the stream, and remain positioned on it
     void FindByte(char ch) {
-        while(true) {
+        while (true) {
             if (nReadPos == nSrcPos)
                 Fill();
             if (vchBuf[nReadPos % vchBuf.size()] == ch)

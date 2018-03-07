@@ -192,7 +192,7 @@ class Block::Iter : public Iterator {
 
     // Linear search (within restart block) for first key >= target
     SeekToRestartPoint(left);
-    while(true) {
+    while (true) {
       if (!ParseNextKey()) {
         return;
       }

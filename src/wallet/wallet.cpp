@@ -2538,7 +2538,7 @@ bool CWallet::SelectCoins(const vector <COutput> &vAvailableCoins, const CAmount
 }
 
 bool CWallet::FundTransaction(CMutableTransaction &tx, CAmount &nFeeRet, bool overrideEstimatedFeeRate,
-                              const CFeeRate &specificFeeRate, int &nChangePosInOut, std::string& strFailReason,
+                              const CFeeRate &specificFeeRate, int &nChangePosInOut, std::string &strFailReason,
                               bool includeWatching, bool lockUnspents, const CTxDestination &destChange) {
     vector <CRecipient> vecSend;
 
@@ -2651,7 +2651,7 @@ bool CWallet::SelectCoinsByDenominations(int nDenom, CAmount nValueMin, CAmount 
     return nValueRet >= nValueMin && nDenom == nDenomResult;
 }
 
-bool CWallet::CreateCollateralTransaction(CMutableTransaction &txCollateral, std::string& strReason) {
+bool CWallet::CreateCollateralTransaction(CMutableTransaction &txCollateral, std::string &strReason) {
     txCollateral.vin.clear();
     txCollateral.vout.clear();
 
@@ -2774,7 +2774,7 @@ bool CWallet::SelectCoinsGrouppedByAddresses(std::vector <CompactTallyItem> &vec
 
 bool CWallet::CreateTransaction(const vector <CRecipient> &vecSend, CWalletTx &wtxNew, CReserveKey &reservekey,
                                 CAmount &nFeeRet,
-                                int &nChangePosInOut, std::string& strFailReason, const CCoinControl *coinControl,
+                                int &nChangePosInOut, std::string &strFailReason, const CCoinControl *coinControl,
                                 bool sign, AvailableCoinsType nCoinType, bool fUseInstantSend) {
     LogPrintf("CreateTransaction()\n");
     CAmount nValue = 0;
@@ -2839,7 +2839,7 @@ bool CWallet::CreateTransaction(const vector <CRecipient> &vecSend, CWalletTx &w
 
             nFeeRet = payTxFee.GetFeePerK();
             // Start with no fee and loop until there is enough fee
-            while(true) {
+            while (true) {
                 nChangePosInOut = nChangePosRequest;
                 txNew.vin.clear();
                 txNew.vout.clear();
@@ -3324,7 +3324,7 @@ bool CWallet::CreateZerocoinSpendModel(string &stringError, string denomAmount) 
  */
 bool CWallet::CreateZerocoinMintTransaction(const vector <CRecipient> &vecSend, CWalletTx &wtxNew,
                                             CReserveKey &reservekey,
-                                            CAmount &nFeeRet, int &nChangePosInOut, std::string& strFailReason,
+                                            CAmount &nFeeRet, int &nChangePosInOut, std::string &strFailReason,
                                             const CCoinControl *coinControl, bool sign) {
     CAmount nValue = 0;
     int nChangePosRequest = nChangePosInOut;
@@ -3363,7 +3363,7 @@ bool CWallet::CreateZerocoinMintTransaction(const vector <CRecipient> &vecSend, 
             nFeeRet = payTxFee.GetFeePerK();
             LogPrintf("nFeeRet=%s\n", nFeeRet);
             // Start with no fee and loop until there is enough fee
-            while(true) {
+            while (true) {
                 nChangePosInOut = nChangePosRequest;
                 txNew.vin.clear();
                 txNew.vout.clear();
@@ -3630,7 +3630,7 @@ bool CWallet::CreateZerocoinMintTransaction(const vector <CRecipient> &vecSend, 
 
 bool
 CWallet::CreateZerocoinMintTransaction(CScript pubCoin, int64_t nValue, CWalletTx &wtxNew, CReserveKey &reservekey,
-                                       int64_t &nFeeRet, std::string& strFailReason,
+                                       int64_t &nFeeRet, std::string &strFailReason,
                                        const CCoinControl *coinControl) {
     vector <CRecipient> vecSend;
     CRecipient recipient = {pubCoin, nValue, false};
@@ -3656,7 +3656,7 @@ CWallet::CreateZerocoinMintTransaction(CScript pubCoin, int64_t nValue, CWalletT
 bool CWallet::CreateZerocoinSpendTransaction(int64_t nValue, libzerocoin::CoinDenomination denomination,
                                              CWalletTx &wtxNew, CReserveKey &reservekey, CBigNum &coinSerial,
                                              uint256 &txHash, CBigNum &zcSelectedValue, bool &zcSelectedIsUsed,
-                                             std::string& strFailReason) {
+                                             std::string &strFailReason) {
     if (nValue < 0) {
         strFailReason = _("Transaction amounts must be positive");
         return false;
@@ -4590,12 +4590,12 @@ set <set<CTxDestination>> CWallet::GetAddressGroupings() {
     return ret;
 }
 
-CAmount CWallet::GetAccountBalance(const std::string& strAccount, int nMinDepth, const isminefilter &filter) {
+CAmount CWallet::GetAccountBalance(const std::string &strAccount, int nMinDepth, const isminefilter &filter) {
     CWalletDB walletdb(strWalletFile);
     return GetAccountBalance(walletdb, strAccount, nMinDepth, filter);
 }
 
-CAmount CWallet::GetAccountBalance(CWalletDB &walletdb, const std::string& strAccount, int nMinDepth,
+CAmount CWallet::GetAccountBalance(CWalletDB &walletdb, const std::string &strAccount, int nMinDepth,
                                    const isminefilter &filter) {
     CAmount nBalance = 0;
 
@@ -4619,7 +4619,7 @@ CAmount CWallet::GetAccountBalance(CWalletDB &walletdb, const std::string& strAc
     return nBalance;
 }
 
-std::set <CTxDestination> CWallet::GetAccountAddresses(const std::string& strAccount) const {
+std::set <CTxDestination> CWallet::GetAccountAddresses(const std::string &strAccount) const {
     LOCK(cs_wallet);
     set <CTxDestination> result;
     BOOST_FOREACH(const PAIRTYPE(CTxDestination, CAddressBookData)&item, mapAddressBook)
@@ -5279,10 +5279,10 @@ bool CWallet::ParameterInteraction() {
     return true;
 }
 
-bool CWallet::BackupWallet(const std::string& strDest) {
+bool CWallet::BackupWallet(const std::string &strDest) {
     if (!fFileBacked)
         return false;
-    while(true) {
+    while (true) {
         {
             LOCK(bitdb.cs_db);
             if (!bitdb.mapFileUseCount.count(strWalletFile) || bitdb.mapFileUseCount[strWalletFile] == 0) {
@@ -5305,7 +5305,7 @@ bool CWallet::BackupWallet(const std::string& strDest) {
 #endif
                     LogPrintf("copied %s to %s\n", strWalletFile, pathDest.string());
                     return true;
-                } catch (const boost::filesystem::filesystem_error& e) {
+                } catch (const boost::filesystem::filesystem_error &e) {
                     LogPrintf("error copying %s to %s - %s\n", strWalletFile, pathDest.string(), e.what());
                     return false;
                 }

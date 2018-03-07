@@ -988,7 +988,7 @@ bool CheckSequenceLocks(const CTransaction &tx, int flags, LockPoints *lp, bool 
     AssertLockHeld(cs_main);
     AssertLockHeld(mempool.cs);
 
-    CBlockIndex* tip = chainActive.Tip();
+    CBlockIndex *tip = chainActive.Tip();
     CBlockIndex index;
     index.pprev = tip;
     // CheckSequenceLocks() uses chainActive.Height()+1 to evaluate
@@ -1825,8 +1825,8 @@ bool AcceptToMemoryPoolWorker(CTxMemPool &pool, CValidationState &state, const C
 
                 LOCK(csFreeLimiter);
 
-                // Use an exponentially decaying ~10-minute window:
-                dFreeCount *= pow(1.0 - 1.0 / 600.0, (double) (nNow - nLastTime));
+                // Use an exponentially decaying ~2,5-minute window:
+                dFreeCount *= pow(1.0 - 1.0 / 150.0, (double) (nNow - nLastTime));
                 nLastTime = nNow;
                 // -limitfreerelay unit is thousand-bytes-per-minute
                 // At default rate it would take over a month to fill 1GB
@@ -2277,7 +2277,7 @@ bool fLargeWorkForkFound = false;
 bool fLargeWorkInvalidChainFound = false;
 CBlockIndex *pindexBestForkTip = NULL, *pindexBestForkBase = NULL;
 
-static void AlertNotify(const std::string& strMessage) {
+static void AlertNotify(const std::string &strMessage) {
     uiInterface.NotifyAlertChanged();
     std::string strCmd = GetArg("-alertnotify", "");
     if (strCmd.empty()) return;
@@ -2390,7 +2390,7 @@ void static InvalidChainFound(CBlockIndex *pindexNew) {
               pindexNew->GetBlockHash().ToString(), pindexNew->nHeight,
               log(pindexNew->nChainWork.getdouble()) / log(2.0), DateTimeStrFormat("%Y-%m-%d %H:%M:%S",
                                                                                    pindexNew->GetBlockTime()));
-    CBlockIndex* tip = chainActive.Tip();
+    CBlockIndex *tip = chainActive.Tip();
     assert(tip);
     LogPrintf("%s:  current best=%s  height=%d  log2_work=%.8g  date=%s\n", __func__,
               tip->GetBlockHash().ToString(), chainActive.Height(), log(tip->nChainWork.getdouble()) / log(2.0),
@@ -2639,7 +2639,7 @@ namespace {
     }
 
 /** Abort with a message */
-    bool AbortNode(const std::string& strMessage, const std::string &userMessage = "") {
+    bool AbortNode(const std::string &strMessage, const std::string &userMessage = "") {
         strMiscWarning = strMessage;
         LogPrintf("*** %s\n", strMessage);
         uiInterface.ThreadSafeMessageBox(
@@ -2650,7 +2650,7 @@ namespace {
         return false;
     }
 
-    bool AbortNode(CValidationState &state, const std::string& strMessage, const std::string &userMessage = "") {
+    bool AbortNode(CValidationState &state, const std::string &strMessage, const std::string &userMessage = "") {
         AbortNode(strMessage, userMessage);
         return state.Error(strMessage);
     }
@@ -2762,7 +2762,7 @@ void static FlushBlockFile(bool fFinalize = false) {
 
     CDiskBlockPos posOld(nLastBlockFile, 0);
 
-    FILE* fileOld = OpenBlockFile(posOld);
+    FILE *fileOld = OpenBlockFile(posOld);
     if (fileOld) {
         if (fFinalize)
             TruncateFile(fileOld, vinfoBlockFile[nLastBlockFile].nSize);
@@ -2791,7 +2791,7 @@ void ThreadScriptCheck() {
 // Protected by cs_main
 VersionBitsCache versionbitscache;
 
-int32_t ComputeBlockVersion(const CBlockIndex *pindexPrev, const Consensus::Params& params) {
+int32_t ComputeBlockVersion(const CBlockIndex *pindexPrev, const Consensus::Params &params) {
     LOCK(cs_main);
     int32_t nVersion = VERSIONBITS_TOP_BITS;
 
@@ -2815,11 +2815,11 @@ private:
 public:
     WarningBitsConditionChecker(int bitIn) : bit(bitIn) {}
 
-    int64_t BeginTime(const Consensus::Params& params) const { return 0; }
-    int64_t EndTime(const Consensus::Params& params) const { return std::numeric_limits<int64_t>::max(); }
-    int Period(const Consensus::Params& params) const { return params.nMinerConfirmationWindow; }
-    int Threshold(const Consensus::Params& params) const { return params.nRuleChangeActivationThreshold; }
-    bool Condition(const CBlockIndex *pindex, const Consensus::Params& params) const {
+    int64_t BeginTime(const Consensus::Params &params) const { return 0; }
+    int64_t EndTime(const Consensus::Params &params) const { return std::numeric_limits<int64_t>::max(); }
+	int Period(const Consensus::Params &params) const { return params.nMinerConfirmationWindow; }
+	int Threshold(const Consensus::Params &params) const { return params.nRuleChangeActivationThreshold; }
+    bool Condition(const CBlockIndex *pindex, const Consensus::Params &params) const {
         return ((pindex->nVersion & VERSIONBITS_TOP_MASK) == VERSIONBITS_TOP_BITS) &&
                ((pindex->nVersion >> bit) & 1) != 0 &&
                ((ComputeBlockVersion(pindex->pprev, params) >> bit) & 1) == 0;
@@ -2943,7 +2943,7 @@ bool ConnectBlock(const CBlock &block, CValidationState &state, CBlockIndex *pin
     int nInputs = 0;
     int64_t nSigOpsCost = 0;
     CDiskTxPos pos(pindex->GetBlockPos(), GetSizeOfCompactSize(block.vtx.size()));
-    std::vector<std::pair<uint256, CDiskTxPos>> vPos;
+    std::vector <std::pair<uint256, CDiskTxPos>> vPos;
     vPos.reserve(block.vtx.size());
     blockundo.vtxundo.reserve(block.vtx.size() - 1);
     std::vector <PrecomputedTransactionData> txdata;
@@ -3184,7 +3184,7 @@ bool static FlushStateToDisk(CValidationState &state, FlushStateMode mode) {
             FlushBlockFile();
             // Then update all block file information (which may refer to block and undo files).
             {
-                std::vector<std::pair<int, const CBlockFileInfo *>> vFiles;
+                std::vector <std::pair<int, const CBlockFileInfo *>> vFiles;
                 vFiles.reserve(setDirtyFileInfo.size());
                 for (set<int>::iterator it = setDirtyFileInfo.begin(); it != setDirtyFileInfo.end();) {
                     vFiles.push_back(make_pair(*it, &vinfoBlockFile[*it]));
@@ -3256,7 +3256,7 @@ void static UpdateTip(CBlockIndex *pindexNew, const CChainParams &chainParams) {
     mempool.AddTransactionsUpdated(1);
     cvBlockChange.notify_all();
     static bool fWarned = false;
-    std::vector<std::string> warningMessages;
+    std::vector <std::string> warningMessages;
     if (!IsInitialBlockDownload()) {
         int nUpgraded = 0;
         const CBlockIndex *pindex = chainActive.Tip();
@@ -3815,7 +3815,7 @@ static CBlockIndex *FindMostWorkChain() {
         }
         if (!fInvalidAncestor)
             return pindexNew;
-    } while(true);
+    } while (true);
 }
 
 /** Delete all entries in setBlockIndexCandidates that are worse than the current tip. */
@@ -4287,7 +4287,7 @@ FindBlockPos(CValidationState &state, CDiskBlockPos &pos, unsigned int nAddSize,
             if (fPruneMode)
                 fCheckForPruning = true;
             if (CheckDiskSpace(nNewChunks * BLOCKFILE_CHUNK_SIZE - pos.nPos)) {
-                FILE* file = OpenBlockFile(pos);
+                FILE *file = OpenBlockFile(pos);
                 if (file) {
                     LogPrintf("Pre-allocating up to position 0x%x in blk%05u.dat\n", nNewChunks * BLOCKFILE_CHUNK_SIZE,
                               pos.nFile);
@@ -4319,7 +4319,7 @@ bool FindUndoPos(CValidationState &state, int nFile, CDiskBlockPos &pos, unsigne
         if (fPruneMode)
             fCheckForPruning = true;
         if (CheckDiskSpace(nNewChunks * UNDOFILE_CHUNK_SIZE - pos.nPos)) {
-            FILE* file = OpenUndoFile(pos);
+            FILE *file = OpenUndoFile(pos);
             if (file) {
                 LogPrintf("Pre-allocating up to position 0x%x in rev%05u.dat\n", nNewChunks * UNDOFILE_CHUNK_SIZE,
                           pos.nFile);
@@ -4475,7 +4475,7 @@ CheckIndexAgainstCheckpoint(const CBlockIndex *pindexPrev, CValidationState &sta
     return true;
 }
 
-bool IsWitnessEnabled(const CBlockIndex *pindexPrev, const Consensus::Params& params) {
+bool IsWitnessEnabled(const CBlockIndex *pindexPrev, const Consensus::Params &params) {
     LOCK(cs_main);
     return (VersionBitsState(pindexPrev, params, Consensus::DEPLOYMENT_SEGWIT, versionbitscache) == THRESHOLD_ACTIVE);
 }
@@ -4978,7 +4978,7 @@ FILE *OpenDiskFile(const CDiskBlockPos &pos, const char *prefix, bool fReadOnly)
         return NULL;
     boost::filesystem::path path = GetBlockPosFilename(pos, prefix);
     boost::filesystem::create_directories(path.parent_path());
-    FILE* file = fopen(path.string().c_str(), "rb+");
+    FILE *file = fopen(path.string().c_str(), "rb+");
     if (!file && !fReadOnly)
         file = fopen(path.string().c_str(), "wb+");
     if (!file) {
@@ -5256,7 +5256,7 @@ bool CVerifyDB::VerifyDB(const CChainParams &chainparams, CCoinsView *coinsview,
     return true;
 }
 
-bool RewindBlockIndex(const CChainParams& params) {
+bool RewindBlockIndex(const CChainParams &params) {
     LOCK(cs_main);
 
     int nHeight = 1;
@@ -5425,7 +5425,7 @@ bool InitBlockIndex(const CChainParams &chainparams) {
     return true;
 }
 
-bool LoadExternalBlockFile(const CChainParams &chainparams, FILE* fileIn, CDiskBlockPos *dbp) {
+bool LoadExternalBlockFile(const CChainParams &chainparams, FILE *fileIn, CDiskBlockPos *dbp) {
     // Map of disk positions for blocks with unknown parent (only used for reindex)
     LogPrintf("LoadExternalBlockFile...\n");
     static std::multimap <uint256, CDiskBlockPos> mapBlocksUnknownParent;
@@ -5766,7 +5766,7 @@ void static CheckBlockIndex(const Consensus::Params &consensusParams) {
     assert(nNodes == forward.size());
 }
 
-std::string GetWarnings(const std::string& strFor) {
+std::string GetWarnings(const std::string &strFor) {
     string strStatusBar;
     string strRPC;
     string strGUI;
@@ -7515,7 +7515,7 @@ bool static ProcessMessage(CNode *pfrom, string strCommand, CDataStream &vRecv, 
 //        LogPrintf("Main.cpp ProcessMessage() strCommand=%s\n", strCommand);
         // Ignore unknown commands for extensibility
         bool found = false;
-        const std::vector<std::string> &allMessages = getAllNetMessageTypes();
+        const std::vector <std::string> &allMessages = getAllNetMessageTypes();
         BOOST_FOREACH(const std::string msg, allMessages) {
             if (msg == strCommand) {
                 found = true;
@@ -8185,7 +8185,7 @@ std::string CBlockFileInfo::ToString() const {
                      nHeightLast, DateTimeStrFormat("%Y-%m-%d", nTimeFirst), DateTimeStrFormat("%Y-%m-%d", nTimeLast));
 }
 
-ThresholdState VersionBitsTipState(const Consensus::Params& params, Consensus::DeploymentPos pos) {
+ThresholdState VersionBitsTipState(const Consensus::Params &params, Consensus::DeploymentPos pos) {
     LOCK(cs_main);
     return VersionBitsState(chainActive.Tip(), params, pos, versionbitscache);
 }
