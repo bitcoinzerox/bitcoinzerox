@@ -344,7 +344,7 @@ UniValue xnode(const UniValue &params, bool fHelp) {
     }
 
     if (strCommand == "list-conf") {
-        UniValue resultObj(UniValue::VOBJ);
+        UniValue resultObj(UniValue::VARR);
 
         BOOST_FOREACH(CXnodeConfig::CXnodeEntry mne, xnodeConfig.getEntries()) {
             CTxIn vin = CTxIn(uint256S(mne.getTxHash()), uint32_t(atoi(mne.getOutputIndex().c_str())));
@@ -359,7 +359,7 @@ UniValue xnode(const UniValue &params, bool fHelp) {
             mnObj.push_back(Pair("txHash", mne.getTxHash()));
             mnObj.push_back(Pair("outputIndex", mne.getOutputIndex()));
             mnObj.push_back(Pair("status", strStatus));
-            resultObj.push_back(Pair("xnode", mnObj));
+            resultObj.push_back(mnObj);
         }
 
         return resultObj;
