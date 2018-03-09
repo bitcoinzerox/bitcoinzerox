@@ -326,7 +326,7 @@ void CXnodeSync::ProcessTick() {
                 netfulfilledman.AddFulfilledRequest(pnode->addr, "spork-sync");
                 // get current network sporks
                 pnode->PushMessage(NetMsgType::GETSPORKS);
-                LogPrintf("CXnodeSync::ProcessTick -- nTick %d nRequestedXnodeAssets %d -- requesting sporks from peer %d\n", nTick, nRequestedXnodeAssets, pnode->id);
+                //LogPrintf("CXnodeSync::ProcessTick -- nTick %d nRequestedXnodeAssets %d -- requesting sporks from peer %d\n", nTick, nRequestedXnodeAssets, pnode->id);
                 continue; // always get sporks first, switch to the next node without waiting for the next tick
             }
 
