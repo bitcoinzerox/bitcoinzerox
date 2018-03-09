@@ -659,7 +659,7 @@ bool CXnodeBroadcast::CheckOutpoint(int &nDos) {
             return false;
         }
         if (coins.vout[vin.prevout.n].nValue != XNODE_COIN_REQUIRED * COIN) {
-            LogPrint("xnode", "CXnodeBroadcast::CheckOutpoint -- Xnode UTXO should have 1000 HXX, xnode=%s\n", vin.prevout.ToStringShort());
+            LogPrint("xnode", "CXnodeBroadcast::CheckOutpoint -- Xnode UTXO should have 2000 HXX, xnode=%s\n", vin.prevout.ToStringShort());
             return false;
         }
         if (chainActive.Height() - coins.nHeight + 1 < Params().GetConsensus().nXnodeMinimumConfirmations) {
@@ -682,7 +682,7 @@ bool CXnodeBroadcast::CheckOutpoint(int &nDos) {
     }
 
     // verify that sig time is legit in past
-    // should be at least not earlier than block when 1000 HXX tx got nXnodeMinimumConfirmations
+    // should be at least not earlier than block when 2000 HXX tx got nXnodeMinimumConfirmations
     uint256 hashBlock = uint256();
     CTransaction tx2;
     GetTransaction(vin.prevout.hash, tx2, Params().GetConsensus(), hashBlock, true);
@@ -690,7 +690,7 @@ bool CXnodeBroadcast::CheckOutpoint(int &nDos) {
         LOCK(cs_main);
         BlockMap::iterator mi = mapBlockIndex.find(hashBlock);
         if (mi != mapBlockIndex.end() && (*mi).second) {
-            CBlockIndex *pMNIndex = (*mi).second; // block for 1000 HXX tx -> 1 confirmation
+            CBlockIndex *pMNIndex = (*mi).second; // block for 2000 HXX tx -> 1 confirmation
             CBlockIndex *pConfIndex = chainActive[pMNIndex->nHeight + Params().GetConsensus().nXnodeMinimumConfirmations - 1]; // block where tx got nXnodeMinimumConfirmations
             if (pConfIndex->GetBlockTime() > sigTime) {
                 LogPrintf("CXnodeBroadcast::CheckOutpoint -- Bad sigTime %d (%d conf block is at %d) for Xnode %s %s\n",
