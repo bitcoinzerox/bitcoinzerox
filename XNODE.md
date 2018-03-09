@@ -17,7 +17,7 @@ Step 0. ON VPS: Build (Optional - use latest linux-x64 binaries otherwise)
 
 **0.2.**  See [README.md](README.md) for instructions on building.
 
-**0.3** Optional, install rebuild client and full chain
+**0.3** Optional, install prebuild client and full chain
 
 	mkdir .hexxcoin
 	cd .hexxcoin
