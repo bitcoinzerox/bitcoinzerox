@@ -13,7 +13,7 @@ Step 0. ON VPS: Build (Optional - use latest linux-x64 binaries otherwise)
 ----------------------
 **0.1.**  Check out from source:
 
-    git clone https://github.com/hexxcointakeover/4.0.1.X
+    git clone https://github.com/hexxcointakeover/hexxcoin
 
 **0.2.**  See [README.md](README.md) for instructions on building.
 
