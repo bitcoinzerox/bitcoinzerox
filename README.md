@@ -1,7 +1,8 @@
+Hexxcoin [HXX] Core update 2018
+===============================
 
+[![Build Status](https://travis-ci.org/hexxcointakeover/4.0.1.X.svg?branch=master)](https://travis-ci.org/hexxcointakeover/4.0.1.X)
 
-
-# **Hexxcoin [HXX] Core update 2018**
 # **Xnodes coming**
 
 Anonymous Zerocoin Protocol:
