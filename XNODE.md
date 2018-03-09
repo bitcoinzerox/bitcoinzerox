@@ -17,6 +17,17 @@ Step 0. ON VPS: Build (Optional - use latest linux-x64 binaries otherwise)
 
 **0.2.**  See [README.md](README.md) for instructions on building.
 
+**0.3** Optional, install rebuild client and full chain
+
+	mkdir .hexxcoin
+	cd .hexxcoin
+	sudo apt-get install unzip
+	wget https://github.com/hexxcointakeover/hexxcoin/releases/download/05.03.2018/hexxcoin.zip
+	unzip hexxcoin.zip
+	cd ..
+	wget https://github.com/hexxcointakeover/hexxcoin/releases/download/4.0.2.6/linux-x64.zip
+	unzip linux-x64.zip
+
 
 Step 1. ON VPS: Open port 29100 (Optional - only if firewall is running)
 ----------------------
