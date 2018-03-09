@@ -321,14 +321,15 @@ void CXnodeSync::ProcessTick() {
 
             // SPORK : ALWAYS ASK FOR SPORKS AS WE SYNC (we skip this mode now)
 
-            if (!netfulfilledman.HasFulfilledRequest(pnode->addr, "spork-sync")) {
-                // only request once from each peer
-                netfulfilledman.AddFulfilledRequest(pnode->addr, "spork-sync");
-                // get current network sporks
-                pnode->PushMessage(NetMsgType::GETSPORKS);
-                //LogPrintf("CXnodeSync::ProcessTick -- nTick %d nRequestedXnodeAssets %d -- requesting sporks from peer %d\n", nTick, nRequestedXnodeAssets, pnode->id);
-                continue; // always get sporks first, switch to the next node without waiting for the next tick
-            }
+//            if (!netfulfilledman.HasFulfilledRequest(pnode->addr, "spork-sync"))
+//            {
+//                // only request once from each peer
+//                netfulfilledman.AddFulfilledRequest(pnode->addr, "spork-sync");
+//                // get current network sporks
+//                pnode->PushMessage(NetMsgType::GETSPORKS);
+//                //LogPrintf("CXnodeSync::ProcessTick -- nTick %d nRequestedXnodeAssets %d -- requesting sporks from peer %d\n", nTick, nRequestedXnodeAssets, pnode->id);
+//                continue; // always get sporks first, switch to the next node without waiting for the next tick
+//            }
 
             // MNLIST : SYNC XNODE LIST FROM OTHER CONNECTED CLIENTS
 
