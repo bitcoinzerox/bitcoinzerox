@@ -71,7 +71,7 @@ Debian/Ubuntu Linux Daemon Build Instructions
 	for qt:
 	sudo apt-get install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler libqrencode-dev
 
-	git clone https://github.com/hexxcointakeover/4.0.1.2 hexxcoin
+	git clone https://github.com/hexxcointakeover/hexxcoin
 
 	cd hexxcoin
 	for vps:
