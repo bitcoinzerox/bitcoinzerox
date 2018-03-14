@@ -4,7 +4,8 @@ os: linux
 language: minimal
 cache:
   directories:
-  - depends
+  - depends/built
+  - depends/sdk-sources
   - $HOME/.ccache
 env:
   global:
