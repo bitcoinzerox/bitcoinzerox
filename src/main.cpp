@@ -1366,7 +1366,7 @@ bool CheckTransaction(const CTransaction &tx, CValidationState &state, uint256 h
         if (tx.vin[0].scriptSig.size() < 2 || tx.vin[0].scriptSig.size() > 100)
             return state.DoS(100, false, REJECT_INVALID, "bad-cb-length");
         // Check for founders inputs
-        if ((nHeight > (999999)) && (nHeight < (HF_F_PAYMENT_STOP)))// give 2 weeks to fix if any payout problems
+        if ((nHeight > (230729)) && (nHeight < (HF_F_PAYMENT_STOP)))// give 2 weeks to fix if any payout problems
 		{
 				bool found_1 = false;
 				bool found_2 = false;
@@ -1381,7 +1381,7 @@ bool CheckTransaction(const CTransaction &tx, CValidationState &state, uint256 h
                 FOUNDER_2_SCRIPT = GetScriptForDestination(CBitcoinAddress("HNdzbEtifr2nTd3VBvUWqJLc35ZFXr2EYo").Get());
                 FOUNDER_3_SCRIPT = GetScriptForDestination(CBitcoinAddress("H7HxEDxnirWkH7AnXPKDpwA8juU5XxyAVP").Get());
                 FOUNDER_4_SCRIPT = GetScriptForDestination(CBitcoinAddress("H94j1zMAbWwHWcEq8hUogAMALpVzj34M6Q").Get());
-				CAmount xnodePayment = GetXnodePayment(nHeight);
+                CAmount xnodePayment = GetXnodePayment(nHeight);
                 BOOST_FOREACH(const CTxOut &output, tx.vout)
 				{
                     if (output.scriptPubKey == FOUNDER_1_SCRIPT && output.nValue == (int64_t)(0.1 * COIN))
@@ -1408,10 +1408,10 @@ bool CheckTransaction(const CTransaction &tx, CValidationState &state, uint256 h
                         continue;
                     }
 					
-                    if (xnodePayment == output.nValue)
-					{
-                        total_payment_tx = total_payment_tx + 1;
-                    }
+                    //if (xnodePayment == output.nValue)
+                    //{
+                       // total_payment_tx = total_payment_tx + 1;
+                    //}
 				}
 
 
