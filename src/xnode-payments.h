@@ -23,7 +23,7 @@ static const int MNPAYMENTS_SIGNATURES_TOTAL            = 10;
 //  vote for xnode and be elected as a payment winner
 // V1 - Last protocol version before update
 // V2 - Newest protocol version
-static const int MIN_XNODE_PAYMENT_PROTO_VERSION_1 = 99019;
+static const int MIN_XNODE_PAYMENT_PROTO_VERSION_1 = 99021;
 static const int MIN_XNODE_PAYMENT_PROTO_VERSION_2 = 99022;
 
 extern CCriticalSection cs_vecPayees;
