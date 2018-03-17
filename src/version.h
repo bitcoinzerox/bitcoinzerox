@@ -46,6 +46,6 @@ static const int FEEFILTER_VERSION = 99013;
 static const int SHORT_IDS_BLOCKS_VERSION = 99013;
 
 //! not banning for invalid compact blocks starts with this version
-static const int INVALID_CB_NO_BAN_VERSION = 99017;
+static const int INVALID_CB_NO_BAN_VERSION = 99021;
 
 #endif // BITCOIN_VERSION_H
