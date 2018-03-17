@@ -21,7 +21,10 @@ static const int MNPAYMENTS_SIGNATURES_TOTAL            = 10;
 
 //! minimum peer version that can receive and send xnode payment messages,
 //  vote for xnode and be elected as a payment winner
-static const int MIN_XNODE_PAYMENT_PROTO_VERSION = 99020;
+// V1 - Last protocol version before update
+// V2 - Newest protocol version
+static const int MIN_XNODE_PAYMENT_PROTO_VERSION_1 = 99019;
+static const int MIN_XNODE_PAYMENT_PROTO_VERSION_2 = 99022;
 
 extern CCriticalSection cs_vecPayees;
 extern CCriticalSection cs_mapXnodeBlocks;

@@ -8,9 +8,9 @@
 #include "key.h"
 #include "main.h"
 #include "net.h"
+#include "spork.h"
 #include "timedata.h"
 #include "utiltime.h"
-#include "spork.h"
 
 class CXnode;
 class CXnodeBroadcast;

@@ -10,8 +10,8 @@
 #include "xnode-sync.h"
 #include "xnodeman.h"
 #include "netfulfilledman.h"
-#include "util.h"
 #include "spork.h"
+#include "util.h"
 
 class CXnodeSync;
 
@@ -140,6 +140,8 @@ std::string CXnodeSync::GetAssetName() {
     switch (nRequestedXnodeAssets) {
         case (XNODE_SYNC_INITIAL):
             return "XNODE_SYNC_INITIAL";
+        case (XNODE_SYNC_SPORKS):
+            return "XNODE_SYNC_SPORKS";
         case (XNODE_SYNC_LIST):
             return "XNODE_SYNC_LIST";
         case (XNODE_SYNC_MNW):
@@ -159,6 +161,11 @@ void CXnodeSync::SwitchToNextAsset() {
             throw std::runtime_error("Can't switch to next asset from failed, should use Reset() first!");
             break;
         case (XNODE_SYNC_INITIAL):
+            ClearFulfilledRequests();
+            nRequestedXnodeAssets = XNODE_SYNC_SPORKS;
+            LogPrintf("CXnodeSync::SwitchToNextAsset -- Starting %s\n", GetAssetName());
+            break;
+        case (XNODE_SYNC_SPORKS):
             nTimeLastXnodeList = GetTime();
             nRequestedXnodeAssets = XNODE_SYNC_LIST;
             LogPrintf("CXnodeSync::SwitchToNextAsset -- Starting %s\n", GetAssetName());
@@ -183,6 +190,8 @@ std::string CXnodeSync::GetSyncStatus() {
     switch (xnodeSync.nRequestedXnodeAssets) {
         case XNODE_SYNC_INITIAL:
             return _("Synchronization pending...");
+        case XNODE_SYNC_SPORKS:
+            return _("Synchronizing sporks...");
         case XNODE_SYNC_LIST:
             return _("Synchronizing xnodes...");
         case XNODE_SYNC_MNW:
@@ -216,6 +225,7 @@ void CXnodeSync::ClearFulfilledRequests() {
 
     BOOST_FOREACH(CNode * pnode, vNodes)
     {
+        netfulfilledman.RemoveFulfilledRequest(pnode->addr, "spork-sync");
         netfulfilledman.RemoveFulfilledRequest(pnode->addr, "xnode-list-sync");
         netfulfilledman.RemoveFulfilledRequest(pnode->addr, "xnode-payment-sync");
         netfulfilledman.RemoveFulfilledRequest(pnode->addr, "full-sync");
@@ -262,8 +272,13 @@ void CXnodeSync::ProcessTick() {
         }
     }
 
-    if (nRequestedXnodeAssets == XNODE_SYNC_INITIAL && IsBlockchainSynced())
-    {
+    if (Params().NetworkIDString() != CBaseChainParams::REGTEST && !IsBlockchainSynced() && nRequestedXnodeAssets > XNODE_SYNC_SPORKS) {
+        nTimeLastXnodeList = GetTime();
+        nTimeLastPaymentVote = GetTime();
+        nTimeLastGovernanceItem = GetTime();
+        return;
+    }
+    if (nRequestedXnodeAssets == XNODE_SYNC_INITIAL || (nRequestedXnodeAssets == XNODE_SYNC_SPORKS && IsBlockchainSynced())) {
         SwitchToNextAsset();
     }
 
@@ -277,8 +292,24 @@ void CXnodeSync::ProcessTick() {
         // initialted from another node, so skip it too.
         if (pnode->fXnode || (fXNode && pnode->fInbound)) continue;
 
+        // QUICK MODE (REGTEST ONLY!)
+        if (Params().NetworkIDString() == CBaseChainParams::REGTEST) {
+            if (nRequestedXnodeAttempt <= 2) {
+                pnode->PushMessage(NetMsgType::GETSPORKS); //get current network sporks
+            } else if (nRequestedXnodeAttempt < 4) {
+                mnodeman.DsegUpdate(pnode);
+            } else if (nRequestedXnodeAttempt < 6) {
+                int nMnCount = mnodeman.CountXnodes();
+                pnode->PushMessage(NetMsgType::XNODEPAYMENTSYNC, nMnCount); //sync payment votes
+            } else {
+                nRequestedXnodeAssets = XNODE_SYNC_FINISHED;
+            }
+            nRequestedXnodeAttempt++;
+            ReleaseNodeVector(vNodesCopy);
+            return;
+        }
 
-        // NORMAL NETWORK MODE
+        // NORMAL NETWORK MODE - TESTNET/MAINNET
         {
             if (netfulfilledman.HasFulfilledRequest(pnode->addr, "full-sync")) {
                 // We already fully synced from this node recently,
@@ -287,6 +318,18 @@ void CXnodeSync::ProcessTick() {
                 LogPrintf("CXnodeSync::ProcessTick -- disconnecting from recently synced peer %d\n", pnode->id);
                 continue;
             }
+
+            // SPORK : ALWAYS ASK FOR SPORKS AS WE SYNC (we skip this mode now)
+
+//            if (!netfulfilledman.HasFulfilledRequest(pnode->addr, "spork-sync"))
+//            {
+//                // only request once from each peer
+//                netfulfilledman.AddFulfilledRequest(pnode->addr, "spork-sync");
+//                // get current network sporks
+//                pnode->PushMessage(NetMsgType::GETSPORKS);
+//                //LogPrintf("CXnodeSync::ProcessTick -- nTick %d nRequestedXnodeAssets %d -- requesting sporks from peer %d\n", nTick, nRequestedXnodeAssets, pnode->id);
+//                continue; // always get sporks first, switch to the next node without waiting for the next tick
+//            }
 
             // MNLIST : SYNC XNODE LIST FROM OTHER CONNECTED CLIENTS
 

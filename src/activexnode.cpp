@@ -20,6 +20,12 @@ void CActiveXnode::ManageState() {
         return;
     }
 
+    if (Params().NetworkIDString() != CBaseChainParams::REGTEST && !xnodeSync.IsBlockchainSynced()) {
+        nState = ACTIVE_XNODE_SYNC_IN_PROCESS;
+        LogPrintf("CActiveXnode::ManageState -- %s: %s\n", GetStateString(), GetStatus());
+        return;
+    }
+
     if (nState == ACTIVE_XNODE_SYNC_IN_PROCESS) {
         nState = ACTIVE_XNODE_INITIAL;
     }

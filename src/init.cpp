@@ -38,7 +38,6 @@
 #include "utilmoneystr.h"
 #include "validationinterface.h"
 #include "validation.h"
-#include "spork.h"
 
 #ifdef ENABLE_WALLET
 #include "wallet/wallet.h"
@@ -73,6 +72,7 @@
 #include "netfulfilledman.h"
 #include "flat-database.h"
 #include "instantx.h"
+#include "spork.h"
 
 #if ENABLE_ZMQ
 #include "zmq/zmqnotificationinterface.h"

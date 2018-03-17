@@ -4,13 +4,13 @@ thumbs.db
 *.tar.gz
 
 *.exe
-src/hexxcoin
-src/hexxcoind
-src/hexxcoin-cli
-src/hexxcoin-tx
-src/test/test_hexxcoin
-src/test/test_hexxcoin_fuzzy
-src/qt/test/test_hexxcoin-qt
+src/zcoin
+src/zcoind
+src/zcoin-cli
+src/zcoin-tx
+src/test/test_zcoin
+src/test/test_zcoin_fuzzy
+src/qt/test/test_zcoin-qt
 
 # autoreconf
 Makefile.in
@@ -58,6 +58,7 @@ src/qt/test/moc*.cpp
 *.pyc
 *.o
 *.o-*
+*.patch
 *.a
 *.pb.cc
 *.pb.h
@@ -76,12 +77,12 @@ src/qt/test/moc*.cpp
 # Compilation and Qt preprocessor part
 *.qm
 Makefile
-hexxcoin-qt
-hexxcoin-Qt.app
+zcoin-qt
+Zcoin-Qt.app
 
 # Unit-tests
 Makefile.test
-hexxcoin-qt_test
+zcoin-qt_test
 
 # Resources cpp
 qrc_*.cpp
@@ -94,7 +95,7 @@ build
 *.gcno
 *.gcda
 /*.info
-test_hexxcoin.coverage/
+test_zcoin.coverage/
 total.coverage/
 coverage_percent.txt
 
@@ -109,5 +110,5 @@ test/cache/*
 
 /doc/doxygen/
 
-libhexxcoinconsensus.pc
+libzcoinconsensus.pc
 contrib/devtools/split-debug.sh

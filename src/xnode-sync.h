@@ -13,12 +13,13 @@ class CXnodeSync;
 
 static const int XNODE_SYNC_FAILED          = -1;
 static const int XNODE_SYNC_INITIAL         = 0;
+static const int XNODE_SYNC_SPORKS          = 1;
 static const int XNODE_SYNC_LIST            = 2;
 static const int XNODE_SYNC_MNW             = 3;
 static const int XNODE_SYNC_FINISHED        = 999;
 static const int XNODE_SYNC_TICK_SECONDS    = 6;
 static const int XNODE_SYNC_TIMEOUT_SECONDS = 30; // our blocks are 2.5 minutes so 30 seconds should be fine
-static const int XNODE_SYNC_ENOUGH_PEERS    = 6;
+static const int XNODE_SYNC_ENOUGH_PEERS    = 4;
 extern CXnodeSync xnodeSync;
 
 //

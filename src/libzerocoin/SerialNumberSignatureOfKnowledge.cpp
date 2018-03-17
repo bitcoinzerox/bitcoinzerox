@@ -20,8 +20,6 @@ SerialNumberSignatureOfKnowledge::SerialNumberSignatureOfKnowledge(const Params*
 SerialNumberSignatureOfKnowledge::SerialNumberSignatureOfKnowledge(const Params* p, const PrivateCoin& coin, const Commitment& commitmentToCoin, uint256 msghash)
     :params(p), s_notprime(p->zkp_iterations), sprime(p->zkp_iterations) {
 
-    ParallelTasks::DoNotDisturb dnd;
-
 	// Sanity check: verify that the order of the "accumulatedValueCommitmentGroup" is
 	// equal to the modulus of "coinCommitmentGroup". Otherwise we will produce invalid
 	// proofs.
@@ -36,8 +34,6 @@ SerialNumberSignatureOfKnowledge::SerialNumberSignatureOfKnowledge(const Params*
 
 	CHashWriter hasher(0,0);
 	hasher << *params << commitmentToCoin.getCommitmentValue() << coin.getSerialNumber();
-    if (!msghash.IsNull())
-        hasher << msghash;
 
 	vector<Bignum> r(params->zkp_iterations);
 	vector<Bignum> v(params->zkp_iterations);
@@ -111,9 +107,6 @@ inline Bignum SerialNumberSignatureOfKnowledge::challengeCalculation(const Bignu
 
 bool SerialNumberSignatureOfKnowledge::Verify(const Bignum& coinSerialNumber, const Bignum& valueOfCommitmentToCoin,
         const uint256 msghash) const {
-
-    ParallelTasks::DoNotDisturb dnd;
-
 	Bignum a = params->coinCommitmentGroup.g;
 	Bignum b = params->coinCommitmentGroup.h;
 	Bignum g = params->serialNumberSoKCommitmentGroup.g;
@@ -127,8 +120,6 @@ bool SerialNumberSignatureOfKnowledge::Verify(const Bignum& coinSerialNumber, co
 
 	CHashWriter hasher(0,0);
 	hasher << *params << valueOfCommitmentToCoin <<coinSerialNumber;
-    if (!msghash.IsNull())
-        hasher << msghash;
 
 	vector<CBigNum> tprime(params->zkp_iterations);
 	unsigned char *hashbytes = (unsigned char*) &this->hash;

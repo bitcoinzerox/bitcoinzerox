@@ -5,6 +5,7 @@
 #include "activexnode.h"
 #include "addrman.h"
 #include "darksend.h"
+//#include "governance.h"
 #include "xnode-payments.h"
 #include "xnode-sync.h"
 #include "xnodeman.h"

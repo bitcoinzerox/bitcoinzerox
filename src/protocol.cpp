@@ -43,6 +43,8 @@ namespace NetMsgType {
     const char *BLOCKTXN = "blocktxn";
 //xnode
     const char *TXLOCKVOTE="txlvote";
+    const char *SPORK = "spork";
+    const char *GETSPORKS = "getsporks";
     const char *XNODEPAYMENTVOTE = "mnw";
     const char *XNODEPAYMENTBLOCK = "mnwb";
     const char *XNODEPAYMENTSYNC = "mnget";
@@ -98,6 +100,8 @@ const static std::string allNetMessageTypes[] = {
         NetMsgType::XNODEPAYMENTVOTE,
         NetMsgType::XNODEPAYMENTBLOCK,
         NetMsgType::XNODEPAYMENTSYNC,
+        NetMsgType::SPORK,
+        NetMsgType::GETSPORKS,
         NetMsgType::MNANNOUNCE,
         NetMsgType::MNPING,
         NetMsgType::DSACCEPT,
@@ -201,6 +205,7 @@ const char* CInv::GetCommand() const
         case MSG_CMPCT_BLOCK:           return NetMsgType::CMPCTBLOCK;
         case MSG_TXLOCK_REQUEST:        return NetMsgType::TXLOCKREQUEST;
         case MSG_TXLOCK_VOTE:           return NetMsgType::TXLOCKVOTE;
+        case MSG_SPORK:                 return NetMsgType::SPORK;
         case MSG_XNODE_PAYMENT_VOTE:    return NetMsgType::XNODEPAYMENTVOTE;
         case MSG_XNODE_PAYMENT_BLOCK:   return NetMsgType::XNODEPAYMENTBLOCK;
         case MSG_XNODE_ANNOUNCE:        return NetMsgType::MNANNOUNCE;
