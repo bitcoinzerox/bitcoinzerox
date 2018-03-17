@@ -1381,7 +1381,6 @@ bool CheckTransaction(const CTransaction &tx, CValidationState &state, uint256 h
                 FOUNDER_2_SCRIPT = GetScriptForDestination(CBitcoinAddress("HNdzbEtifr2nTd3VBvUWqJLc35ZFXr2EYo").Get());
                 FOUNDER_3_SCRIPT = GetScriptForDestination(CBitcoinAddress("H7HxEDxnirWkH7AnXPKDpwA8juU5XxyAVP").Get());
                 FOUNDER_4_SCRIPT = GetScriptForDestination(CBitcoinAddress("H94j1zMAbWwHWcEq8hUogAMALpVzj34M6Q").Get());
-				CAmount xnodePayment = GetXnodePayment(nHeight);
                 BOOST_FOREACH(const CTxOut &output, tx.vout)
 				{
                     if (output.scriptPubKey == FOUNDER_1_SCRIPT && output.nValue == (int64_t)(0.1 * COIN))
@@ -1408,7 +1407,7 @@ bool CheckTransaction(const CTransaction &tx, CValidationState &state, uint256 h
                         continue;
                     }
 					
-                    if (xnodePayment == output.nValue)
+                    if (xnodePayment == (0.7 * COIN))
 					{
                         total_payment_tx = total_payment_tx + 1;
                     }
