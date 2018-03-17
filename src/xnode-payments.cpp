@@ -8,8 +8,8 @@
 #include "xnode-sync.h"
 #include "xnodeman.h"
 #include "netfulfilledman.h"
-#include "spork.h"
 #include "util.h"
+#include "spork.h"
 #include "consensus/consensus.h"
 #include <boost/lexical_cast.hpp>
 
@@ -31,61 +31,16 @@ CCriticalSection cs_mapXnodePaymentVotes;
 *   - When non-superblocks are detected, the normal schedule should be maintained
 */
 
-bool IsBlockValueValid(const CBlock &block, int nBlockHeight, CAmount blockReward, std::string &strErrorRet) {
+bool IsBlockValueValid(const CBlock &block, int nBlockHeight, CAmount blockReward, std::string &strErrorRet)
+{
     strErrorRet = "";
 
     bool isBlockRewardValueMet = (block.vtx[0].GetValueOut() <= blockReward);
     if (fDebug) LogPrintf("block.vtx[0].GetValueOut() %lld <= blockReward %lld\n", block.vtx[0].GetValueOut(), blockReward);
 
-    // we are still using budgets, but we have no data about them anymore,
-    // all we know is predefined budget cycle and window
-
-//    const Consensus::Params &consensusParams = Params().GetConsensus();
-//
-////    if (nBlockHeight < consensusParams.nSuperblockStartBlock) {
-//        int nOffset = nBlockHeight % consensusParams.nBudgetPaymentsCycleBlocks;
-//        if (nBlockHeight >= consensusParams.nBudgetPaymentsStartBlock &&
-//            nOffset < consensusParams.nBudgetPaymentsWindowBlocks) {
-//            // NOTE: make sure SPORK_13_OLD_SUPERBLOCK_FLAG is disabled when 12.1 starts to go live
-//            if (xnodeSync.IsSynced() && !sporkManager.IsSporkActive(SPORK_13_OLD_SUPERBLOCK_FLAG)) {
-//                // no budget blocks should be accepted here, if SPORK_13_OLD_SUPERBLOCK_FLAG is disabled
-//                LogPrint("gobject", "IsBlockValueValid -- Client synced but budget spork is disabled, checking block value against block reward\n");
-//                if (!isBlockRewardValueMet) {
-//                    strErrorRet = strprintf("coinbase pays too much at height %d (actual=%d vs limit=%d), exceeded block reward, budgets are disabled",
-//                                            nBlockHeight, block.vtx[0].GetValueOut(), blockReward);
-//                }
-//                return isBlockRewardValueMet;
-//            }
-//            LogPrint("gobject", "IsBlockValueValid -- WARNING: Skipping budget block value checks, accepting block\n");
-//            // TODO: reprocess blocks to make sure they are legit?
-//            return true;
-//        }
-//        // LogPrint("gobject", "IsBlockValueValid -- Block is not in budget cycle window, checking block value against block reward\n");
-//        if (!isBlockRewardValueMet) {
-//            strErrorRet = strprintf("coinbase pays too much at height %d (actual=%d vs limit=%d), exceeded block reward, block is not in budget cycle window",
-//                                    nBlockHeight, block.vtx[0].GetValueOut(), blockReward);
-//        }
-//        return isBlockRewardValueMet;
-//    }
-
-    // superblocks started
-
-//    CAmount nSuperblockMaxValue =  blockReward + CSuperblock::GetPaymentsLimit(nBlockHeight);
-//    bool isSuperblockMaxValueMet = (block.vtx[0].GetValueOut() <= nSuperblockMaxValue);
-//    bool isSuperblockMaxValueMet = false;
-
-//    LogPrint("gobject", "block.vtx[0].GetValueOut() %lld <= nSuperblockMaxValue %lld\n", block.vtx[0].GetValueOut(), nSuperblockMaxValue);
-
-    if (!xnodeSync.IsSynced()) {
+    if (!xnodeSync.IsSynced())
+		{
         // not enough data but at least it must NOT exceed superblock max value
-//        if(CSuperblock::IsValidBlockHeight(nBlockHeight)) {
-//            if(fDebug) LogPrintf("IsBlockPayeeValid -- WARNING: Client not synced, checking superblock max bounds only\n");
-//            if(!isSuperblockMaxValueMet) {
-//                strErrorRet = strprintf("coinbase pays too much at height %d (actual=%d vs limit=%d), exceeded superblock max value",
-//                                        nBlockHeight, block.vtx[0].GetValueOut(), nSuperblockMaxValue);
-//            }
-//            return isSuperblockMaxValueMet;
-//        }
         if (!isBlockRewardValueMet) {
             strErrorRet = strprintf("coinbase pays too much at height %d (actual=%d vs limit=%d), exceeded block reward, only regular blocks are allowed at this height",
                                     nBlockHeight, block.vtx[0].GetValueOut(), blockReward);
@@ -93,39 +48,6 @@ bool IsBlockValueValid(const CBlock &block, int nBlockHeight, CAmount blockRewar
         // it MUST be a regular block otherwise
         return isBlockRewardValueMet;
     }
-
-    // we are synced, let's try to check as much data as we can
-
-    if (sporkManager.IsSporkActive(SPORK_9_SUPERBLOCKS_ENABLED)) {
-////        if(CSuperblockManager::IsSuperblockTriggered(nBlockHeight)) {
-////            if(CSuperblockManager::IsValid(block.vtx[0], nBlockHeight, blockReward)) {
-////                LogPrint("gobject", "IsBlockValueValid -- Valid superblock at height %d: %s", nBlockHeight, block.vtx[0].ToString());
-////                // all checks are done in CSuperblock::IsValid, nothing to do here
-////                return true;
-////            }
-////
-////            // triggered but invalid? that's weird
-////            LogPrintf("IsBlockValueValid -- ERROR: Invalid superblock detected at height %d: %s", nBlockHeight, block.vtx[0].ToString());
-////            // should NOT allow invalid superblocks, when superblocks are enabled
-////            strErrorRet = strprintf("invalid superblock detected at height %d", nBlockHeight);
-////            return false;
-////        }
-//        LogPrint("gobject", "IsBlockValueValid -- No triggered superblock detected at height %d\n", nBlockHeight);
-//        if(!isBlockRewardValueMet) {
-//            strErrorRet = strprintf("coinbase pays too much at height %d (actual=%d vs limit=%d), exceeded block reward, no triggered superblock detected",
-//                                    nBlockHeight, block.vtx[0].GetValueOut(), blockReward);
-//        }
-    } else {
-//        // should NOT allow superblocks at all, when superblocks are disabled
-        LogPrint("gobject", "IsBlockValueValid -- Superblocks are disabled, no superblocks allowed\n");
-        if (!isBlockRewardValueMet) {
-            strErrorRet = strprintf("coinbase pays too much at height %d (actual=%d vs limit=%d), exceeded block reward, superblocks are disabled",
-                                    nBlockHeight, block.vtx[0].GetValueOut(), blockReward);
-        }
-    }
-
-    // it MUST be a regular block
-    return isBlockRewardValueMet;
 }
 
 bool IsBlockPayeeValid(const CTransaction &txNew, int nBlockHeight, CAmount blockReward) {
@@ -144,28 +66,15 @@ bool IsBlockPayeeValid(const CTransaction &txNew, int nBlockHeight, CAmount bloc
     }
 
     //check for xnode payee
-    if (mnpayments.IsTransactionValid(txNew, nBlockHeight)) {
+    if (mnpayments.IsTransactionValid(txNew, nBlockHeight))
+    {
         LogPrint("mnpayments", "IsBlockPayeeValid -- Valid xnode payment at height %d: %s", nBlockHeight, txNew.ToString());
         return true;
-    } else {
-        if(sporkManager.IsSporkActive(SPORK_8_XNODE_PAYMENT_ENFORCEMENT)){
-            return false;
-        } else {
-            LogPrintf("XNode payment enforcement is disabled, accepting block\n");
-            return true;
-        }
     }
+
 }
 
 void FillBlockPayments(CMutableTransaction &txNew, int nBlockHeight, CAmount xnodePayment, CTxOut &txoutXnodeRet, std::vector <CTxOut> &voutSuperblockRet) {
-    // only create superblocks if spork is enabled AND if superblock is actually triggered
-    // (height should be validated inside)
-//    if(sporkManager.IsSporkActive(SPORK_9_SUPERBLOCKS_ENABLED) &&
-//        CSuperblockManager::IsSuperblockTriggered(nBlockHeight)) {
-//            LogPrint("gobject", "FillBlockPayments -- triggered superblock creation at height %d\n", nBlockHeight);
-//            CSuperblockManager::CreateSuperblock(txNew, nBlockHeight, voutSuperblockRet);
-//            return;
-//    }
 
     // FILL BLOCK PAYEE WITH XNODE PAYMENT OTHERWISE
     mnpayments.FillBlockPayee(txNew, nBlockHeight, xnodePayment, txoutXnodeRet);
@@ -174,10 +83,6 @@ void FillBlockPayments(CMutableTransaction &txNew, int nBlockHeight, CAmount xno
 }
 
 std::string GetRequiredPaymentsString(int nBlockHeight) {
-    // IF WE HAVE A ACTIVATED TRIGGER FOR THIS HEIGHT - IT IS A SUPERBLOCK, GET THE REQUIRED PAYEES
-//    if(CSuperblockManager::IsSuperblockTriggered(nBlockHeight)) {
-//        return CSuperblockManager::GetRequiredPaymentsString(nBlockHeight);
-//    }
 
     // OTHERWISE, PAY XNODE
     return mnpayments.GetRequiredPaymentsString(nBlockHeight);
@@ -254,10 +159,9 @@ void CXnodePayments::FillBlockPayee(CMutableTransaction &txNew, int nBlockHeight
 
 }
 
-int CXnodePayments::GetMinXnodePaymentsProto() {
-    return sporkManager.IsSporkActive(SPORK_10_XNODE_PAY_UPDATED_NODES)
-           ? MIN_XNODE_PAYMENT_PROTO_VERSION_2
-           : MIN_XNODE_PAYMENT_PROTO_VERSION_1;
+int CXnodePayments::GetMinXnodePaymentsProto()
+{
+    return MIN_XNODE_PAYMENT_PROTO_VERSION;
 }
 
 void CXnodePayments::ProcessMessage(CNode *pfrom, std::string &strCommand, CDataStream &vRecv) {
@@ -624,13 +528,7 @@ bool CXnodePaymentVote::IsValid(CNode *pnode, int nValidationHeight, std::string
     }
 
     int nMinRequiredProtocol;
-    if (nBlockHeight >= nValidationHeight) {
-        // new votes must comply SPORK_10_XNODE_PAY_UPDATED_NODES rules
-        nMinRequiredProtocol = mnpayments.GetMinXnodePaymentsProto();
-    } else {
-        // allow non-updated xnodes for old blocks
-        nMinRequiredProtocol = MIN_XNODE_PAYMENT_PROTO_VERSION_1;
-    }
+    nMinRequiredProtocol = mnpayments.GetMinXnodePaymentsProto();
 
     if (pmn->nProtocolVersion < nMinRequiredProtocol) {
         strError = strprintf("Xnode protocol is too old: nProtocolVersion=%d, nMinRequiredProtocol=%d", pmn->nProtocolVersion, nMinRequiredProtocol);
@@ -748,11 +646,13 @@ bool CXnodePaymentVote::CheckSignature(const CPubKey &pubKeyXnode, int nValidati
                              ScriptToAsmStr(payee);
 
     std::string strError = "";
-    if (!darkSendSigner.VerifyMessage(pubKeyXnode, vchSig, strMessage, strError)) {
+    if (!darkSendSigner.VerifyMessage(pubKeyXnode, vchSig, strMessage, strError))
+    {
         // Only ban for future block vote when we are already synced.
         // Otherwise it could be the case when MN which signed this vote is using another key now
         // and we have no idea about the old one.
-        if (xnodeSync.IsXnodeListSynced() && nBlockHeight > nValidationHeight) {
+        if (xnodeSync.IsXnodeListSynced() && nBlockHeight > nValidationHeight)
+        {
             nDos = 20;
         }
         return error("CXnodePaymentVote::CheckSignature -- Got bad Xnode payment signature, xnode=%s, error: %s", vinXnode.prevout.ToStringShort().c_str(), strError);

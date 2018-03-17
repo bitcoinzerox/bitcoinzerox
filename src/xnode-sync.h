@@ -13,7 +13,6 @@ class CXnodeSync;
 
 static const int XNODE_SYNC_FAILED          = -1;
 static const int XNODE_SYNC_INITIAL         = 0;
-static const int XNODE_SYNC_SPORKS          = 1;
 static const int XNODE_SYNC_LIST            = 2;
 static const int XNODE_SYNC_MNW             = 3;
 static const int XNODE_SYNC_FINISHED        = 999;

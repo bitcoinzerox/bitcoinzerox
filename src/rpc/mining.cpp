@@ -791,7 +791,6 @@ UniValue getblocktemplate(const UniValue& params, bool fHelp)
     }
     result.push_back(Pair("xnode", xnodeObj));
     result.push_back(Pair("xnode_payments_started", pindexPrev->nHeight + 1 > HF_XNODE_PAYMENT_START));
-//    result.push_back(Pair("xnode_payments_enforced", sporkManager.IsSporkActive(SPORK_8_MASTERNODE_PAYMENT_ENFORCEMENT)));
 
     const struct BIP9DeploymentInfo& segwit_info = VersionBitsDeploymentInfo[Consensus::DEPLOYMENT_SEGWIT];
     if (!pblocktemplate->vchCoinbaseCommitment.empty() && setClientRules.find(segwit_info.name) != setClientRules.end()) {

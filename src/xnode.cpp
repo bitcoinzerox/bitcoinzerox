@@ -100,8 +100,6 @@ CXnode::CXnode(const CXnodeBroadcast &mnb) :
         fAllowMixingTx(true),
         fUnitTest(false) {}
 
-//CSporkManager sporkManager;
-//
 // When a new xnode broadcast is sent, update our information
 //
 bool CXnode::UpdateFromNewBroadcast(CXnodeBroadcast &mnb) {
@@ -284,10 +282,6 @@ bool CXnode::IsValidForPayment() {
     if (nActiveState == XNODE_ENABLED) {
         return true;
     }
-//    if(!sporkManager.IsSporkActive(SPORK_14_REQUIRE_SENTINEL_FLAG) &&
-//       (nActiveState == XNODE_WATCHDOG_EXPIRED)) {
-//        return true;
-//    }
 
     return false;
 }

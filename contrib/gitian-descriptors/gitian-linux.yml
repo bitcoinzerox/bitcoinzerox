@@ -1,5 +1,5 @@
 ---
-name: "hexxcoin-linux-zoi.3.3"
+name: "hexxcoin-linux-0.13.5"
 enable_cache: true
 suites:
 - "trusty"

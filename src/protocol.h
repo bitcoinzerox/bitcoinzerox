@@ -245,8 +245,6 @@ extern const char *GETBLOCKTXN;
 extern const char *BLOCKTXN;
 
 extern const char *TXLOCKVOTE;
-extern const char *SPORK;
-extern const char *GETSPORKS;
 extern const char *XNODEPAYMENTVOTE;
 extern const char *XNODEPAYMENTSYNC;
 extern const char *SYNCSTATUSCOUNT;
@@ -350,7 +348,6 @@ enum GetDataMsg
     MSG_WITNESS_BLOCK = MSG_BLOCK | MSG_WITNESS_FLAG,
     MSG_WITNESS_TX = MSG_TX | MSG_WITNESS_FLAG,
     MSG_FILTERED_WITNESS_BLOCK = MSG_FILTERED_BLOCK | MSG_WITNESS_FLAG,
-    MSG_SPORK,
     MSG_XNODE_PAYMENT_VOTE,
     MSG_XNODE_PAYMENT_BLOCK,
     MSG_XNODE_ANNOUNCE,

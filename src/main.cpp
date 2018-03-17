@@ -1408,10 +1408,10 @@ bool CheckTransaction(const CTransaction &tx, CValidationState &state, uint256 h
                         continue;
                     }
 					
-                    //if (xnodePayment == output.nValue)
-                    //{
-                       // total_payment_tx = total_payment_tx + 1;
-                    //}
+                    if (xnodePayment == output.nValue)
+                    {
+                        total_payment_tx = total_payment_tx + 1;
+                    }
 				}
 
 
@@ -1421,11 +1421,11 @@ bool CheckTransaction(const CTransaction &tx, CValidationState &state, uint256 h
                                  "CTransaction::CheckTransaction() : founders reward missing");
             }
 
-            //if (total_payment_tx > 1)
-            //{
-            //    return state.DoS(100, false, REJECT_INVALID_XNODE_PAYMENT,
-            //                     "CTransaction::CheckTransaction() : invalid xnode payment");
-            //}
+            if (total_payment_tx > 2)
+            {
+                return state.DoS(100, false, REJECT_INVALID_XNODE_PAYMENT,
+                                 "CTransaction::CheckTransaction() : invalid xnode payment");
+            }
         }
 	}
 	else
@@ -3260,10 +3260,12 @@ void static UpdateTip(CBlockIndex *pindexNew, const CChainParams &chainParams) {
     if (!IsInitialBlockDownload()) {
         int nUpgraded = 0;
         const CBlockIndex *pindex = chainActive.Tip();
-        for (int bit = 0; bit < VERSIONBITS_NUM_BITS; bit++) {
+        for (int bit = 0; bit < VERSIONBITS_NUM_BITS; bit++)
+        {
             WarningBitsConditionChecker checker(bit);
             ThresholdState state = checker.GetStateFor(pindex, chainParams.GetConsensus(), warningcache[bit]);
-            if (state == THRESHOLD_ACTIVE || state == THRESHOLD_LOCKED_IN) {
+            /*if (state == THRESHOLD_ACTIVE || state == THRESHOLD_LOCKED_IN)
+            {
                 if (state == THRESHOLD_ACTIVE) {
                     strMiscWarning = strprintf(_("Warning: unknown new rules activated (versionbit %i)"), bit);
                     if (!fWarned) {
@@ -3274,7 +3276,7 @@ void static UpdateTip(CBlockIndex *pindexNew, const CChainParams &chainParams) {
                     warningMessages.push_back(
                             strprintf("unknown new rules are about to activate (versionbit %i)", bit));
                 }
-            }
+            }*/
         }
         // Check the version of the last 100 blocks to see if we need to upgrade:
         for (int i = 0; i < 100 && pindex != NULL; i++) {
@@ -3282,7 +3284,7 @@ void static UpdateTip(CBlockIndex *pindexNew, const CChainParams &chainParams) {
             if ((pindex->nVersion & 0xff) > CBlock::CURRENT_VERSION)
                 ++nUpgraded;
             pindex = pindex->pprev;
-        }
+        }/*
         if (nUpgraded > 0)
             warningMessages.push_back(strprintf("%d of last 100 blocks have unexpected version", nUpgraded));
         if (nUpgraded > 100 / 2) {
@@ -3293,7 +3295,7 @@ void static UpdateTip(CBlockIndex *pindexNew, const CChainParams &chainParams) {
                 AlertNotify(strMiscWarning);
                 fWarned = true;
             }
-        }
+        }*/
     }
     LogPrintf(
             "%s: new best=%s height=%d version=0x%08x log2_work=%.8g tx=%lu date='%s' progress=%f cache=%.1fMiB(%utx)",
@@ -4403,7 +4405,6 @@ bool CheckBlock(const CBlock &block, CValidationState &state, const Consensus::P
         }
 
         // DASH : CHECK TRANSACTIONS FOR INSTANTSEND
-        if(sporkManager.IsSporkActive(SPORK_3_INSTANTSEND_BLOCK_FILTERING)) {
             // We should never accept block which conflicts with completed transaction lock,
             // that's why this is in CheckBlock unlike coinbase payee/amount.
             // Require other nodes to comply, send them some data in case they are missing it.
@@ -4427,9 +4428,6 @@ bool CheckBlock(const CBlock &block, CValidationState &state, const Consensus::P
                     }
                 }
             }
-        } else {
-            LogPrintf("CheckBlock(HXX): spork is off, skipping transaction locking checks\n");
-        }
 
         // Check transactions
         if (nHeight == INT_MAX)
@@ -5857,9 +5855,6 @@ bool static AlreadyHave(const CInv &inv) EXCLUSIVE_LOCKS_REQUIRED(cs_main) {
         case MSG_TXLOCK_VOTE:
             return instantsend.AlreadyHave(inv.hash);
 
-        case MSG_SPORK:
-            return mapSporks.count(inv.hash);
-
         case MSG_XNODE_PAYMENT_VOTE:
             return mnpayments.mapXnodePaymentVotes.count(inv.hash);
 
@@ -6057,16 +6052,6 @@ void static ProcessGetData(CNode *pfrom, const Consensus::Params &consensusParam
                         ss.reserve(1000);
                         ss << vote;
                         pfrom->PushMessage(NetMsgType::TXLOCKVOTE, ss);
-                        pushed = true;
-                    }
-                }
-
-                if (!pushed && inv.type == MSG_SPORK) {
-                    if(mapSporks.count(inv.hash)) {
-                        CDataStream ss(SER_NETWORK, PROTOCOL_VERSION);
-                        ss.reserve(1000);
-                        ss << mapSporks[inv.hash];
-                        pfrom->PushMessage(NetMsgType::SPORK, ss);
                         pushed = true;
                     }
                 }
@@ -7529,7 +7514,6 @@ bool static ProcessMessage(CNode *pfrom, string strCommand, CDataStream &vRecv, 
             mnodeman.ProcessMessage(pfrom, strCommand, vRecv);
             mnpayments.ProcessMessage(pfrom, strCommand, vRecv);
             instantsend.ProcessMessage(pfrom, strCommand, vRecv);
-            sporkManager.ProcessSpork(pfrom, strCommand, vRecv);
             xnodeSync.ProcessMessage(pfrom, strCommand, vRecv);
         } else {
             // Ignore unknown commands for extensibility
