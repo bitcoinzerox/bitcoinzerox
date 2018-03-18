@@ -5,6 +5,7 @@ language: minimal
 cache:
   directories:
   - depends/built
+  - depends/work
   - depends/sdk-sources
   - $HOME/.ccache
 env:
