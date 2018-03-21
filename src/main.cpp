@@ -3263,7 +3263,7 @@ void static UpdateTip(CBlockIndex *pindexNew, const CChainParams &chainParams) {
         for (int bit = 0; bit < VERSIONBITS_NUM_BITS; bit++) {
             WarningBitsConditionChecker checker(bit);
             ThresholdState state = checker.GetStateFor(pindex, chainParams.GetConsensus(), warningcache[bit]);
-            if (state == THRESHOLD_ACTIVE || state == THRESHOLD_LOCKED_IN) {
+            /*if (state == THRESHOLD_ACTIVE || state == THRESHOLD_LOCKED_IN) {
                 if (state == THRESHOLD_ACTIVE) {
                     strMiscWarning = strprintf(_("Warning: unknown new rules activated (versionbit %i)"), bit);
                     if (!fWarned) {
@@ -3274,7 +3274,7 @@ void static UpdateTip(CBlockIndex *pindexNew, const CChainParams &chainParams) {
                     warningMessages.push_back(
                             strprintf("unknown new rules are about to activate (versionbit %i)", bit));
                 }
-            }
+            }*/
         }
         // Check the version of the last 100 blocks to see if we need to upgrade:
         for (int i = 0; i < 100 && pindex != NULL; i++) {
@@ -3282,7 +3282,7 @@ void static UpdateTip(CBlockIndex *pindexNew, const CChainParams &chainParams) {
             if ((pindex->nVersion & 0xff) > CBlock::CURRENT_VERSION)
                 ++nUpgraded;
             pindex = pindex->pprev;
-        }
+        }/*
         if (nUpgraded > 0)
             warningMessages.push_back(strprintf("%d of last 100 blocks have unexpected version", nUpgraded));
         if (nUpgraded > 100 / 2) {
@@ -3293,7 +3293,7 @@ void static UpdateTip(CBlockIndex *pindexNew, const CChainParams &chainParams) {
                 AlertNotify(strMiscWarning);
                 fWarned = true;
             }
-        }
+        }*/
     }
     LogPrintf(
             "%s: new best=%s height=%d version=0x%08x log2_work=%.8g tx=%lu date='%s' progress=%f cache=%.1fMiB(%utx)",
